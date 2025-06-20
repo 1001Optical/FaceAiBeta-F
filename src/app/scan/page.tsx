@@ -49,7 +49,7 @@ export default function ScanPage() {
     // 얼굴이 타원 안에 들어오면 2초 후 자동 캡처 (임시: 버튼 없이 타이머)
     useEffect(() => {
       if (step === "guide" && faceInEllipse && !captured) {
-        setCountdown(2);
+        setCountdown(5);
         const timer = setTimeout(() => {
           handleCapture();
         }, 2000);
