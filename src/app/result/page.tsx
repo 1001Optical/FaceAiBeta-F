@@ -20,24 +20,16 @@ export default function ResultPage() {
   const ratios = JSON.parse(searchParams.get('ratios') || '{}');
 
   // 얼굴형 상세 정보
-  const faceDetail = faceShapeDetails.find(
-    (f: FaceShapeDetail) => f.shape === faceShape
-  );
+  const faceDetail = faceShapeDetails.find((f: FaceShapeDetail) => f.shape === faceShape);
 
   // 추천 프레임 정보
-  const recommendations =
-    frameRecommendations[faceShape as keyof typeof frameRecommendations];
+  const recommendations = frameRecommendations[faceShape as keyof typeof frameRecommendations];
   const recommendedFrames = recommendations?.recommendedFrames || [];
 
   // 추천 프레임 상세 정보
-  const frameDetails = recommendedFrames
-    .map((frameName: string) =>
-      frameShapeDetails.find(
-        (f: FrameShapeDetail) =>
-          f.shape.toLowerCase() === frameName.toLowerCase()
-      )
-    )
-    .filter(Boolean);
+  const frameDetails = recommendedFrames.map((frameName: string) =>
+    frameShapeDetails.find((f: FrameShapeDetail) => f.shape.toLowerCase() === frameName.toLowerCase()),
+  ).filter(Boolean);
 
   // 디버깅용 로그
   useEffect(() => {
@@ -50,61 +42,42 @@ export default function ResultPage() {
       frameDetails,
       rawParams: Object.fromEntries(searchParams.entries()),
     });
-  }, [
-    faceShape,
-    confidence,
-    ratios,
-    faceDetail,
-    recommendations,
-    frameDetails,
-    searchParams,
-  ]);
+  }, [faceShape, confidence, ratios, faceDetail, recommendations, frameDetails, searchParams]);
 
   return (
     <div className="min-h-screen bg-black text-white p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8 flex justify-center items-center">
-          Your Face Shape is {faceShape}
-        </h1>
+        <h1 className="text-3xl font-bold mb-8">Face Shape Analysis Result</h1>
 
         {/* 얼굴형 정보 */}
-        <div className="bg-gray-700 rounded-lg p-6 mb-8">
+        <div className="bg-gray-900 rounded-lg p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-8">
-            {/* 이미지 영역 */}
             {faceDetail?.image && (
-              <div className="w-full md:w-1/3 flex justify-center items-center">
-                <img
+              <div className="w-full md:w-1/3">
+                <Image
                   src={faceDetail.image}
                   alt={`${faceShape} face shape`}
+                  width={300}
+                  height={200}
                   className="w-full h-auto rounded-lg"
                 />
               </div>
             )}
-
-            {/* 텍스트 영역 */}
-            <div className="flex-1 flex flex-col justify-center">
-              <p className="text-gray-300 text-xl mb-2">
+            <div className="flex-1">
+              <h2 className="text-xl font-semibold mb-4">Your Face Shape</h2>
+              <p className="text-gray-300 mb-6">
+                Based on our analysis, your face shape is: <span className="font-bold text-white">{faceShape}</span>
                 {confidence > 0 && (
-                  <span className="text-xl text-gray-400 ml-2">
+                  <span className="text-sm text-gray-400 ml-2">
                     (Confidence: {Math.round(confidence * 100)}%)
                   </span>
                 )}
               </p>
-
-              {faceDetail?.description && (
-                <p className="text-gray-300 text-xl mb-4">
-                  {faceDetail.description}
-                </p>
-              )}
-
+              {faceDetail?.description && <p className="text-gray-300 mb-4">{faceDetail.description}</p>}
               {faceDetail?.celebrities && (
-                <div className="mt-4 text-lg">
-                  <h3 className="text-lg font-medium mb-1">
-                    Celebrities with Your Face Shape
-                  </h3>
-                  <p className="text-gray-300 text-base">
-                    {faceDetail.celebrities.join(', ')}
-                  </p>
+                <div className="mt-4">
+                  <h3 className="text-lg font-medium mb-2">Similar Celebrities:</h3>
+                  <p className="text-gray-300">{faceDetail.celebrities.join(', ')}</p>
                 </div>
               )}
             </div>
@@ -112,7 +85,7 @@ export default function ResultPage() {
         </div>
 
         {/* 얼굴 측정값 */}
-        {/* <div className="bg-gray-900 rounded-lg p-6 mb-8">
+        <div className="bg-gray-900 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">Face Measurements</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div className="bg-gray-800 p-3 rounded-lg">
@@ -140,30 +113,27 @@ export default function ResultPage() {
               <p className="text-lg font-medium">{Math.round(ratios.jawAngle)}°</p>
             </div>
           </div>
-        </div> */}
+        </div>
 
         {/* 추천 프레임 */}
         {recommendations && (
-          <div className="bg-gray-700 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-1">
-              Recommended Frame Shape
-            </h2>
+          <div className="bg-gray-900 rounded-lg p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-4">Recommended Frames</h2>
             <p className="text-gray-300 mb-6">{recommendations.reason}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {frameDetails.map(
-                (frame, index) =>
-                  frame && (
-                    <div key={index} className="bg-gray-800 p-4 rounded-lg ">
-                      <h3 className="text-lg font-extrabold mb-4">
-                        {frame.shape}
-                      </h3>
-                      <img
-                        src={frame.image}
-                        alt={`${frame.shape} frame`}
-                        className="w-full h-auto rounded-lg"
-                      />
-                    </div>
-                  )
+              {frameDetails.map((frame, index) =>
+                frame ? (
+                  <div key={index} className="bg-gray-800 p-4 rounded-lg">
+                    <h3 className="font-medium mb-4">{frame.shape}</h3>
+                    <Image
+                      src={frame.image}
+                      alt={`${frame.shape} frame`}
+                      width={300}
+                      height={200}
+                      className="w-full h-auto rounded-lg"
+                    />
+                  </div>
+                ) : null,
               )}
             </div>
           </div>

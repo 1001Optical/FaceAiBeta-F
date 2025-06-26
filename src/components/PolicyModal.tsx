@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 
 interface PolicyModalProps {
   isOpen: boolean;
@@ -10,75 +10,27 @@ export default function PolicyModal({ isOpen, onClose }: PolicyModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold text-gray-800">
-            🔒 Privacy Policy – Facial Analysis Addendum
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            ✕
-          </button>
-        </div>
-
-        <div className="space-y-4 text-gray-600">
-          <h3 className="text-xl font-semibold text-gray-800">
-            Facial Analysis for Eyewear Recommendations
-          </h3>
-
+      <div className="bg-white text-black p-6 rounded-lg max-w-md mx-4 max-h-[80vh] overflow-y-auto">
+        <h2 className="text-xl font-bold mb-4">개인정보 처리방침</h2>
+        <div className="text-sm space-y-3">
           <p>
-            We offer an optional facial analysis feature that allows customers
-            to receive personalised eyewear recommendations based on their face
-            shape.
+            본 서비스는 얼굴 인식 기술을 사용하여 얼굴형을 분석합니다. 
+            업로드된 이미지는 분석 목적으로만 사용되며, 서버에 저장되지 않습니다.
           </p>
-
           <p>
-            By using this feature, you acknowledge and agree to the following:
+            분석 결과는 개인 맞춤형 안경 프레임 추천을 위해 사용됩니다.
+            모든 데이터는 안전하게 처리되며, 제3자와 공유되지 않습니다.
           </p>
-
-          <ul className="list-disc pl-6 space-y-2">
-            <li>
-              Your facial image will be captured and processed using AI
-              technology to determine your face shape.
-            </li>
-            <li>
-              The image is processed in real-time and will not be stored or
-              retained after analysis is complete.
-            </li>
-            <li>
-              No facial data is used for identity recognition, biometric
-              matching, or any unrelated purposes.
-            </li>
-            <li>
-              Your image is not shared with third parties, and no data is used
-              for marketing or profiling.
-            </li>
-            <li>
-              We do not store any biometric information as defined under the
-              Australian Privacy Act 1988.
-            </li>
-            <li>
-              You must be 15 years or older to use this feature. If you are
-              under 15, parental or guardian consent is required.
-            </li>
-          </ul>
-
-          <p className="font-semibold">
-            By proceeding, you consent to this one-time analysis for the stated
-            purpose only.
+          <p>
+            서비스 이용 시 위 내용에 동의하는 것으로 간주됩니다.
           </p>
-
-          <div className="flex justify-center mt-8">
-            <button
-              onClick={onClose}
-              className="px-8 py-3 bg-[#007a8a] text-white rounded-xl font-semibold text-lg hover:bg-blue-700 transition-colors duration-200 shadow-md"
-            >
-              I Agree
-            </button>
-          </div>
         </div>
+        <button
+          onClick={onClose}
+          className="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+        >
+          확인
+        </button>
       </div>
     </div>
   );

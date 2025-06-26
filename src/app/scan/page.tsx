@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Loading from '@/components/Loading';
 import { faceShapeDetails } from '@/data/faceData';
@@ -12,58 +12,54 @@ export default function ScanPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [step, setStep] = useState<'intro' | 'guide' | 'loading'>('intro');
   const router = useRouter();
-  const [scanResult, setScanResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  // 캡처 및 얼굴 감지 상태 (useCallback, useEffect보다 위에 선언)
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [captured, setCaptured] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   // 카메라 프리뷰 시작
   useEffect(() => {
     if (step === 'intro' || step === 'guide') {
-      navigator.mediaDevices
-        .getUserMedia({ video: { facingMode: 'user' } })
-        .then(stream => {
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
-        });
+      startCamera();
     }
     // 정리: 컴포넌트 언마운트 시 카메라 종료
     return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        (videoRef.current.srcObject as MediaStream)
-          .getTracks()
-          .forEach(track => track.stop());
+      if (videoRef.current) {
+        const stream = videoRef.current.srcObject as MediaStream;
+        if (stream) {
+          stream.getTracks().forEach(track => track.stop());
+        }
       }
     };
   }, [step]);
 
-  // 타원 크기 더 크게 조정
-  const ellipseWidth = 420; // px (더 크게)
-  const ellipseHeight = 700; // px (더 크게)
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+          facingMode: 'user',
+        },
+      });
 
-  // 캡처 및 얼굴 감지 상태
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [captured, setCaptured] = useState(false);
-  const [countdown, setCountdown] = useState<number | null>(null);
-  const [faceInEllipse, setFaceInEllipse] = useState(false);
-
-  // 얼굴이 타원 안에 들어오면 2초 후 자동 캡처 (임시: 버튼 없이 타이머)
-  useEffect(() => {
-    if (step === 'guide' && faceInEllipse && !captured) {
-      setCountdown(5);
-      const timer = setTimeout(() => {
-        handleCapture();
-      }, 2000);
-      return () => clearTimeout(timer);
-    } else {
-      setCountdown(null);
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (err) {
+      setError('카메라에 접근할 수 없습니다. 카메라 권한을 확인해주세요.');
+      console.error('Camera access error:', err);
     }
-  }, [faceInEllipse, step, captured]);
+  };
 
-  // 캡처 함수
-  const handleCapture = async () => {
-    if (!videoRef.current || !canvasRef.current) return;
+  // 캡처 함수 useCallback 적용
+  const handleCapture = useCallback(async () => {
+    if (!videoRef.current || !canvasRef.current || isLoading) return;
     const video = videoRef.current;
     const canvas = canvasRef.current;
     canvas.width = video.videoWidth;
@@ -82,7 +78,7 @@ export default function ScanPage() {
       ctx.restore();
     }
     setCaptured(true);
-    setStep('loading'); // 로딩 상태로 변경
+    setIsLoading(true);
     setError(null); // 에러 상태 초기화
 
     try {
@@ -162,8 +158,6 @@ export default function ScanPage() {
         return;
       }
 
-      setScanResult(detectData);
-
       // 결과 페이지로 이동하면서 데이터 전달
       const queryParams = new URLSearchParams({
         faceShape: detectData.shape,
@@ -235,16 +229,23 @@ export default function ScanPage() {
       );
       setStep('guide');
       setCaptured(false);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [apiUrl, isLoading, captured, router]);
 
-  // 임시: 타원 안에 얼굴이 들어왔는지 감지하는 로직 (실제 얼굴 인식은 추후 구현)
-  // 여기서는 사용자가 타원 안에 얼굴을 맞췄다고 가정하고, 2초 후 자동 캡처
+  // 얼굴이 타원 안에 들어오면 2초 후 자동 캡처 (임시: 버튼 없이 타이머)
   useEffect(() => {
     if (step === 'guide' && !captured) {
-      setFaceInEllipse(true); // 실제 얼굴 인식 대신 항상 true
+      setCountdown(5);
+      const timer = setTimeout(() => {
+        handleCapture();
+      }, 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setCountdown(null);
     }
-  }, [step, captured]);
+  }, [step, captured, handleCapture]);
 
   return (
     <div
@@ -264,7 +265,7 @@ export default function ScanPage() {
       <canvas ref={canvasRef} style={{ display: 'none' }} />
 
       {/* 로딩 화면 */}
-      {step === 'loading' && (
+      {isLoading && (
         <div className="absolute inset-0 flex flex-col items-center justify-center z-20 bg-black bg-opacity-75">
           <Loading />
           <p className="text-white mt-4 text-lg">
@@ -289,7 +290,7 @@ export default function ScanPage() {
           <div className="max-w-lg text-center text-white flex flex-col gap-8">
             <h1 className="text-3xl font-bold mb-4">Ready to scan the face?</h1>
             <p className="mb-8 text-base font-light">
-              Click "I'm ready" and ask the customer to face the camera
+              Click &quot;I&apos;m ready&quot; and ask the customer to face the camera
               directly, looking straight ahead without any glasses, hats, or
               masks.
             </p>
@@ -297,7 +298,7 @@ export default function ScanPage() {
               className="mt-4 px-8 py-3 rounded-full bg-white text-black font-semibold text-lg shadow-lg hover:bg-gray-200 transition"
               onClick={() => setStep('guide')}
             >
-              I'm ready
+              I&apos;m ready
             </button>
           </div>
         </div>
