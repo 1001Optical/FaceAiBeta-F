@@ -17,4 +17,4 @@ export interface FrameShapeDetail {
 
 export interface FrameRecommendations {
   [key: string]: FrameRecommendation;
-} 
+}
