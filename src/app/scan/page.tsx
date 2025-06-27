@@ -17,11 +17,6 @@ export default function ScanPage() {
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  console.log('=== 환경 변수 디버깅 ===');
-  console.log('NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
-  console.log('NODE_ENV:', process.env.NODE_ENV);
-  console.log('현재 apiUrl:', apiUrl);
-  console.log('========================');
 
   // 캡처 및 얼굴 감지 상태 (useCallback, useEffect보다 위에 선언)
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -58,23 +53,13 @@ export default function ScanPage() {
         videoRef.current.srcObject = stream;
       }
     } catch (err) {
-      setError('카메라에 접근할 수 없습니다. 카메라 권한을 확인해주세요.');
-      console.error('Camera access error:', err);
+      setError('Cannot access camera. Please check camera permissions.');
     }
   };
 
   // 캡처 함수 useCallback 적용
   const handleCapture = useCallback(async () => {
-    console.log('=== handleCapture 시작 ===');
-    console.log('apiUrl:', apiUrl);
-    console.log('isLoading:', isLoading);
-    
     if (!videoRef.current || !canvasRef.current || isLoading) {
-      console.log('조건 체크 실패:', {
-        videoRef: !!videoRef.current,
-        canvasRef: !!canvasRef.current,
-        isLoading
-      });
       return;
     }
     
@@ -100,32 +85,18 @@ export default function ScanPage() {
     setError(null); // 에러 상태 초기화
 
     try {
-      console.log('=== 이미지 캡처 시작 ===');
       // 캡처된 이미지를 Blob으로 변환
       const blob = await new Promise<Blob | null>(resolve => {
         canvas.toBlob(blob => resolve(blob), 'image/jpeg', 0.95);
       });
 
       if (!blob) {
-        throw new Error('이미지 변환에 실패했습니다.');
+        throw new Error('Failed to convert image.');
       }
-
-      console.log('Blob 생성 성공:', {
-        size: blob.size,
-        type: blob.type
-      });
 
       // FormData로 변환
       const formData = new FormData();
       formData.append('image', blob, 'capture.jpg');
-
-      console.log('=== 첫 번째 API 호출: upload_image ===');
-      console.log('요청 URL:', `${apiUrl}/upload_image`);
-      console.log('요청 메서드:', 'POST');
-      console.log('FormData 내용:', {
-        hasImage: formData.has('image'),
-        imageName: formData.get('image') instanceof File ? (formData.get('image') as File).name : 'N/A'
-      });
 
       // Flask API 엔드포인트에 POST 요청
       const response = await fetch(`${apiUrl}/upload_image`, {
@@ -137,29 +108,16 @@ export default function ScanPage() {
         signal: AbortSignal.timeout(10000),
       });
 
-      console.log('=== upload_image 응답 ===');
-      console.log('응답 상태:', response.status);
-      console.log('응답 상태 텍스트:', response.statusText);
-      console.log('응답 헤더:', Object.fromEntries(response.headers.entries()));
-
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('upload_image 에러 응답:', errorText);
         throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       }
 
       const data = await response.json();
-      console.log('upload_image 성공 응답:', data);
       
       if (!data || !data.image_url) {
-        console.error('image_url이 없음:', data);
-        throw new Error('이미지 업로드에 실패했습니다.');
+        throw new Error('Image upload failed.');
       }
-
-      console.log('=== 두 번째 API 호출: detect_face_shape ===');
-      console.log('요청 URL:', `${apiUrl}/detect_face_shape`);
-      console.log('요청 메서드:', 'POST');
-      console.log('요청 바디:', { image_url: data.image_url });
 
       // 업로드된 이미지 URL을 Face Shape Detection API에 POST
       const detectRes = await fetch(`${apiUrl}/detect_face_shape`, {
@@ -173,31 +131,12 @@ export default function ScanPage() {
         signal: AbortSignal.timeout(10000),
       });
 
-      console.log('=== detect_face_shape 응답 ===');
-      console.log('응답 상태:', detectRes.status);
-      console.log('응답 상태 텍스트:', detectRes.statusText);
-      console.log('응답 헤더:', Object.fromEntries(detectRes.headers.entries()));
-
       if (!detectRes.ok) {
         const errorText = await detectRes.text();
-        console.error('detect_face_shape 에러 응답:', errorText);
         throw new Error(`HTTP error! status: ${detectRes.status}, message: ${errorText}`);
       }
 
       const detectData = await detectRes.json();
-      console.log('=== Face Detection Response ===');
-      console.log('Raw Response:', detectData);
-      console.log('Face Shape:', detectData.shape);
-      console.log('Confidence:', detectData.confidence);
-      console.log('Ratios:', {
-        cheek: detectData.cheek_ratio,
-        chin: detectData.chin_ratio,
-        forehead: detectData.forehead_ratio,
-        head: detectData.head_ratio,
-        jaw: detectData.jaw_ratio,
-        jawAngle: detectData.jaw_angle,
-      });
-      console.log('===========================');
 
       // 얼굴 인식 실패 처리
       if (
@@ -206,8 +145,7 @@ export default function ScanPage() {
         detectData.shape === 'Unknown' ||
         !detectData.shape
       ) {
-        console.log('얼굴 인식 실패:', detectData);
-        setError('We can not recognize face. Please try again.');
+        setError('Face recognition failed. Please try again.');
         setStep('guide');
         setCaptured(false);
         return;
@@ -226,10 +164,6 @@ export default function ScanPage() {
           jawAngle: detectData.jaw_angle,
         }),
       }).toString();
-
-      console.log('=== Query Parameters ===');
-      console.log('URL Parameters:', queryParams);
-      console.log('===========================');
 
       // 얼굴형 이미지와 프레임 이미지들을 미리 로드
       const faceDetail = faceShapeDetails.find(
@@ -257,8 +191,6 @@ export default function ScanPage() {
         ),
       ].filter(Boolean) as string[];
 
-      console.log('로드할 이미지 URLs:', imageUrls);
-
       const imageLoadPromises = imageUrls.map(url => {
         return new Promise((resolve, reject) => {
           const img = new Image();
@@ -271,27 +203,20 @@ export default function ScanPage() {
       try {
         // 모든 이미지가 로드될 때까지 대기
         await Promise.all(imageLoadPromises);
-        console.log('All images loaded successfully');
         // 이미지 로드가 완료된 후 결과 페이지로 이동
         router.push(`/result?${queryParams}`);
       } catch (error) {
-        console.error('Error loading images:', error);
         // 이미지 로드 실패 시에도 결과 페이지로 이동
         router.push(`/result?${queryParams}`);
       }
     } catch (err) {
-      console.error('=== API 요청 실패 ===');
-      console.error('에러 타입:', err instanceof Error ? err.constructor.name : typeof err);
-      console.error('에러 메시지:', err instanceof Error ? err.message : String(err));
-      console.error('전체 에러 객체:', err);
       setError(
-        'API 요청 실패: ' + (err instanceof Error ? err.message : String(err))
+        'API request failed: ' + (err instanceof Error ? err.message : String(err))
       );
       setStep('guide');
       setCaptured(false);
     } finally {
       setIsLoading(false);
-      console.log('=== handleCapture 종료 ===');
     }
   }, [apiUrl, isLoading, captured, router]);
 
