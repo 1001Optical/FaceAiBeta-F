@@ -23,13 +23,6 @@ export const faceShapeDetails: FaceShapeDetail[] = [
     celebrities: ['Jessica Alba', 'Beyoncé', 'Song Hye-kyo'],
   },
   {
-    shape: 'Rectangle Face',
-    image: 'https://i.ibb.co/qLSBQkNX/faceshape-rectangle.png',
-    description:
-      'Rectangle faces are long and angular with a defined jaw and straight cheek lines. This shape often conveys strength and elegance.',
-    celebrities: ['Angelina Jolie', 'Courteney Cox', 'Tang Wei'],
-  },
-  {
     shape: 'Round Face',
     image: 'https://i.ibb.co/8JSyKC0/faceshape-round.png',
     description:
