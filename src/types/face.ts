@@ -7,7 +7,6 @@ export interface FaceShapeDetail {
 
 export interface FrameRecommendation {
   recommendedFrames: string[];
-  reason: string;
 }
 
 export interface FrameShapeDetail {

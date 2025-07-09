@@ -45,12 +45,34 @@ function ResultContent() {
   }, [faceShape, confidence, ratios, faceDetail, recommendations, frameDetails, searchParams]);
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Face Shape Analysis Result</h1>
+    <div className="fixed inset-0 z-20">
+      {/* 배경 이미지 */}
+      <Image
+        src="/Blur.jpg"
+        alt="로딩 배경"
+        fill
+        className="object-cover object-center z-0"
+        priority
+      />
+      {/* 메인 콘텐츠 */}
+          <div className="flex flex-col h-full absolute inset-0 z-10">
+        {/* 상단 로고 */}
+        <header className="flex flex-col items-center mt-8 mb-4">
+            <div className="relative w-[200px] h-[120px] mb-12">
+                <Image
+                 src="/1001Logo.png"
+                 alt="1001Logo"
+                 fill
+                 className="object-contain"
+                 priority
+                />
+            </div>
+        </header>
+
+        <div className="max-w-4xl mx-auto">
 
         {/* 얼굴형 정보 */}
-        <div className="bg-gray-900 rounded-lg p-6 mb-8">
+        <div className="bg-gray-500 rounded-lg p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-8">
             {faceDetail?.image && (
               <div className="w-full md:w-1/3">
@@ -64,9 +86,9 @@ function ResultContent() {
               </div>
             )}
             <div className="flex-1">
-              <h2 className="text-xl font-semibold mb-4">Your Face Shape</h2>
+              <h2 className="text-xl font-semibold mb-4">Your Face Shape is</h2>
               <p className="text-gray-300 mb-6">
-                Based on our analysis, your face shape is: <span className="font-bold text-white">{faceShape}</span>
+                    <span className="font-bold text-white">{faceShape}</span>
                 {confidence > 0 && (
                   <span className="text-sm text-gray-400 ml-2">
                     (Confidence: {Math.round(confidence * 100)}%)
@@ -88,30 +110,7 @@ function ResultContent() {
         <div className="bg-gray-900 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">Face Measurements</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div className="bg-gray-800 p-3 rounded-lg">
-              <p className="text-sm text-gray-400">Cheek Ratio</p>
-              <p className="text-lg font-medium">{Math.round(ratios.cheek * 100)}%</p>
-            </div>
-            <div className="bg-gray-800 p-3 rounded-lg">
-              <p className="text-sm text-gray-400">Chin Ratio</p>
-              <p className="text-lg font-medium">{Math.round(ratios.chin * 100)}%</p>
-            </div>
-            <div className="bg-gray-800 p-3 rounded-lg">
-              <p className="text-sm text-gray-400">Forehead Ratio</p>
-              <p className="text-lg font-medium">{Math.round(ratios.forehead * 100)}%</p>
-            </div>
-            <div className="bg-gray-800 p-3 rounded-lg">
-              <p className="text-sm text-gray-400">Head Ratio</p>
-              <p className="text-lg font-medium">{Math.round(ratios.head * 100)}%</p>
-            </div>
-            <div className="bg-gray-800 p-3 rounded-lg">
-              <p className="text-sm text-gray-400">Jaw Ratio</p>
-              <p className="text-lg font-medium">{Math.round(ratios.jaw * 100)}%</p>
-            </div>
-            <div className="bg-gray-800 p-3 rounded-lg">
-              <p className="text-sm text-gray-400">Jaw Angle</p>
-              <p className="text-lg font-medium">{Math.round(ratios.jawAngle)}°</p>
-            </div>
+            
           </div>
         </div>
 
@@ -119,7 +118,6 @@ function ResultContent() {
         {recommendations && (
           <div className="bg-gray-900 rounded-lg p-6 mb-8">
             <h2 className="text-xl font-semibold mb-4">Recommended Frames</h2>
-            <p className="text-gray-300 mb-6">{recommendations.reason}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {frameDetails.map((frame, index) =>
                 frame ? (
@@ -141,32 +139,35 @@ function ResultContent() {
 
         <div className="flex justify-center space-x-4">
           <button
-            onClick={() => router.push('/scan')}
-            className="px-6 py-3 bg-white text-black rounded-full font-semibold hover:bg-gray-200 transition"
-          >
-            Scan Again
-          </button>
-          <button
-            onClick={() => router.push('/')}
+            onClick={() => router.push('/QR_${faceShape}.png')}
             className="px-6 py-3 bg-gray-800 text-white rounded-full font-semibold hover:bg-gray-700 transition"
           >
-            Back to Home
+            Get QR Code
           </button>
         </div>
       </div>
     </div>
+   </div>
   );
 }
-
 function LoadingFallback() {
-  return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
-        <p className="text-lg">Loading results...</p>
-      </div>
-    </div>
-  );
+    return (
+        <div className="fixed inset-0 z-20">
+            <Image
+                src="/Blur.jpg"
+                alt="로딩 배경"
+                fill
+                className="object-cover object-center z-0"
+                priority
+            />
+            <div className="absolute inset-0 flex items-center justify-center z-10 text-white">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+                    <p className="text-lg">Loading results...</p>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default function ResultPage() {

@@ -3,44 +3,37 @@ import { FaceShapeDetail } from '@/types/face';
 export const faceShapeDetails: FaceShapeDetail[] = [
   {
     shape: 'Diamond',
-    image: 'https://i.ibb.co/mCR7McbZ/faceshape-diamond.png',
+    image: 'FaceType_Diamond.png',
     description:
-      'Diamond-shaped faces have a narrow forehead and chin with broad cheekbones. This angular face shape is striking and dramatic.',
-    celebrities: ['Megan Fox', 'Vanessa Hudgens', 'Fan Bingbing'],
+      'A narrow forehead and chin define this shape. Softer frames help balance the sharp angles and highlight cheekbones softly.',
+        celebrities: ['Benedict Cumberbatch', 'Megan Fox', 'Taye Diggs', 'Taeyeon', 'Cillian Murphy', 'G-DRAGON'],
   },
   {
     shape: 'Heart-Shaped Face',
-    image: 'https://i.ibb.co/TBsbknCs/faceshape-heart.png',
+    image: 'FaceType_Heart.png',
     description:
-      "Heart-shaped faces feature a wide forehead and high cheekbones that taper down to a narrow chin. It's considered youthful and expressive.",
-    celebrities: ['Reese Witherspoon', 'Scarlett Johansson', 'IU (Lee Ji-eun)'],
+      "A broad forehead and narrow jawline shape the face. Balanced frames soften the upper width and bring harmony to the full look.",
+      celebrities: ['Ariana Grande', 'NCT Jeno', 'Scarlett Johansson', 'Joseph Gordon-Levitt', 'Reese Witherspoon', 'Natalie Portman'],
   },
   {
     shape: 'Oval Face',
-    image: 'https://i.ibb.co/0RV7S08f/faceshape-oval.png',
+    image: 'FaceType_Oval.png',
     description:
-      "Oval faces are balanced and softly rounded, with a slightly wider forehead and gently curved jawline. It's often considered the most versatile shape.",
-    celebrities: ['Jessica Alba', 'Beyoncé', 'Song Hye-kyo'],
-  },
-  {
-    shape: 'Rectangle Face',
-    image: 'https://i.ibb.co/qLSBQkNX/faceshape-rectangle.png',
-    description:
-      'Rectangle faces are long and angular with a defined jaw and straight cheek lines. This shape often conveys strength and elegance.',
-    celebrities: ['Angelina Jolie', 'Courteney Cox', 'Tang Wei'],
+      "The width of the forehead and jawline are similar, with the widest part at the cheeks. Will look good in almost any frame style.",
+      celebrities: ['Millie Bobby Brown', 'Cha Eunwoo', 'Mary J. Blige', 'Jake Gyllenhaal', 'Fan Bingbing', 'IU'],
   },
   {
     shape: 'Round Face',
-    image: 'https://i.ibb.co/8JSyKC0/faceshape-round.png',
+    image: 'FaceType_Round.png',
     description:
-      'Round faces are circular with full cheeks and a rounded chin. This shape is associated with youth and softness.',
-    celebrities: ['Selena Gomez', 'Kirsten Dunst', 'Park Bo-young'],
+      'This face is round with full cheeks and a broad forehead. Structured frames define and balance the natural curves beautifully.',
+      celebrities: ['Jill Scott', 'BTS Jin', 'Selena Gomez', 'Ed Sheeran', 'Chrissy Teigen', 'Matsumoto Jun'],
   },
   {
     shape: 'Square Face',
-    image: 'https://i.ibb.co/23LPDPjC/faceshape-square.png',
+    image: 'FaceType_Square.png',
     description:
-      "Square faces have a strong jawline, broad forehead, and sharp angles. It's a bold, structured shape that photographs well.",
-    celebrities: ['Olivia Wilde', 'Keira Knightley', 'Zhou Xun'],
+      "With equal width and length, plus a broad forehead and jawline, curved frames reduce harsh lines and create good balance.",
+      celebrities: ['BLACKPINK Jennie', 'David Beckham', 'Angelina Jolie', 'EXO Chanyeol', 'Naomi Campbell', 'Han Sohee'],
   },
 ];

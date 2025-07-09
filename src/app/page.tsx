@@ -5,6 +5,7 @@ import { useState } from 'react';
 import PolicyModal from '@/components/PolicyModal';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import OrbitEyewear from '@/components/OrbitEyewear';
 
 export default function Home() {
   const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
@@ -14,16 +15,29 @@ export default function Home() {
   });
 
   return (
-    <main className="min-h-screen w-full bg-white relative">
-      <div className="absolute inset-0 z-0">
+      <main className="min-h-screen w-full relative overflow-hidden">
+          <Image
+              src="/Blur.jpg"
+              alt="배경"
+              fill
+              style={{
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                  zIndex: 0,
+              }}
+              priority
+          />
+
+      <div className="absolute inset-0 z-10 pointer-events-none">
         <LottiePlayer />
-      </div>
-      <div className="max-w-[834px] mx-auto px-6 py-8">
+          </div>
+
+          <div className="relative z-20 max-w-[834px] mx-auto px-6 py-8">
         {/* header section */}
         <header className="flex flex-col items-center justify-center space-y-8 mb-8">
           <div className="relative w-[200px] h-[120px]">
             <Image
-              src="/1001Logo.jpg"
+              src="/1001Logo.png"
               alt="1001Logo"
               fill
               sizes="200px"
@@ -35,17 +49,60 @@ export default function Home() {
         </header>
 
         {/* 메인 콘텐츠 영역 */}
-        <div className="max-w-[768px] mx-auto">
+          <div className="max-w-[768px] mx-auto flex flex-col items-center justify-center pt-8">
+
           <div className="flex flex-col items-center justify-center">
-            <h1 className="text-4xl font-bold text-center text-white mb-6">
-              Ai Facial Recommendation
+            <h1 className="font-aribau font-bold text-[68px] leading-[90%] text-center text-white mb-2 mt-0"
+                style={{
+                    textShadow: '1px 0px 1px rgba(255, 255, 255, 0.50)',
+                    fontStyle: 'normal',
+                }}
+            >
+              AI Eyewear Recommendation
             </h1>
-
-
+            <p className="font-aribau font-normal text-[30px] leading-[136%] text-center mb-2 mt-0"
+               style={{
+                color: 'rgba(255, 255, 255, 0.60)',
+                fontStyle: 'normal',
+                letterSpacing: '-0.75px',
+               }}
+            >
+              From AI face scan to perfect frames
+            </p>
+              <OrbitEyewear />
               <div className="absolute bottom-0 left-0 w-full flex justify-center pb-8">
                 <Link href="/scan" className="flex justify-center">
-                  <button className="px-12 py-4 bg-[#007a8a] text-white rounded-xl font-semibold text-lg hover:bg-gray-300 transition-colors duration-200 shadow-md">
-                    Start New Test
+                  <button 
+                   className="
+                    flex
+                    w-[738px]
+                    h-[88px]
+                    px-8
+                    py-2.5
+                    justify-center
+                    items-center
+                    gap-1
+                    shrink-0
+                    rounded-full
+                    bg-black/40
+                    text-white
+                    font-normal
+                    text-[30px]
+                    leading-[142%]
+                    backdrop-blur
+                    shadow-md
+                    transition-colors
+                    duration-200
+                    hover:bg-black/60
+                    font-aribau
+                  "
+                   style={{
+                    color: '#FFF',
+                    fontStyle: 'normal',
+                    letterSpacing: '-0.048px',
+                   }}
+                  >
+                    Start Face Scan
                   </button>
                 </Link>
               </div>
