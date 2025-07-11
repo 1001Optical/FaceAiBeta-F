@@ -205,13 +205,13 @@ export default function ScanPage() {
         await Promise.all(imageLoadPromises);
         // 이미지 로드가 완료된 후 결과 페이지로 이동
         router.push(`/result?${queryParams}`);
-      } catch (_error) {
+      } catch {
         // 이미지 로드 실패 시에도 결과 페이지로 이동
         router.push(`/result?${queryParams}`);
       }
-    } catch (err) {
+    } catch (_err) {
       setError(
-        'API request failed: ' + (err instanceof Error ? err.message : String(err))
+        'API request failed: ' + (_err instanceof Error ? _err.message : String(_err))
       );
       setStep('guide');
       setCaptured(false);
