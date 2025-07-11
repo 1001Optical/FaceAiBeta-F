@@ -30,8 +30,9 @@ export default function ScanPage() {
     }
     // 정리: 컴포넌트 언마운트 시 카메라 종료
     return () => {
-      if (videoRef.current) {
-        const stream = videoRef.current.srcObject as MediaStream;
+      const currentVideo = videoRef.current;
+      if (currentVideo) {
+        const stream = currentVideo.srcObject as MediaStream;
         if (stream) {
           stream.getTracks().forEach(track => track.stop());
         }
@@ -52,7 +53,7 @@ export default function ScanPage() {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
-    } catch (err) {
+    } catch {
       setError('Cannot access camera. Please check camera permissions.');
     }
   };
@@ -218,7 +219,7 @@ export default function ScanPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [apiUrl, isLoading, captured, router]);
+  }, [apiUrl, isLoading, router]);
 
   // 얼굴이 타원 안에 들어오면 2초 후 자동 캡처 (임시: 버튼 없이 타이머)
   useEffect(() => {
