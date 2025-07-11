@@ -129,7 +129,7 @@ export default function ScanPage() {
           Accept: 'application/json',
         },
         body: JSON.stringify({ image_url: data.image_url }),
-        signal: AbortSignal.timeout(10000),
+        signal: AbortSignal.timeout(30000),
       });
 
       if (!detectRes.ok) {
