@@ -205,7 +205,7 @@ export default function ScanPage() {
         await Promise.all(imageLoadPromises);
         // 이미지 로드가 완료된 후 결과 페이지로 이동
         router.push(`/result?${queryParams}`);
-      } catch (error) {
+      } catch (_error) {
         // 이미지 로드 실패 시에도 결과 페이지로 이동
         router.push(`/result?${queryParams}`);
       }
