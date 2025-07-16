@@ -23,6 +23,7 @@ export const faceShapeDetails: FaceShapeDetail[] = [
       celebrities: ['Millie Bobby Brown', 'Cha Eunwoo', 'Mary J. Blige', 'Jake Gyllenhaal', 'Fan Bingbing', 'IU'],
   },
   {
+<<<<<<< HEAD
     shape: 'Round',
     image: 'FaceType_Round.png',
     description:
@@ -32,6 +33,10 @@ export const faceShapeDetails: FaceShapeDetail[] = [
   {
     shape: 'Square',
     image: 'FaceType_Square.png',
+=======
+    shape: 'Round Face',
+    image: 'https://i.ibb.co/8JSyKC0/faceshape-round.png',
+>>>>>>> 4ceca1e0e5d9158f3f02b7ec66a9e41f2eea1909
     description:
       "With equal width and length, plus a broad forehead and jawline, curved frames reduce harsh lines and create good balance.",
       celebrities: ['BLACKPINK Jennie', 'David Beckham', 'Angelina Jolie', 'EXO Chanyeol', 'Naomi Campbell', 'Han Sohee'],
