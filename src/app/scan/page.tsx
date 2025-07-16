@@ -10,6 +10,7 @@ import { FaceShapeDetail, FrameShapeDetail } from '@/types/face';
 import Image from 'next/image'
 import "./FaceScanner.css";
 import FaceScanBar from "./FaceScanBar";
+import Link from 'next/link';
 
 export default function ScanPage() {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -274,6 +275,21 @@ export default function ScanPage() {
                         minHeight: 652,
                     }}
                 >
+
+                    {/* 내비게이션바 이미지 */}
+                    <div
+                        className="absolute top-10 left-6 z-30 cursor-pointer w-[44px] h-[44px]"
+                        onClick={() => router.back()}
+                    >
+                        <Image
+                            src="/direction_left.png"
+                            alt="내비게이션 바"
+                            fill
+                            sizes="44px"
+                            className="object-contain"
+                        />
+                    </div>
+
                     {/* 로고: 메인화면과 동일한 위치/크기 */}
                     <header
                         className="flex flex-col items-center justify-center space-y-8 mb-8 pt-8"
@@ -282,19 +298,20 @@ export default function ScanPage() {
                             top: 0,
                             left: '50%',
                             transform: 'translateX(-50%)',
-                            width: '100%',
                             zIndex: 20,
                         }}
                     >
-                        <div className="relative w-[200px] h-[120px]">
-                            <Image
-                                src="/1001Logo.png"
-                                alt="1001Logo"
-                                fill
-                                sizes="200px"
-                                className="object-contain"
-                            />
-                        </div>
+                        <Link href="/" passHref>
+                            <div className="relative w-[100px] h-[64px] cursor-pointer">
+                                <Image
+                                    src="/1001Logo.png"
+                                    alt="1001Logo"
+                                    fill
+                                    sizes="200px"
+                                    className="object-contain"
+                                />
+                            </div>
+                        </Link>
                     </header>
 
                     {/* 중앙 반투명 박스 */}
@@ -304,8 +321,8 @@ export default function ScanPage() {
                             top: '50%',
                             left: '50%',
                             transform: 'translate(-50%, -50%)',
-                            width: 1107,
-                            height: 1074,
+                            width: 738,
+                            height: 716,
                             boxSizing: 'border-box',
                             borderRadius: 48,
                             border: '2px solid var(--opacity-white-400, rgba(255, 255, 255, 0.38))',
@@ -313,7 +330,7 @@ export default function ScanPage() {
                             boxShadow: '0px 4px 30px 0px rgba(0, 0, 0, 0.10)',
                             backdropFilter: 'blur(12.5px)',
                             display: 'inline-flex',
-                            padding: '60px 40px',
+                            padding: '32px 40px',
                             flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -322,7 +339,7 @@ export default function ScanPage() {
                     >
                         {/* 안내문구 및 아이콘 */}
                         <div className="flex flex-col items-center">
-                            <div className="flex justify-center items-center mb-6">
+                            <div className="flex justify-center items-center">
                                 <Image
                                     src="/record_icon.png"
                                     alt="Record"
@@ -334,7 +351,7 @@ export default function ScanPage() {
                                 style={{
                                     color: '#FFF',
                                     fontFamily: '"Aribau Grotesk", sans-serif',
-                                    fontSize: 40,
+                                    fontSize: 28,
                                     fontWeight: 400,
                                     lineHeight: '136%',
                                     letterSpacing: '-0.084px',
@@ -349,10 +366,10 @@ export default function ScanPage() {
                             {/* 실선 구분선 */}
                             <div
                                 style={{
-                                    width: 960,
+                                    width: 658,
                                     height: 2,
                                     background: 'rgba(136,136,136,0.55)', 
-                                    marginTop: 20,
+                                    marginTop: 10,
                                     marginBottom: 10,
                                     marginLeft: 0,
                                     marginRight: 0,
@@ -361,12 +378,12 @@ export default function ScanPage() {
                             />
 
                             {/* 흰색 반투명 박스 3개 (아이콘만) */}
-                            <div className="flex gap-8 mt-10">
+                            <div className="flex gap-8 mt-4">
                                 <div
                                     className="flex flex-col items-center justify-center"
                                     style={{
-                                        width: 300,
-                                        height: 300,
+                                        width: 206,
+                                        height: 206,
                                         borderRadius: 42,
                                         background: 'var(--opacity-white-400, rgba(255, 255, 255, 0.38))',
                                         boxShadow: `0px 0px 2.183px 0px rgba(0, 0, 0, 0.10),
@@ -384,15 +401,15 @@ export default function ScanPage() {
                                     <Image
                                         src="/camera_icon.png"
                                         alt="Camera"
-                                        width={240}
-                                        height={240}
+                                        width={158}
+                                        height={158}
                                     />
                                 </div>
                                 <div
                                     className="flex flex-col items-center justify-center"
                                     style={{
-                                        width: 300,
-                                        height: 300,
+                                        width: 206,
+                                        height: 206,
                                         borderRadius: 42,
                                         background: 'var(--opacity-white-400, rgba(255, 255, 255, 0.38))',
                                         boxShadow: `0px 0px 2.183px 0px rgba(0, 0, 0, 0.10),
@@ -410,15 +427,15 @@ export default function ScanPage() {
                                     <Image
                                         src="/glasses_icon.png"
                                         alt="Glasses"
-                                        width={240}
-                                        height={240}
+                                        width={158}
+                                        height={158}
                                     />
                                 </div>
                                 <div
                                     className="flex flex-col items-center justify-center"
                                     style={{
-                                        width: 300,
-                                        height: 300,
+                                        width: 206,
+                                        height: 206,
                                         borderRadius: 42,
                                         background: 'var(--opacity-white-400, rgba(255, 255, 255, 0.38))',
                                         boxShadow: `0px 0px 2.183px 0px rgba(0, 0, 0, 0.10),
@@ -436,8 +453,8 @@ export default function ScanPage() {
                                     <Image
                                         src="/hair_icon.png"
                                         alt="Hair"
-                                        width={240}
-                                        height={240}
+                                        width={158}
+                                        height={158}
                                     />
                                 </div>
                             </div>
@@ -448,10 +465,10 @@ export default function ScanPage() {
                                     style={{
                                         color: '#888',
                                         fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 25,
+                                        fontSize: 18,
                                         fontWeight: 500,
                                         textAlign: 'center',
-                                        width: 300,
+                                        width: 206,
                                         marginTop: 8,
                                         marginBottom: 8,
                                         letterSpacing: '0.01em',
@@ -463,10 +480,10 @@ export default function ScanPage() {
                                     style={{
                                         color: '#888',
                                         fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 25,
+                                        fontSize: 18,
                                         fontWeight: 500,
                                         textAlign: 'center',
-                                        width: 300,
+                                        width: 206,
                                         marginTop: 8,
                                         marginBottom: 8,
                                         letterSpacing: '0.01em',
@@ -478,10 +495,10 @@ export default function ScanPage() {
                                     style={{
                                         color: '#888',
                                         fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 25,
+                                        fontSize: 18,
                                         fontWeight: 500,
                                         textAlign: 'center',
-                                        width: 300,
+                                        width: 206,
                                         marginTop: 8,
                                         marginBottom: 8,
                                         letterSpacing: '0.01em',
@@ -492,15 +509,15 @@ export default function ScanPage() {
                             </div>
 
                             {/* 안내문구 3개: 각 박스 하단에 위치 */}
-                            <div className="flex gap-8 mt-4">
+                            <div className="flex gap-8">
                                 <span
                                     style={{
                                         color: '#FFF',
                                         fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 35,
+                                        fontSize: 24,
                                         fontWeight: 300,
                                         textAlign: 'center',
-                                        width: 300,
+                                        width: 206,
                                     }}
                                 >
                                     Please look straight at the camera.
@@ -509,10 +526,10 @@ export default function ScanPage() {
                                     style={{
                                         color: '#FFF',
                                         fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 35,
+                                        fontSize: 24,
                                         fontWeight: 300,
                                         textAlign: 'center',
-                                        width: 300,
+                                        width: 206,
                                     }}
                                 >
                                     Remove your eyewear for an accurate scan.
@@ -521,10 +538,10 @@ export default function ScanPage() {
                                     style={{
                                         color: '#FFF',
                                         fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 35,
+                                        fontSize: 24,
                                         fontWeight: 300,
                                         textAlign: 'center',
-                                        width: 300,
+                                        width: 206,
                                     }}
                                 >
                                     Pull your hair back to show your face.
@@ -534,21 +551,23 @@ export default function ScanPage() {
 
                         {/* 버튼: 박스 하단 */}
                         <button
-                            style={{
-                                width: 960,
-                                height: 150,
-                                borderRadius: 200,
-                                border: '1.5px solid rgba(255,255,255,0.38)',
-                                background: 'rgba(255,255,255,0.15)',
-                                color: '#FFF',
-                                fontSize: 35,
-                                fontFamily: '"Aribau Grotesk"',
-                                fontWeight: 300,
-                                cursor: 'pointer',
-                                marginTop: 32,
-                                boxShadow: '0 2px 12px 0 rgba(0,0,0,0.08)',
-                                transition: 'background 0.2s',
-                            }}
+                            className="
+                                w-[658px]
+                                h-[88px]
+                                flex items-center justify-center
+                                rounded-full
+                                border
+                                border-white/40
+                                bg-white/15
+                                text-white
+                                text-[24px]
+                                font-aribau
+                                font-light
+                                shadow-md
+                                transition-colors
+                                duration-200
+                                hover:bg-white/35
+                             "
                             onClick={() => setStep('guide')}
                             onMouseOver={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.35)')}
                             onMouseOut={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}
@@ -566,34 +585,43 @@ export default function ScanPage() {
                         className="absolute inset-0 flex flex-col items-center justify-center z-10 p-4"
                         style={{ background: 'rgba(0,0,0,0.35)' }}
                     >
+
+                        {/* 내비게이션바 이미지 */}
+                        <div
+                            className="absolute top-10 left-6 z-30 cursor-pointer w-[44px] h-[44px]"
+                            onClick={() => window.location.reload()}
+                        >
+                            <Image
+                                src="/direction_left.png"
+                                alt="내비게이션 바"
+                                fill
+                                sizes="44px"
+                                className="object-contain"
+                            />
+                        </div>
+
                         {/* 로고: 메인화면과 동일한 위치/크기 */}
                         <header
-                            className="flex flex-col items-center justify-center space-y-8 mb-8 pt-8"
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: '50%',
-                                transform: 'translateX(-50%)',
-                                width: '100%',
-                                zIndex: 20,
-                            }}
+                            className="absolute top-0 left-1/2 -translate-x-1/2 pt-8 z-20 flex flex-col items-center"
                         >
-                            <div className="relative w-[200px] h-[120px]">
-                                <Image
-                                    src="/1001Logo.png"
-                                    alt="1001Logo"
-                                    fill
-                                    sizes="200px"
-                                    className="object-contain"
-                                />
-                            </div>
+                            <Link href="/" passHref>
+                                <div className="relative w-[100px] h-[64px] cursor-pointer">
+                                    <Image
+                                        src="/1001Logo.png"
+                                        alt="1001Logo"
+                                        fill
+                                        sizes="200px"
+                                        className="object-contain"
+                                    />
+                                </div>
+                            </Link>
                         </header>
 
                         <div
                             style={{
                                 position: "absolute",
                                 width: 1200,
-                                height: 1320,
+                                height: 1200,
                                 left: "50%",
                                 top: "50%",
                                 transform: "translate(-50%, -50%)",
@@ -605,75 +633,32 @@ export default function ScanPage() {
                             <svg
                                 width="100%"
                                 height="100%"
-                                viewBox="0 0 1200 1320"
-                                style={{
-                                    display: 'block',
-                                    position: 'absolute',
-                                    left: '50%',
-                                    top: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    zIndex: 20,
-                                }}
+                                viewBox="0 0 1200 1200"
                             >
                                 <ellipse
                                     cx="600"
-                                    cy="660"
-                                    rx="310"
-                                    ry="396"
+                                    cy="540"
+                                    rx={207}
+                                    ry={265}
                                     stroke="var(--opacity-white-1000, #FFF)"
                                     strokeWidth={8}                                   
                                     fill="none"
                                     style={{ filter: 'drop-shadow(0 0 12px #fff)' }}
                                 />
                             </svg>
-
-                            {/* Face Scan Animation */}
                             <FaceScanBar />
                         </div>
 
                         {/* 안내문구 박스: 타원보다 훨씬 아래에 배치 */}
                         <div
-                            style={{
-                                display: "inline-flex",
-                                padding: "32px 40px",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                gap: "24px",
-                                borderRadius: "48px",
-                                border: "2px solid var(--opacity-white-400, rgba(255, 255, 255, 0.38))",
-                                background: "var(--opacity-black-400, rgba(0, 0, 0, 0.38))",
-                                boxShadow: "0px 4px 30px 0px rgba(0, 0, 0, 0.10)",
-                                backdropFilter: "blur(12.5px)",
-                                color: "#fff",
-                                fontSize: "1.15rem",
-                                fontWeight: 500,
-                                textAlign: "center",
-                                maxWidth: "90%",
-                                zIndex: 30,
-                                position: "absolute",
-                                left: "50%",
-                                bottom: "60px",
-                                transform: "translateX(-50%)"
-                            }}
+                            className="absolute left-1/2 bottom-[150px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white/40 bg-black/40 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem]"
                         >
-                            <div
-                                style={{
-                                    width: "658px",
-                                    color: "var(--opacity-white-1000, #FFF)",
-                                    textAlign: "center",
-                                    fontFamily: '"Aribau Grotesk", sans-serif',
-                                    fontSize: "24px",
-                                    fontStyle: "normal",
-                                    fontWeight: 400,
-                                    lineHeight: "142%", // 34.08px
-                                    letterSpacing: "-0.048px"
-                                }}
-                            >
+                            <div className="w-[658px] text-white text-center font-aribau text-[24px] font-normal leading-[142%] tracking-[-0.048px]">
                                 Just a moment<br />
                                 We're scanning your face to find the best frames for you!
                             </div>
                         </div>
+
                     </div>
                 )
             }

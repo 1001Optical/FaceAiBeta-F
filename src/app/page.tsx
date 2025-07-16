@@ -34,8 +34,8 @@ export default function Home() {
 
           <div className="relative z-20 max-w-[834px] mx-auto px-6 py-8">
         {/* header section */}
-        <header className="flex flex-col items-center justify-center space-y-8 mb-8">
-          <div className="relative w-[200px] h-[120px]">
+        <header className="flex flex-col items-center justify-center space-y-8">
+          <div className="relative w-[100px] h-[64px]">
             <Image
               src="/1001Logo.png"
               alt="1001Logo"
@@ -52,7 +52,7 @@ export default function Home() {
           <div className="max-w-[768px] mx-auto flex flex-col items-center justify-center pt-8">
 
           <div className="flex flex-col items-center justify-center">
-            <h1 className="font-aribau font-bold text-[68px] leading-[90%] text-center text-white mb-2 mt-0"
+            <h1 className="font-aribau font-bold text-[68px] leading-[90%] text-center text-white mb-2"
                 style={{
                     textShadow: '1px 0px 1px rgba(255, 255, 255, 0.50)',
                     fontStyle: 'normal',
@@ -60,17 +60,18 @@ export default function Home() {
             >
               AI Eyewear Recommendation
             </h1>
-            <p className="font-aribau font-normal text-[30px] leading-[136%] text-center mb-2 mt-0"
+            <p className="font-aribau font-normal text-[30px] leading-[136%] text-center"
                style={{
                 color: 'rgba(255, 255, 255, 0.60)',
                 fontStyle: 'normal',
                 letterSpacing: '-0.75px',
+                marginBottom: '-40px'
                }}
             >
               From AI face scan to perfect frames
             </p>
               <OrbitEyewear />
-              <div className="absolute bottom-0 left-0 w-full flex justify-center pb-8">
+              <div className="absolute bottom-0 left-0 w-full flex justify-center pb-10">
                 <Link href="/scan" className="flex justify-center">
                   <button 
                    className="
@@ -103,6 +104,13 @@ export default function Home() {
                    }}
                   >
                     Start Face Scan
+                    <Image
+                        src="/arrow_right.png"
+                        alt="오른쪽 화살표"
+                        width={43}
+                        height={43}
+                        className="ml-2"
+                    />
                   </button>
                 </Link>
               </div>

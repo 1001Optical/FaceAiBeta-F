@@ -1,9 +1,9 @@
 ﻿import React, { useEffect, useState } from "react";
 
 const cx = 600;
-const cy = 660;
-const rx = 310;
-const ry = 396;
+const cy = 540;
+const rx = 207;
+const ry = 265;
 
 const FaceScanBar: React.FC = () => {
     const [scanY, setScanY] = useState(cy); // 반드시 cy로 초기화

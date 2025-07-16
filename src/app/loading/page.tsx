@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-
+import Link from 'next/link';
 
 export default function Loading() {
     // dotlottie-player 컴포넌트 스크립트 동적 로드
@@ -19,7 +19,7 @@ export default function Loading() {
         <div className="fixed inset-0 z-20">
             {/* 배경 이미지 */}
             <Image
-                src="/Blur.jpg"
+                src="/Bg_loading.png"
                 alt="로딩 배경"
                 fill
                 className="object-cover object-center z-0"
@@ -29,16 +29,19 @@ export default function Loading() {
             <div className="flex flex-col h-full absolute inset-0 z-10">
                 {/* 상단 로고 */}
                 <header className="flex flex-col items-center mt-8 mb-4">
-                    <div className="relative w-[200px] h-[120px] mb-12">
-                        <Image
-                            src="/1001Logo.png"
-                            alt="1001Logo"
-                            fill
-                            className="object-contain"
-                            priority
-                        />
-                    </div>
+                    <Link href="/" passHref>
+                        <div className="relative w-[100px] h-[64px] mb-12 cursor-pointer">
+                            <Image
+                                src="/1001Logo.png"
+                                alt="1001Logo"
+                                fill
+                                className="object-contain"
+                                priority
+                            />
+                        </div>
+                    </Link>
                 </header>
+
                 {/* 중앙 텍스트 및 얼굴 스캔 이미지 */}
                 <div className="flex flex-col items-center justify-center flex-1">
                     {/* Smart AI face scan */}
@@ -88,7 +91,7 @@ export default function Loading() {
                     </p>
 
                     {/* Lottie 애니메이션 (중앙에 겹치게) */}
-                    <div className="relative w-[420px] h-[420px] mt-24 flex items-center justify-center">
+                    <div className="relative w-[420px] h-[420px] mt-16 flex items-center justify-center">
                             <dotlottie-player
                                 src="https://lottie.host/3ee95351-a63f-4806-9414-45d55670a4b0/V8oXQSrKxH.lottie"
                                 background="transparent"
@@ -107,7 +110,6 @@ export default function Loading() {
                         flex-col
                         justify-center
                         items-center
-                        gap-[24px]
                         p-[32px] 
                         px-[40px]
                         rounded-[48px]
@@ -121,6 +123,7 @@ export default function Loading() {
                     style={{
                         borderColor: 'var(--opacity-white-400, rgba(255,255,255,0.38))',
                         background: 'var(--opacity-black-400, rgba(0,0,0,0.38))',
+                        marginTop: '-70px'
                     }}
                 >
                     <p

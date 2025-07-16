@@ -1,20 +1,19 @@
 import { FrameRecommendations } from '@/types/face';
 
 export const frameRecommendations: FrameRecommendations = {
-  'Round Face': {
-    recommendedFrames: ['rectangle', 'square'],
+  'Round': {
+    recommendedFrames: ['Rectangle', 'Square'],
   },
-  'Oval Face': {
-    recommendedFrames: ['pilot', 'cateye'],
+  'Oval': {
+    recommendedFrames: ['Pilot', 'Cat eye'],
   },
-  'Square Face': {
-    recommendedFrames: ['round', 'pilot'],
+  'Square': {
+    recommendedFrames: ['Round', 'Pilot'],
   },
-  'Heart-Shaped Face': {
-    recommendedFrames: ['cateye', 'round'],
+  'Heart': {
+    recommendedFrames: ['Cat eye', 'Round'],
   },
-  'Diamond Shaped Face': {
-    recommendedFrames: ['pilot', 'cateye'],
+  'Diamond': {
+    recommendedFrames: ['Pilot', 'Cat eye'],
   },
 };
-s
