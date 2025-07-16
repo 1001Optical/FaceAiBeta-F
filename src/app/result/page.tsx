@@ -19,14 +19,14 @@ function ResultContent() {
 
 
   // URL 파라미터에서 데이터 가져오기
-  // const faceShape = searchParams.get('faceShape') || 'Unknown';
-  const faceShape = searchParams.get('faceShape') || 'Oval';
+  const faceShape = searchParams.get('faceShape') || 'Unknown';
+  //const faceShape = searchParams.get('faceShape') || 'Oval';
 
   const confidence = parseFloat(searchParams.get('confidence') || '0');
   // const ratios = JSON.parse(searchParams.get('ratios') || '{}');
 
   // 얼굴형 상세 정보
-    const faceDetail = faceShapeDetails.find(
+    const faceDetail = faceShapeDetails.find
         (f: FaceShapeDetail) => f.shape.toLowerCase() === faceShape.toLowerCase()
     );
 
