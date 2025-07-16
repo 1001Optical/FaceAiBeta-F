@@ -1,29 +1,19 @@
 import { FrameRecommendations } from '@/types/face';
 
 export const frameRecommendations: FrameRecommendations = {
-  'Round Face': {
-    recommendedFrames: ['rectangle', 'square'],
-    reason:
-      'Round faces pair best with angular frames like rectangle or square shapes to add structure and balance to soft features.',
+  'Round': {
+    recommendedFrames: ['Rectangle', 'Square'],
   },
-  'Oval Face': {
-    recommendedFrames: ['pilot', 'cateye'],
-    reason:
-      'Oval faces can pull off almost any style, but pilot and cateye frames enhance their natural symmetry beautifully.',
+  'Oval': {
+    recommendedFrames: ['Pilot', 'Cat eye'],
   },
-  'Square Face': {
-    recommendedFrames: ['round', 'pilot'],
-    reason:
-      'Square faces benefit from round or pilot frames to soften strong jawlines and add a touch of contrast.',
+  'Square': {
+    recommendedFrames: ['Round', 'Pilot'],
   },
-  'Heart-Shaped Face': {
-    recommendedFrames: ['cateye', 'round'],
-    reason:
-      'Heart-shaped faces look great in round and cateye frames, which balance a broader forehead and a narrow chin.',
+  'Heart': {
+    recommendedFrames: ['Cat eye', 'Round'],
   },
-  'Diamond Shaped Face': {
-    recommendedFrames: ['pilot', 'cateye'],
-    reason:
-      'Diamond faces shine in frames that highlight their cheekbones like pilot or upswept cateye styles.',
+  'Diamond': {
+    recommendedFrames: ['Pilot', 'Cat eye'],
   },
 };

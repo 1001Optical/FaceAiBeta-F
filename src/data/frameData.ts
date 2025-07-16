@@ -2,23 +2,23 @@ import { FrameShapeDetail } from '@/types/face';
 
 export const frameShapeDetails: FrameShapeDetail[] = [
   {
-    shape: 'Cateye',
-    image: 'https://i.ibb.co/m53mgYrJ/frameshape-cateye.png',
+    shape: 'Cat Eye',
+    image: 'Cat Eye.png',
   },
   {
     shape: 'Pilot',
-    image: 'https://i.ibb.co/5P1jn6J/frameshape-pilot.png',
+    image: 'Pilot.png',
   },
   {
     shape: 'Rectangle',
-    image: 'https://i.ibb.co/BKSf4TB5/frameshape-rectangle.png',
+    image: 'Rectangle.png',
   },
   {
     shape: 'Round',
-    image: 'https://i.ibb.co/Rk4ZGsNF/frameshape-round.png',
+    image: 'Round.png',
   },
   {
     shape: 'Square',
-    image: 'https://i.ibb.co/S4Sh6zRD/frameshape-square.png',
+    image: 'Square.png',
   },
 ];

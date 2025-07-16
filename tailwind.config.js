@@ -8,7 +8,11 @@ module.exports = {
     './src/**/*.{ts,tsx,js,jsx}',
   ],
   theme: {
-    extend: {},
+      extend: {
+          fontFamily: {
+              aribau: ['"Aribau Grotesk"', 'sans-serif'],
+          },
+      },
   },
   plugins: [],
 };
