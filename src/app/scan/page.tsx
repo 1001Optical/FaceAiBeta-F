@@ -27,7 +27,6 @@ export default function ScanPage() {
     const [captured, setCaptured] = useState(false);
     const [countdown, setCountdown] = useState<number | null>(null);
 
-<<<<<<< HEAD
     // 카메라 프리뷰 시작
     useEffect(() => {
         if (step === 'intro' || step === 'guide') {
@@ -59,20 +58,6 @@ export default function ScanPage() {
             }
         } catch (err) {
             setError('Cannot access camera. Please check camera permissions.');
-=======
-  // 카메라 프리뷰 시작
-  useEffect(() => {
-    if (step === 'intro' || step === 'guide') {
-      startCamera();
-    }
-    // 정리: 컴포넌트 언마운트 시 카메라 종료
-    return () => {
-      const currentVideo = videoRef.current;
-      if (currentVideo) {
-        const stream = currentVideo.srcObject as MediaStream;
-        if (stream) {
-          stream.getTracks().forEach(track => track.stop());
->>>>>>> 4ceca1e0e5d9158f3f02b7ec66a9e41f2eea1909
         }
     };
 
@@ -82,7 +67,6 @@ export default function ScanPage() {
             return;
         }
 
-<<<<<<< HEAD
         const video = videoRef.current;
         const canvas = canvasRef.current;
         canvas.width = video.videoWidth;
@@ -103,15 +87,6 @@ export default function ScanPage() {
         setCaptured(true);
         setIsLoading(true);
         setError(null); // 에러 상태 초기화
-=======
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    } catch {
-      setError('Cannot access camera. Please check camera permissions.');
-    }
-  };
->>>>>>> 4ceca1e0e5d9158f3f02b7ec66a9e41f2eea1909
 
         try {
             // 캡처된 이미지를 Blob으로 변환
@@ -137,22 +112,10 @@ export default function ScanPage() {
                 signal: AbortSignal.timeout(10000),
             });
 
-<<<<<<< HEAD
             if (!response.ok) {
                 const errorText = await response.text();
                 throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
             }
-=======
-      // Flask API 엔드포인트에 POST 요청
-      const response = await fetch(`${apiUrl}/upload_image`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Accept: 'application/json',
-        },
-        signal: AbortSignal.timeout(30000),
-      });
->>>>>>> 4ceca1e0e5d9158f3f02b7ec66a9e41f2eea1909
 
             const data = await response.json();
 
@@ -160,7 +123,6 @@ export default function ScanPage() {
                 throw new Error('Image upload failed.');
             }
 
-<<<<<<< HEAD
             // 업로드된 이미지 URL을 Face Shape Detection API에 POST
             const detectRes = await fetch(`${apiUrl}/detect_face_shape`, {
                 method: 'POST',
@@ -172,19 +134,6 @@ export default function ScanPage() {
                 body: JSON.stringify({ image_url: data.image_url }),
                 signal: AbortSignal.timeout(10000),
             });
-=======
-      // 업로드된 이미지 URL을 Face Shape Detection API에 POST
-      const detectRes = await fetch(`${apiUrl}/detect_face_shape`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer eyJzdWIiOiIxMjM0NTY4ODkwIiwibmFtZSI6IkpqaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ`,
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({ image_url: data.image_url }),
-        signal: AbortSignal.timeout(30000),
-      });
->>>>>>> 4ceca1e0e5d9158f3f02b7ec66a9e41f2eea1909
 
             if (!detectRes.ok) {
                 const errorText = await detectRes.text();
@@ -255,7 +204,6 @@ export default function ScanPage() {
                 });
             });
 
-<<<<<<< HEAD
             try {
                 // 모든 이미지가 로드될 때까지 대기
                 await Promise.all(imageLoadPromises);
@@ -275,27 +223,6 @@ export default function ScanPage() {
             setIsLoading(false);
         }
     }, [apiUrl, isLoading, captured, router]);
-=======
-      try {
-        // 모든 이미지가 로드될 때까지 대기
-        await Promise.all(imageLoadPromises);
-        // 이미지 로드가 완료된 후 결과 페이지로 이동
-        router.push(`/result?${queryParams}`);
-      } catch {
-        // 이미지 로드 실패 시에도 결과 페이지로 이동
-        router.push(`/result?${queryParams}`);
-      }
-    } catch (_err) {
-      setError(
-        'API request failed: ' + (_err instanceof Error ? _err.message : String(_err))
-      );
-      setStep('guide');
-      setCaptured(false);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [apiUrl, isLoading, router]);
->>>>>>> 4ceca1e0e5d9158f3f02b7ec66a9e41f2eea1909
 
     // 얼굴이 타원 안에 들어오면 5초 후 자동 캡처 (임시: 버튼 없이 타이머)
     useEffect(() => {

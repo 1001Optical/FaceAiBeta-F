@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+// import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -12,10 +13,10 @@ import { frameShapeDetails } from '@/data/frameData';
 import { FaceShapeDetail, FrameShapeDetail } from '@/types/face';
 
 function ResultContent() {
-  const router = useRouter();
+  // const router = useRouter();
   const searchParams = useSearchParams();
   const [showQRModel, setShowQRModel] = useState(false);
-  const [selectedCelebrity, setSelectedCelebrity] = useState(null);
+  const [selectedCelebrity, setSelectedCelebrity] = useState<string | null>(null);
 
 
   // URL 파라미터에서 데이터 가져오기
@@ -26,8 +27,9 @@ function ResultContent() {
   // const ratios = JSON.parse(searchParams.get('ratios') || '{}');
 
   // 얼굴형 상세 정보
-    const faceDetail = faceShapeDetails.find
-        (f: FaceShapeDetail) => f.shape.toLowerCase() === faceShape.toLowerCase()
+    const faceDetail = faceShapeDetails.find(
+        (f: FaceShapeDetail) =>
+            f.shape.toLowerCase() === faceShape.toLowerCase()
     );
 
   // 추천 프레임 정보
@@ -39,7 +41,7 @@ function ResultContent() {
     frameShapeDetails.find((f: FrameShapeDetail) => f.shape.toLowerCase() === frameName.toLowerCase()),
   ).filter(Boolean);
 
-  // 디버깅용 로그
+  // 디버깅용 로그npm inst
   useEffect(() => {
     console.log('Result Page Data:', {
       faceShape,
