@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, Suspense } from 'react';
 // import { useRouter, useSearchParams } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
@@ -23,7 +23,7 @@ function ResultContent() {
   const faceShape = searchParams.get('faceShape') || 'Unknown';
   //const faceShape = searchParams.get('faceShape') || 'Oval';
 
-  const confidence = parseFloat(searchParams.get('confidence') || '0');
+  // const confidence = parseFloat(searchParams.get('confidence') || '0');
   // const ratios = JSON.parse(searchParams.get('ratios') || '{}');
 
   // 얼굴형 상세 정보
@@ -41,8 +41,10 @@ function ResultContent() {
     frameShapeDetails.find((f: FrameShapeDetail) => f.shape.toLowerCase() === frameName.toLowerCase()),
   ).filter(Boolean);
 
+
   // 디버깅용 로그npm inst
-  useEffect(() => {
+    /*
+    useEffect(() => {
     console.log('Result Page Data:', {
       faceShape,
       confidence,
@@ -52,6 +54,7 @@ function ResultContent() {
       rawParams: Object.fromEntries(searchParams.entries()),
     });
   }, [faceShape, confidence, faceDetail, recommendations, frameDetails, searchParams]);
+    */  
 
     return (
         <div className="fixed inset-0 z-20">
