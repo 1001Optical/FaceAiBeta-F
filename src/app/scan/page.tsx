@@ -235,13 +235,13 @@ export default function ScanPage() {
         }
     }, [apiUrl, isLoading, router]);
 
-    // 얼굴이 타원 안에 들어오면 5초 후 자동 캡처 (임시: 버튼 없이 타이머)
+    // 얼굴이 타원 안에 들어오면 3초 후 자동 캡처 (임시: 버튼 없이 타이머)
     useEffect(() => {
         if (step === 'guide' && !captured) {
-            setCountdown(5);
+            setCountdown(3);
             const timer = setTimeout(() => {
                 handleCapture();
-            }, 5000);
+            }, 3000);
             return () => clearTimeout(timer);
         } else {
             setCountdown(null);
@@ -264,10 +264,6 @@ export default function ScanPage() {
             />
             {/* 캡처된 이미지 미리보기 (디버그용) */}
             <canvas ref={canvasRef} style={{ display: 'none' }} />
-
-
-            {/* 로딩 화면 */}
-
 
             {/* 에러 메시지 */}
             {error && (
