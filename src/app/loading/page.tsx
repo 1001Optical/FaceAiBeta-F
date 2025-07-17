@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import LottieCanvas from "@/components/LottieCanvas";
 
 export default function Loading() {
     // dotlottie-player 컴포넌트 스크립트 동적 로드
@@ -92,14 +93,7 @@ export default function Loading() {
 
                     {/* Lottie 애니메이션 (중앙에 겹치게) */}
                     <div className="relative w-[420px] h-[420px] mt-16 flex items-center justify-center">
-                            <dotlottie-player
-                                src="https://lottie.host/3ee95351-a63f-4806-9414-45d55670a4b0/V8oXQSrKxH.lottie"
-                                background="transparent"
-                                speed="1"
-                                style={{ width: 420, height: 420 }}
-                                loop
-                                autoplay
-                            ></dotlottie-player>
+                            <LottieCanvas />
                     </div>
                 </div>
                 {/* 하단 안내 메시지 (반투명 박스) */}
