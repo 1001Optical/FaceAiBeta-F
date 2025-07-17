@@ -20,8 +20,8 @@ function ResultContent() {
 
 
   // URL 파라미터에서 데이터 가져오기
-  const faceShape = searchParams.get('faceShape') || 'Unknown';
-  //const faceShape = searchParams.get('faceShape') || 'Oval';
+  const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
+  const faceShape = faceShapeRaw.replace(/\s*Face$/i, '');
 
   // const confidence = parseFloat(searchParams.get('confidence') || '0');
   // const ratios = JSON.parse(searchParams.get('ratios') || '{}');

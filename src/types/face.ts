@@ -1,6 +1,5 @@
 export interface FaceShapeDetail {
   shape: string;
-  image: string;
   description: string;
   celebrities: string[];
 }
