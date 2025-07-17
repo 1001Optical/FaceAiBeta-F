@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import Loading from '@/components/Loading';
+// import Loading from '@/components/Loading';
 import { faceShapeDetails } from '@/data/faceData';
 import { frameRecommendations } from '@/data/reconMap';
 import { frameShapeDetails } from '@/data/frameData';
@@ -25,17 +25,21 @@ export default function ScanPage() {
     // 캡처 및 얼굴 감지 상태 (useCallback, useEffect보다 위에 선언)
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [captured, setCaptured] = useState(false);
-    const [countdown, setCountdown] = useState<number | null>(null);
+    const [, setCountdown] = useState<number | null>(null);
 
     // 카메라 프리뷰 시작
     useEffect(() => {
         if (step === 'intro' || step === 'guide') {
             startCamera();
         }
+
+        // ref의 값을 클로저 변수로 저장
+        const videoEl = videoRef.current;
+
         // 정리: 컴포넌트 언마운트 시 카메라 종료
         return () => {
-            if (videoRef.current) {
-                const stream = videoRef.current.srcObject as MediaStream;
+            if (videoEl) {
+                const stream = videoEl.srcObject as MediaStream;
                 if (stream) {
                     stream.getTracks().forEach(track => track.stop());
                 }
@@ -57,6 +61,7 @@ export default function ScanPage() {
                 videoRef.current.srcObject = stream;
             }
         } catch (err) {
+            console.error(err);
             setError('Cannot access camera. Please check camera permissions.');
         }
     };
@@ -196,13 +201,18 @@ export default function ScanPage() {
             ].filter(Boolean) as string[];
 
             const imageLoadPromises = imageUrls.map(url => {
-                return new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.onload = resolve;
-                    img.onerror = reject;
+                return new Promise<void>((resolve, reject) => {
+                    if (typeof window === "undefined") {
+                        resolve(); // SSR 환경에서는 바로 resolve
+                        return;
+                    }
+                    const img: HTMLImageElement = new window.Image();
+                    img.onload = () => resolve();
+                    img.onerror = () => reject();
                     img.src = url;
                 });
             });
+
 
             try {
                 // 모든 이미지가 로드될 때까지 대기
@@ -211,6 +221,7 @@ export default function ScanPage() {
                 router.push(`/result?${queryParams}`);
             } catch (error) {
                 // 이미지 로드 실패 시에도 결과 페이지로 이동
+                console.error(error);
                 router.push(`/result?${queryParams}`);
             }
         } catch (err) {
@@ -222,7 +233,7 @@ export default function ScanPage() {
         } finally {
             setIsLoading(false);
         }
-    }, [apiUrl, isLoading, captured, router]);
+    }, [apiUrl, isLoading, router]);
 
     // 얼굴이 타원 안에 들어오면 5초 후 자동 캡처 (임시: 버튼 없이 타이머)
     useEffect(() => {
@@ -655,7 +666,7 @@ export default function ScanPage() {
                         >
                             <div className="w-[658px] text-white text-center font-aribau text-[24px] font-normal leading-[142%] tracking-[-0.048px]">
                                 Just a moment<br />
-                                We're scanning your face to find the best frames for you!
+                                We&apos;re scanning your face to find the best frames for you!
                             </div>
                         </div>
 

@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.next",
     "\\public",
-    "\\public\\fonts",
-    "\\public\\frame",
-    "\\public\\QR",
     "\\public\\result",
     "\\src",
+    "\\src\\app",
+    "\\src\\app\\loading",
+    "\\src\\app\\scan",
+    "\\src\\components",
     "\\src\\data",
     "\\src\\types"
   ],
-  "SelectedNode": "\\src\\app\\result\\page.tsx",
+  "SelectedNode": "\\src\\types\\custom.d.ts",
   "PreviewInSolutionExplorer": false
 }

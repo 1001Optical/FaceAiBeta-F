@@ -140,7 +140,7 @@ export default function Loading() {
                             color: 'var(--opacity-white-1000, #FFF)',
                         }}
                     >
-                            We're analyzing which eyewears suit you best!
+                            We&apos;re analyzing which eyewears suit you best!
                         </p>
                     </div>
                 </div>
