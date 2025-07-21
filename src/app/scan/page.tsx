@@ -11,6 +11,34 @@ import "./FaceScanner.css";
 import FaceScanBar from "./FaceScanBar";
 import Link from 'next/link';
 
+// 최대 동시 3개씩 이미지를 프리로드, 각 이미지의 로딩이 비동기적으로 병렬 진행
+async function limitedParallelLoad(urls: string[], limit: number = 3): Promise<boolean[]> {
+    const results: boolean[] = [];
+    let idx = 0;
+
+    const preloadImage = (url: string): Promise<void> =>
+        new Promise((resolve, reject) => {
+            const img = new window.Image();
+            img.onload = () => resolve();
+            img.onerror = () => reject();
+            img.src = url;
+        });
+
+    async function loadNext(): Promise<void> {
+        if (idx >= urls.length) return;
+        const i = idx++;
+        try {
+            await preloadImage(urls[i]);
+            results[i] = true;
+        } catch {
+            results[i] = false;
+        }
+        await loadNext();
+    }
+    await Promise.all(Array(limit).fill(0).map(() => loadNext()));
+    return results;
+}
+
 export default function ScanPage() {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [step, setStep] = useState<'intro' | 'guide' | 'loading'>('intro');
@@ -199,23 +227,9 @@ export default function ScanPage() {
                 ),
             ].filter(Boolean) as string[];
 
-            const imageLoadPromises = imageUrls.map(url => {
-                return new Promise<void>((resolve, reject) => {
-                    if (typeof window === "undefined") {
-                        resolve(); // SSR 환경에서는 바로 resolve
-                        return;
-                    }
-                    const img: HTMLImageElement = new window.Image();
-                    img.onload = () => resolve();
-                    img.onerror = () => reject();
-                    img.src = url;
-                });
-            });
-
-
             try {
                 // 모든 이미지가 로드될 때까지 대기
-                await Promise.all(imageLoadPromises);
+                await limitedParallelLoad(imageUrls, 3);
                 // 이미지 로드가 완료된 후 결과 페이지로 이동
                 router.push(`/loading?${queryParams}`);
             } catch (error) {
