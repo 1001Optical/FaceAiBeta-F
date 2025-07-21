@@ -1,12 +1,14 @@
 ﻿'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import LottieCanvas from "@/components/LottieCanvas";
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function Loading() {
+
+// 내부 컴포넌트 분리
+function LoadingInner() {
     const router = useRouter();
     const params = useSearchParams();
 
@@ -154,5 +156,14 @@ export default function Loading() {
                 </div>
             </div>
         </div>
+    );
+}
+
+// 페이지 default export에서 Suspense로 감쌈
+export default function Loading() {
+    return (
+        <Suspense fallback={null}>
+            <LoadingInner />
+        </Suspense>
     );
 }
