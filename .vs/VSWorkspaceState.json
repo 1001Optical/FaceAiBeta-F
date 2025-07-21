@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\.next",
+    "\\.next\\types",
     "\\public",
-    "\\public\\result",
-    "\\src",
+    "\\public\\frame",
+    "\\public\\icon",
     "\\src\\app",
-    "\\src\\app\\loading",
+    "\\src\\app\\result",
     "\\src\\app\\scan",
-    "\\src\\components",
-    "\\src\\data",
-    "\\src\\types"
+    "\\src\\data"
   ],
-  "SelectedNode": "\\src\\types\\custom.d.ts",
+  "SelectedNode": "\\README.md",
   "PreviewInSolutionExplorer": false
 }

@@ -2,7 +2,6 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-// import Loading from '@/components/Loading';
 import { faceShapeDetails } from '@/data/faceData';
 import { frameRecommendations } from '@/data/reconMap';
 import { frameShapeDetails } from '@/data/frameData';
@@ -218,11 +217,11 @@ export default function ScanPage() {
                 // 모든 이미지가 로드될 때까지 대기
                 await Promise.all(imageLoadPromises);
                 // 이미지 로드가 완료된 후 결과 페이지로 이동
-                router.push(`/result?${queryParams}`);
+                router.push(`/loading?${queryParams}`);
             } catch (error) {
-                // 이미지 로드 실패 시에도 결과 페이지로 이동
+                // 이미지 로드 실패 시에도 로딩 페이지로 이동
                 console.error(error);
-                router.push(`/result?${queryParams}`);
+                router.push(`/loading?${queryParams}`);
             }
         } catch (err) {
             setError(
@@ -250,8 +249,7 @@ export default function ScanPage() {
 
     return (
         <div
-            className="relative flex flex-col items-center justify-center min-h-screen bg-black p-0 m-0"
-            style={{ width: '100%', height: '100vh' }}
+            className="relative flex flex-col items-center justify-center min-h-screen w-full h-screen bg-black overflow-hidden"
         >
             {/* 카메라 프리뷰 */}
             <video
@@ -259,16 +257,15 @@ export default function ScanPage() {
                 autoPlay
                 playsInline
                 muted
-                className="absolute inset-0 w-full h-full object-cover z-0"
-                style={{ transform: 'scaleX(-1)' }}
+                className="absolute inset-0 w-full h-full object-cover z-0 transform scale-x-[-1]"
             />
             {/* 캡처된 이미지 미리보기 (디버그용) */}
-            <canvas ref={canvasRef} style={{ display: 'none' }} />
+            <canvas ref={canvasRef} className="hidden" />
 
             {/* 에러 메시지 */}
             {error && (
-                <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg">
-                    <p className="text-center">{error}</p>
+                <div className="absolute top-5 left-1/2 -translate-x-1/2 z-30 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg w-11/12 max-w-md text-center">
+                    <p>{error}</p>
                 </div>
             )}
 
@@ -385,89 +382,32 @@ export default function ScanPage() {
                             />
 
                             {/* 흰색 반투명 박스 3개 (아이콘만) */}
-                            <div className="flex gap-8 mt-4">
-                                <div
-                                    className="flex flex-col items-center justify-center"
-                                    style={{
-                                        width: 206,
-                                        height: 206,
-                                        borderRadius: 42,
-                                        background: 'var(--opacity-white-400, rgba(255, 255, 255, 0.38))',
-                                        boxShadow: `0px 0px 2.183px 0px rgba(0, 0, 0, 0.10),
-                                                    0px 1.092px 8.732px 0px rgba(0, 0, 0, 0.12),
-                                                    1.092px 1.092px 0px -0.546px #333 inset,
-                                                    -1.092px -1.092px 0px -0.546px #262626 inset,
-                                                    1.092px 1.092px 0.546px -1.092px #FFF inset,
-                                                    -1.092px -1.092px 0.546px -1.092px #FFF inset,
-                                                    0px 0px 3.275px 0px rgba(255, 255, 255, 0.50) inset,
-                                                    0px 0px 17.465px 0px #F2F2F2 inset
-                                        `,
-                                        backdropFilter: 'blur(6.549295425415039px)',
-                                    }}
-                                >
-                                    <Image
-                                        src="/camera_icon.png"
-                                        alt="Camera"
-                                        width={158}
-                                        height={158}
-                                    />
-                                </div>
-                                <div
-                                    className="flex flex-col items-center justify-center"
-                                    style={{
-                                        width: 206,
-                                        height: 206,
-                                        borderRadius: 42,
-                                        background: 'var(--opacity-white-400, rgba(255, 255, 255, 0.38))',
-                                        boxShadow: `0px 0px 2.183px 0px rgba(0, 0, 0, 0.10),
-                                                    0px 1.092px 8.732px 0px rgba(0, 0, 0, 0.12),
-                                                    1.092px 1.092px 0px -0.546px #333 inset,
-                                                    -1.092px -1.092px 0px -0.546px #262626 inset,
-                                                    1.092px 1.092px 0.546px -1.092px #FFF inset,
-                                                    -1.092px -1.092px 0.546px -1.092px #FFF inset,
-                                                    0px 0px 3.275px 0px rgba(255, 255, 255, 0.50) inset,
-                                                    0px 0px 17.465px 0px #F2F2F2 inset
-                                        `,
-                                        backdropFilter: 'blur(6.549295425415039px)',
-                                    }}
-                                >
-                                    <Image
-                                        src="/glasses_icon.png"
-                                        alt="Glasses"
-                                        width={158}
-                                        height={158}
-                                    />
-                                </div>
-                                <div
-                                    className="flex flex-col items-center justify-center"
-                                    style={{
-                                        width: 206,
-                                        height: 206,
-                                        borderRadius: 42,
-                                        background: 'var(--opacity-white-400, rgba(255, 255, 255, 0.38))',
-                                        boxShadow: `0px 0px 2.183px 0px rgba(0, 0, 0, 0.10),
-                                                    0px 1.092px 8.732px 0px rgba(0, 0, 0, 0.12),
-                                                    1.092px 1.092px 0px -0.546px #333 inset,
-                                                    -1.092px -1.092px 0px -0.546px #262626 inset,
-                                                    1.092px 1.092px 0.546px -1.092px #FFF inset,
-                                                    -1.092px -1.092px 0.546px -1.092px #FFF inset,
-                                                    0px 0px 3.275px 0px rgba(255, 255, 255, 0.50) inset,
-                                                    0px 0px 17.465px 0px #F2F2F2 inset
-                                        `,
-                                        backdropFilter: 'blur(6.549295425415039px)',
-                                    }}
-                                >
-                                    <Image
-                                        src="/hair_icon.png"
-                                        alt="Hair"
-                                        width={158}
-                                        height={158}
-                                    />
-                                </div>
+                            <div className="flex gap-8 mt-2">
+                                <Image
+                                    src="/icon/cameracheck.png"
+                                    alt="카메라 체크"
+                                    width={206}
+                                    height={206}
+                                    style={{ borderRadius: 42 }}
+                                />
+                                <Image
+                                    src="/icon/glassesclose.png"
+                                    alt="안경 클로즈"
+                                    width={206}
+                                    height={206}
+                                    style={{ borderRadius: 42 }}
+                                />
+                                <Image
+                                    src="/icon/haircheck.png"
+                                    alt="헤어 체크"
+                                    width={206}
+                                    height={206}
+                                    style={{ borderRadius: 42 }}
+                                />
                             </div>
 
                             {/* 카테고리명: Camera, Eyewear, Hair */}
-                            <div className="flex gap-8 mt-3">
+                            <div className="flex gap-8">
                                 <span
                                     style={{
                                         color: '#888',

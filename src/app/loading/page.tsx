@@ -4,8 +4,12 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import LottieCanvas from "@/components/LottieCanvas";
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Loading() {
+    const router = useRouter();
+    const params = useSearchParams();
+
     // dotlottie-player 컴포넌트 스크립트 동적 로드
     useEffect(() => {
         if (!window.customElements.get('dotlottie-player')) {
@@ -15,6 +19,16 @@ export default function Loading() {
             document.body.appendChild(script);
         }
     }, []);
+
+    // 2초 후 자동 이동
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            // /result?뒤에 현재 쿼리스트링 그대로 붙이기
+            router.push(`/result?${params.toString()}`);
+        }, 2000);
+
+        return () => clearTimeout(timeout);
+    }, [router, params]);
 
     return (
         <div className="fixed inset-0 z-20">
