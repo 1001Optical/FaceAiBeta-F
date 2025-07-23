@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 // import { useRouter, useSearchParams } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
@@ -13,64 +13,190 @@ import { frameShapeDetails } from '@/data/frameData';
 import { FaceShapeDetail, FrameShapeDetail } from '@/types/face';
 
 function ResultContent() {
-  // const router = useRouter();
-  const searchParams = useSearchParams();
-  const [showQRModel, setShowQRModel] = useState(false);
-  const [selectedCelebrity, setSelectedCelebrity] = useState<string | null>(null);
+    // const router = useRouter();
+    const searchParams = useSearchParams();
+    const [showQRModel, setShowQRModel] = useState(false);
+    const [selectedCelebrity, setSelectedCelebrity] = useState<string | null>(null);
 
+    // 뷰포트 크기에 따른 스케일 상태
+    const [scale, setScale] = useState(1);
 
-  // URL 파라미터에서 데이터 가져오기
+    useEffect(() => {
+        function updateScale() {
+            const wScale = window.innerWidth / 810;
+            const hScale = window.innerHeight / 1492;
+            setScale(Math.min(wScale, hScale, 1));
+        }
+        updateScale();
+        window.addEventListener('resize', updateScale);
+        return () => window.removeEventListener('resize', updateScale);
+    }, []);
+
+    // URL 파라미터에서 데이터 가져오기
     const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
     const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-  // const confidence = parseFloat(searchParams.get('confidence') || '0');
-  // const ratios = JSON.parse(searchParams.get('ratios') || '{}');
+    // const confidence = parseFloat(searchParams.get('confidence') || '0');
+    // const ratios = JSON.parse(searchParams.get('ratios') || '{}');
 
-  // 얼굴형 상세 정보
+    // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
         (f: FaceShapeDetail) =>
             f.shape.toLowerCase() === faceShape.toLowerCase()
     );
 
-  // 추천 프레임 정보
-  const recommendations = frameRecommendations[faceShape];
-  const recommendedFrames = recommendations?.recommendedFrames || [];
+    // 추천 프레임 정보
+    const recommendations = frameRecommendations[faceShape];
+    const recommendedFrames = recommendations?.recommendedFrames || [];
 
-  // 추천 프레임 상세 정보
-  const frameDetails = recommendedFrames.map((frameName: string) =>
-    frameShapeDetails.find((f: FrameShapeDetail) => f.shape.toLowerCase() === frameName.toLowerCase()),
-  ).filter(Boolean);
+    // 추천 프레임 상세 정보
+    const frameDetails = recommendedFrames.map((frameName: string) =>
+        frameShapeDetails.find((f: FrameShapeDetail) => f.shape.toLowerCase() === frameName.toLowerCase()),
+    ).filter(Boolean);
 
-
-  // 디버깅용 로그npm inst
-    /*
+    // 반응형 모달 스타일
+    const getModalSize = () => {
+        // 예시: 화면의 90vw/90vh를 넘지 않도록 제한
+        const maxWidth = Math.min(window.innerWidth * 0.9, 500);
+        const maxHeight = Math.min(window.innerHeight * 0.9, 600);
+        return {
+            width: maxWidth,
+            height: maxHeight,
+        };
+    };
+    // 모달 크기 상태 관리
+    const [modalSize, setModalSize] = useState({ width: 400, height: 500 });
     useEffect(() => {
-    console.log('Result Page Data:', {
-      faceShape,
-      confidence,
-      faceDetail,
-      recommendations,
-      frameDetails,
-      rawParams: Object.fromEntries(searchParams.entries()),
-    });
-  }, [faceShape, confidence, faceDetail, recommendations, frameDetails, searchParams]);
-    */  
+        function handleModalResize() {
+            setModalSize(getModalSize());
+        }
+        handleModalResize();
+        window.addEventListener('resize', handleModalResize);
+        return () => window.removeEventListener('resize', handleModalResize);
+    }, []);
 
     return (
         <div className="fixed inset-0 z-20">
-            {/* 배경 */}
-            <Image src="/Bg_result.png" alt="로딩 배경" fill className="object-cover object-center z-0" priority />
-            <div className="flex flex-col h-full absolute inset-0 z-10">
-                {/* 상단 로고 */}
-                <header className="flex flex-col items-center mt-8 mb-4">
-                    <Link href="/" passHref>
-                        <div className="relative w-[100px] h-[64px] mb-4 cursor-pointer">
-                            <Image src="/1001Logo.png" alt="1001Logo" fill className="object-contain" priority />
-                        </div>
-                    </Link>
-                </header>
+            {/* 배경 이미지 전체 화면 */}
+            <Image
+                src="/Bg_result.png"
+                alt="로딩 배경"
+                fill
+                className="object-cover object-center z-0"
+                priority
+            />
 
-                <main className="max-w-4xl w-full mx-auto px-6 flex flex-col gap-6">
+            {/* 상단 로고 고정 */}
+            <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
+                <Link href="/" passHref>
+                    <div className="relative w-[100px] h-[64px] cursor-pointer">
+                        <Image src="/1001Logo.png" alt="1001Logo" fill className="object-contain" priority />
+                    </div>
+                </Link>
+            </header>
+
+            {/* QR 코드 모달: 화면 전체에 오버레이, 바깥 영역은 항상 반투명 처리. 내부 모달만 화면 크기에 따라 반응형 */}
+            {showQRModel && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
+                    <div
+                        className="relative flex flex-col items-center bg-[rgba(0,0,0,0.67)] border-[2px] border-white/40 shadow-[0_4px_30px_0_rgba(0,0,0,0.4)] backdrop-blur-[12.5px] rounded-[48px] px-4 py-8"
+                        style={{
+                            width: modalSize.width,
+                            maxWidth: "90vw",
+                            height: modalSize.height,
+                            maxHeight: "90vh",
+                        }}
+                    >
+                        <span className="text-3xl font-semibold text-white">QR Code</span>
+                        <hr className="w-full border-t border-white border-opacity-30 my-3" />
+                        <span className="text-2xl text-white mb-6">{faceShape}</span>
+                        <div
+                            className="flex items-center justify-center mb-8"
+                            style={{
+                                width: Math.min(350, modalSize.width - 40),
+                                height: Math.min(350, modalSize.width - 40),
+                                maxWidth: "80vw",
+                                maxHeight: "40vh",
+                            }}
+                        >
+                            <Image
+                                src={`/QR/QR_${faceShape}.png`}
+                                alt={`${faceShape} QR Code`}
+                                width={500}
+                                height={500}
+                                className="rounded-2xl object-contain w-full h-full"
+                            />
+                        </div>
+                        <button
+                            onClick={() => setShowQRModel(false)}
+                            className="w-full py-4 bg-white/20 text-2xl text-white rounded-full hover:bg-white/40 transition"
+                        >
+                            Got it
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* 셀럽 모달: 화면 전체에 오버레이, 바깥 영역은 항상 반투명 처리. 내부 모달만 화면 크기에 따라 반응형 */}
+            {selectedCelebrity && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
+                    <div
+                        className="relative flex flex-col items-center bg-[rgba(0,0,0,0.67)] border-[2px] border-white/40 shadow-[0_4px_30px_0_rgba(0,0,0,0.4)] backdrop-blur-[12.5px] rounded-[48px] px-4 py-8"
+                        style={{
+                            width: modalSize.width,
+                            maxWidth: "90vw",
+                            height: modalSize.height,
+                            maxHeight: "90vh",
+                        }}
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <span className="text-3xl font-semibold text-white">Celebs with Your Face Type</span>
+                        <hr className="w-full border-t border-white border-opacity-30 my-3" />
+                        {/* 셀럽 이름 */}
+                        <span className="text-2xl text-white mb-6">{selectedCelebrity}</span>
+                        {/* 셀럽 사진 */}
+                        <div
+                            className="flex items-center justify-center mb-8"
+                            style={{
+                                width: Math.min(350, modalSize.width - 40),
+                                height: Math.min(350, modalSize.width - 40),
+                                maxWidth: "80vw",
+                                maxHeight: "40vh",
+                            }}
+                        >
+                            <Image
+                                src={`/model/Model_${selectedCelebrity}.png`}
+                                alt={selectedCelebrity}
+                                width={500}
+                                height={500}
+                                className="rounded-2xl object-cover w-full h-full"
+                            />
+                        </div>
+                        <button
+                            onClick={() => setSelectedCelebrity(null)}
+                            className="w-full py-4 bg-white/20 text-2xl text-white rounded-full hover:bg-white/40 transition"
+                        >
+                            Got it
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* 컨텐츠 박스: 고정 크기 + scale + 중앙 정렬 */}
+            <div
+                style={{
+                    width: 810,
+                    height: 1492,
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    transform: `translate(-50%, -50%) scale(${scale})`,
+                    transformOrigin: 'center',
+                    overflowY: 'auto',
+                }}
+                className="bg-transparent"
+            >
+                <main className="w-full mx-auto px-6 flex flex-col gap-6 pt-[130px]">
                     <Image
                         src={`/result/${faceShape}.png`}
                         alt={`${faceShape} 결과 이미지`}
@@ -79,7 +205,6 @@ function ResultContent() {
                         className="w-full max-w-[738px] mx-auto rounded-[40px] shadow-lg"
                         priority
                     />
-
 
                     {/* 추천 프레임 */}
                     {frameDetails.length > 0 && (
@@ -134,7 +259,7 @@ function ResultContent() {
                         </div>
                     )}
 
-                    {/* 얼굴형 설명 및 셀럽 */ }
+                    {/* 얼굴형 설명 및 셀럽 */}
                     <section
                         className="p-[32px] w-[738px] h-[502px] mx-auto"
                         style={{
@@ -186,7 +311,7 @@ function ResultContent() {
                                             text-ellipsis
                                         "
                                         onClick={() => setSelectedCelebrity(name)}
-                                        title={name} // 툴팁으로 전체 이름 표시
+                                        title={name}
                                     >
                                         <Image
                                             src={`/button/Button_${name}.png`}
@@ -200,7 +325,6 @@ function ResultContent() {
                                 ))}
                             </div>
                         )}
-
                     </section>
 
                     {/* QR 코드 버튼 */}
@@ -219,80 +343,6 @@ function ResultContent() {
                             />
                         </button>
                     </div>
-
-                    {/* QR 코드 모달 */}
-                    {showQRModel && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
-                            <div
-                                className="relative flex flex-col items-center w-full max-w-2xl mx-4 px-10 py-12"
-                                style={{
-                                    borderRadius: "48px",
-                                    border: "2px solid rgba(255, 255, 255, 0.38)",
-                                    background: "rgba(0, 0, 0, 0.67)",
-                                    boxShadow: "0px 4px 30px 0px rgba(0, 0, 0, 0.40)",
-                                    backdropFilter: "blur(12.5px)",
-                                }}
-                            >
-                                <span className="text-3xl font-semibold text-white">QR Code</span>
-                                <hr className="w-[500px] border-t border-white border-opacity-30 my-3" />
-                                <span className="text-2xl text-white mb-6">{faceShape}</span>
-                                <div className="w-[500px] h-[500px] flex items-center justify-center mb-8">
-                                    <Image
-                                        src={`/QR/QR_${faceShape}.png`}
-                                        alt={`${faceShape} QR Code`}
-                                        width={500}
-                                        height={500}
-                                        className="rounded-2xl"
-                                    />
-                                </div>
-                                <button
-                                    onClick={() => setShowQRModel(false)}
-                                    className="w-full py-4 bg-white/20 text-2xl text-white rounded-full hover:bg-white/40 transition"
-                                >
-                                    Got it
-                                </button>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* 셀럽 모달 */}
-                    {selectedCelebrity && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
-                            <div
-                                className="relative flex flex-col items-center w-full max-w-2xl mx-4 px-10 py-12"
-                                style={{
-                                    borderRadius: "48px",
-                                    border: "2px solid rgba(255, 255, 255, 0.38)",
-                                    background: "rgba(0, 0, 0, 0.67)",
-                                    boxShadow: "0px 4px 30px 0px rgba(0, 0, 0, 0.40)",
-                                    backdropFilter: "blur(12.5px)",
-                                }}
-                                onClick={e => e.stopPropagation()}
-                            >
-                                <span className="text-3xl font-semibold text-white">Celebs with Your Face Type</span>
-                                <hr className="w-[500px] border-t border-white border-opacity-30 my-3" />
-                                {/* 셀럽 이름 */}
-                                <span className="text-2xl text-white mb-6">{selectedCelebrity}</span>
-                                {/* 셀럽 사진 */}
-                                <div className="w-[500px] h-[500px] flex items-center justify-center mb-8">
-                                    <Image
-                                        src={`/model/Model_${selectedCelebrity}.png`}
-                                        alt={selectedCelebrity}
-                                        width={500}
-                                        height={500}
-                                        className="rounded-2xl object-cover"
-                                    />
-                                </div>
-                                {/* Got it 버튼 */}
-                                <button
-                                    onClick={() => setSelectedCelebrity(null)}
-                                    className="w-full py-4 bg-white/20 text-2xl text-white rounded-full hover:bg-white/40 transition"
-                                >
-                                    Got it
-                                </button>
-                            </div>
-                        </div>
-                    )}
                 </main>
             </div>
         </div>
@@ -320,9 +370,9 @@ function LoadingFallback() {
 }
 
 export default function ResultPage() {
-  return (
-    <Suspense fallback={<LoadingFallback />}>
-      <ResultContent />
-    </Suspense>
-  );
+    return (
+        <Suspense fallback={<LoadingFallback />}>
+            <ResultContent />
+        </Suspense>
+    );
 }

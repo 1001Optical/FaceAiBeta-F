@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.next",
-    "\\.next\\types",
     "\\public",
-    "\\public\\frame",
     "\\public\\icon",
+    "\\src",
     "\\src\\app",
+    "\\src\\app\\loading",
     "\\src\\app\\result",
     "\\src\\app\\scan",
+    "\\src\\components",
     "\\src\\data"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\src\\app\\scan\\page.tsx",
   "PreviewInSolutionExplorer": false
 }

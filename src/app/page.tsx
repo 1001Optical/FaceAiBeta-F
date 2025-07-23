@@ -13,35 +13,31 @@ export default function Home() {
     const LottiePlayer = dynamic(() => import('@/components/MainPage'), { ssr: false });
 
     return (
-        <main className="min-h-screen min-w-full bg-black flex items-center justify-center overflow-hidden">
-            {/* 최대 810x1080 px로 고정된 중앙 컨테이너 */}
+        <main className="relative min-h-screen min-w-full w-screen h-screen overflow-hidden">
+            {/* 전체 화면을 채우는 배경 이미지 */}
+            <Image
+                src="/Blur.jpg"
+                alt="배경"
+                fill
+                style={{
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    zIndex: 0,
+                }}
+                priority
+            />
+            {/* 최대 810x1080 중앙 고정 콘텐츠 */}
             <div className="
-                relative
-                w-full h-full
-                max-w-[810px] max-h-[1080px]
-                flex flex-col
-                justify-center
-                items-center
-                mx-auto
-                min-h-screen
-                min-w-0">
-                {/* 배경 이미지 */}
-                <Image
-                    src="/Blur.jpg"
-                    alt="배경"
-                    fill
-                    style={{
-                        objectFit: 'cover',
-                        objectPosition: 'center',
-                        zIndex: 0,
-                    }}
-                    priority
-                />
-
+                    absolute left-1/2 top-1/2
+                    -translate-x-1/2 -translate-y-1/2
+                    w-full h-full max-w-[810px] max-h-[1080px]
+                    flex flex-col justify-center items-center
+                    relative
+                    z-10"
+            >
                 <div className="absolute inset-0 z-10 pointer-events-none">
                     <LottiePlayer />
                 </div>
-
                 <div className="relative z-20 w-full h-full px-4 py-6 flex flex-col">
                     {/* 헤더 */}
                     <header className="flex flex-col items-center justify-center space-y-8">
