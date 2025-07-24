@@ -10,6 +10,7 @@ import Image from 'next/image'
 import "./FaceScanner.css";
 import FaceScanBar from "./FaceScanBar";
 import Link from 'next/link';
+import ResponsiveContainer from '../../components/ResponsiveContainer';
 
 // 최대 동시 3개씩 이미지를 프리로드, 각 이미지의 로딩이 비동기적으로 병렬 진행
 async function limitedParallelLoad(urls: string[], limit: number = 3): Promise<boolean[]> {
@@ -309,210 +310,202 @@ export default function ScanPage() {
                     </div>
 
                     {/* 로고: 메인화면과 동일한 위치/크기 */}
-                    <header
-                        className="flex flex-col items-center justify-center space-y-8 mb-8 pt-8"
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            zIndex: 20,
-                        }}
-                    >
+                    <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                         <Link href="/" passHref>
-                            <div className="relative w-[100px] h-[64px] cursor-pointer">
+                            <div className="relative w-[100px] h-[64px] mb-12 cursor-pointer">
                                 <Image
                                     src="/1001Logo.png"
                                     alt="1001Logo"
                                     fill
-                                    sizes="200px"
                                     className="object-contain"
+                                    priority
                                 />
                             </div>
                         </Link>
                     </header>
 
-                    {/* 중앙 반투명 박스 */}
-                    <div
-                        style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: 738,
-                            height: 716,
-                            boxSizing: 'border-box',
-                            borderRadius: 48,
-                            border: '2px solid var(--opacity-white-400, rgba(255, 255, 255, 0.38))',
-                            background: 'var(--opacity-black-600, rgba(0, 0, 0, 0.60))',
-                            boxShadow: '0px 4px 30px 0px rgba(0, 0, 0, 0.10)',
-                            backdropFilter: 'blur(12.5px)',
-                            display: 'inline-flex',
-                            padding: '32px 40px',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            gap: 42,
-                        }}
-                    >
-                        {/* 안내문구 및 아이콘 */}
-                        <div className="flex flex-col items-center">
-                            <div className="flex justify-center items-center">
-                                <Image
-                                    src="/record_icon.png"
-                                    alt="Record"
-                                    width={100}
-                                    height={100}
-                                />
-                            </div>
-                            <h1
-                                style={{
-                                    color: '#FFF',
-                                    fontFamily: '"Aribau Grotesk", sans-serif',
-                                    fontSize: 28,
-                                    fontWeight: 400,
-                                    lineHeight: '136%',
-                                    letterSpacing: '-0.084px',
-                                    whiteSpace: 'nowrap',
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
-                                }}
-                            >
-                                Please adjust face to guidelines
-                            </h1>
-
-                            {/* 실선 구분선 */}
-                            <div
-                                style={{
-                                    width: 658,
-                                    height: 2,
-                                    background: 'rgba(136,136,136,0.55)',
-                                    marginTop: 10,
-                                    marginBottom: 10,
-                                    marginLeft: 0,
-                                    marginRight: 0,
-                                    borderRadius: 1,
-                                }}
-                            />
-
-                            {/* 흰색 반투명 박스 3개 (아이콘만) */}
-                            <div className="flex gap-8 mt-2">
-                                <Image
-                                    src="/icon/cameracheck.png"
-                                    alt="카메라 체크"
-                                    width={206}
-                                    height={206}
-                                    style={{ borderRadius: 42 }}
-                                />
-                                <Image
-                                    src="/icon/glassesclose.png"
-                                    alt="안경 클로즈"
-                                    width={206}
-                                    height={206}
-                                    style={{ borderRadius: 42 }}
-                                />
-                                <Image
-                                    src="/icon/haircheck.png"
-                                    alt="헤어 체크"
-                                    width={206}
-                                    height={206}
-                                    style={{ borderRadius: 42 }}
-                                />
-                            </div>
-
-                            {/* 카테고리명: Camera, Eyewear, Hair */}
-                            <div className="flex gap-8">
-                                <span
-                                    style={{
-                                        color: '#888',
-                                        fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 18,
-                                        fontWeight: 500,
-                                        textAlign: 'center',
-                                        width: 206,
-                                        marginTop: 8,
-                                        marginBottom: 8,
-                                        letterSpacing: '0.01em',
-                                    }}
-                                >
-                                    Camera
-                                </span>
-                                <span
-                                    style={{
-                                        color: '#888',
-                                        fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 18,
-                                        fontWeight: 500,
-                                        textAlign: 'center',
-                                        width: 206,
-                                        marginTop: 8,
-                                        marginBottom: 8,
-                                        letterSpacing: '0.01em',
-                                    }}
-                                >
-                                    Eyewear
-                                </span>
-                                <span
-                                    style={{
-                                        color: '#888',
-                                        fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 18,
-                                        fontWeight: 500,
-                                        textAlign: 'center',
-                                        width: 206,
-                                        marginTop: 8,
-                                        marginBottom: 8,
-                                        letterSpacing: '0.01em',
-                                    }}
-                                >
-                                    Hair
-                                </span>
-                            </div>
-
-                            {/* 안내문구 3개: 각 박스 하단에 위치 */}
-                            <div className="flex gap-8">
-                                <span
+                    <ResponsiveContainer>
+                        {/* 중앙 반투명 박스 */}
+                        <div
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                width: 738,
+                                height: 716,
+                                boxSizing: 'border-box',
+                                borderRadius: 48,
+                                border: '2px solid var(--opacity-white-400, rgba(255, 255, 255, 0.38))',
+                                background: 'var(--opacity-black-600, rgba(0, 0, 0, 0.60))',
+                                boxShadow: '0px 4px 30px 0px rgba(0, 0, 0, 0.10)',
+                                backdropFilter: 'blur(12.5px)',
+                                display: 'inline-flex',
+                                padding: '32px 40px',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                gap: 42,
+                            }}
+                        >
+                            {/* 안내문구 및 아이콘 */}
+                            <div className="flex flex-col items-center">
+                                <div className="flex justify-center items-center">
+                                    <Image
+                                        src="/record_icon.png"
+                                        alt="Record"
+                                        width={100}
+                                        height={100}
+                                    />
+                                </div>
+                                <h1
                                     style={{
                                         color: '#FFF',
-                                        fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 24,
-                                        fontWeight: 300,
-                                        textAlign: 'center',
-                                        width: 206,
+                                        fontFamily: '"Aribau Grotesk", sans-serif',
+                                        fontSize: 28,
+                                        fontWeight: 400,
+                                        lineHeight: '136%',
+                                        letterSpacing: '-0.084px',
+                                        whiteSpace: 'nowrap',
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
                                     }}
                                 >
-                                    Please look straight at the camera.
-                                </span>
-                                <span
-                                    style={{
-                                        color: '#FFF',
-                                        fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 24,
-                                        fontWeight: 300,
-                                        textAlign: 'center',
-                                        width: 206,
-                                    }}
-                                >
-                                    Remove your eyewear for an accurate scan.
-                                </span>
-                                <span
-                                    style={{
-                                        color: '#FFF',
-                                        fontFamily: '"Aribau Grotesk"',
-                                        fontSize: 24,
-                                        fontWeight: 300,
-                                        textAlign: 'center',
-                                        width: 206,
-                                    }}
-                                >
-                                    Pull your hair back to show your face.
-                                </span>
-                            </div>
-                        </div>
+                                    Please adjust face to guidelines
+                                </h1>
 
-                        {/* 버튼: 박스 하단 */}
-                        <button
-                            className="
+                                {/* 실선 구분선 */}
+                                <div
+                                    style={{
+                                        width: 658,
+                                        height: 2,
+                                        background: 'rgba(136,136,136,0.55)',
+                                        marginTop: 10,
+                                        marginBottom: 10,
+                                        marginLeft: 0,
+                                        marginRight: 0,
+                                        borderRadius: 1,
+                                    }}
+                                />
+
+                                {/* 흰색 반투명 박스 3개 (아이콘만) */}
+                                <div className="flex gap-8 mt-2">
+                                    <Image
+                                        src="/icon/cameracheck.png"
+                                        alt="카메라 체크"
+                                        width={206}
+                                        height={206}
+                                        style={{ borderRadius: 42 }}
+                                    />
+                                    <Image
+                                        src="/icon/glassesclose.png"
+                                        alt="안경 클로즈"
+                                        width={206}
+                                        height={206}
+                                        style={{ borderRadius: 42 }}
+                                    />
+                                    <Image
+                                        src="/icon/haircheck.png"
+                                        alt="헤어 체크"
+                                        width={206}
+                                        height={206}
+                                        style={{ borderRadius: 42 }}
+                                    />
+                                </div>
+
+                                {/* 카테고리명: Camera, Eyewear, Hair */}
+                                <div className="flex gap-8">
+                                    <span
+                                        style={{
+                                            color: '#888',
+                                            fontFamily: '"Aribau Grotesk"',
+                                            fontSize: 18,
+                                            fontWeight: 500,
+                                            textAlign: 'center',
+                                            width: 206,
+                                            marginTop: 8,
+                                            marginBottom: 8,
+                                            letterSpacing: '0.01em',
+                                        }}
+                                    >
+                                        Camera
+                                    </span>
+                                    <span
+                                        style={{
+                                            color: '#888',
+                                            fontFamily: '"Aribau Grotesk"',
+                                            fontSize: 18,
+                                            fontWeight: 500,
+                                            textAlign: 'center',
+                                            width: 206,
+                                            marginTop: 8,
+                                            marginBottom: 8,
+                                            letterSpacing: '0.01em',
+                                        }}
+                                    >
+                                        Eyewear
+                                    </span>
+                                    <span
+                                        style={{
+                                            color: '#888',
+                                            fontFamily: '"Aribau Grotesk"',
+                                            fontSize: 18,
+                                            fontWeight: 500,
+                                            textAlign: 'center',
+                                            width: 206,
+                                            marginTop: 8,
+                                            marginBottom: 8,
+                                            letterSpacing: '0.01em',
+                                        }}
+                                    >
+                                        Hair
+                                    </span>
+                                </div>
+
+                                {/* 안내문구 3개: 각 박스 하단에 위치 */}
+                                <div className="flex gap-8">
+                                    <span
+                                        style={{
+                                            color: '#FFF',
+                                            fontFamily: '"Aribau Grotesk"',
+                                            fontSize: 24,
+                                            fontWeight: 300,
+                                            textAlign: 'center',
+                                            width: 206,
+                                        }}
+                                    >
+                                        Please look straight at the camera.
+                                    </span>
+                                    <span
+                                        style={{
+                                            color: '#FFF',
+                                            fontFamily: '"Aribau Grotesk"',
+                                            fontSize: 24,
+                                            fontWeight: 300,
+                                            textAlign: 'center',
+                                            width: 206,
+                                        }}
+                                    >
+                                        Remove your eyewear for an accurate scan.
+                                    </span>
+                                    <span
+                                        style={{
+                                            color: '#FFF',
+                                            fontFamily: '"Aribau Grotesk"',
+                                            fontSize: 24,
+                                            fontWeight: 300,
+                                            textAlign: 'center',
+                                            width: 206,
+                                        }}
+                                    >
+                                        Pull your hair back to show your face.
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* 버튼: 박스 하단 */}
+                            <button
+                                className="
                                 w-[658px]
                                 h-[88px]
                                 flex items-center justify-center
@@ -529,13 +522,14 @@ export default function ScanPage() {
                                 duration-200
                                 hover:bg-white/35
                              "
-                            onClick={() => setStep('guide')}
-                            onMouseOver={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.35)')}
-                            onMouseOut={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}
-                        >
-                            Let&apos;s Begin
-                        </button>
-                    </div>
+                                onClick={() => setStep('guide')}
+                                onMouseOver={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.35)')}
+                                onMouseOut={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}
+                            >
+                                Let&apos;s Begin
+                            </button>
+                        </div>
+                    </ResponsiveContainer>
                 </div>
             )}
 
@@ -562,64 +556,63 @@ export default function ScanPage() {
                         </div>
 
                         {/* 로고: 메인화면과 동일한 위치/크기 */}
-                        <header
-                            className="absolute top-0 left-1/2 -translate-x-1/2 pt-8 z-20 flex flex-col items-center"
-                        >
+                        <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                             <Link href="/" passHref>
-                                <div className="relative w-[100px] h-[64px] cursor-pointer">
+                                <div className="relative w-[100px] h-[64px] mb-12 cursor-pointer">
                                     <Image
                                         src="/1001Logo.png"
                                         alt="1001Logo"
                                         fill
-                                        sizes="200px"
                                         className="object-contain"
+                                        priority
                                     />
                                 </div>
                             </Link>
                         </header>
 
-                        <div
-                            style={{
-                                position: "absolute",
-                                width: 1200,
-                                height: 1200,
-                                left: "50%",
-                                top: "50%",
-                                transform: "translate(-50%, -50%)",
-                                pointerEvents: "none",
-                                zIndex: 20,
-                            }}
-                        >
-                            {/* 타원 가이드라인 */}
-                            <svg
-                                width="100%"
-                                height="100%"
-                                viewBox="0 0 1200 1200"
+                        <ResponsiveContainer>
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    width: 1200,
+                                    height: 1200,
+                                    left: "50%",
+                                    top: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                    pointerEvents: "none",
+                                    zIndex: 20,
+                                }}
                             >
-                                <ellipse
-                                    cx="600"
-                                    cy="540"
-                                    rx={207}
-                                    ry={265}
-                                    stroke="var(--opacity-white-1000, #FFF)"
-                                    strokeWidth={8}
-                                    fill="none"
-                                    style={{ filter: 'drop-shadow(0 0 12px #fff)' }}
-                                />
-                            </svg>
-                            <FaceScanBar />
-                        </div>
+                                {/* 타원 가이드라인 */}
+                                <svg
+                                    width="100%"
+                                    height="100%"
+                                    viewBox="0 0 1200 1200"
+                                >
+                                    <ellipse
+                                        cx="600"
+                                        cy="540"
+                                        rx={207}
+                                        ry={265}
+                                        stroke="var(--opacity-white-1000, #FFF)"
+                                        strokeWidth={8}
+                                        fill="none"
+                                        style={{ filter: 'drop-shadow(0 0 12px #fff)' }}
+                                    />
+                                </svg>
+                                <FaceScanBar />
+                                ResponsiveContainer</div>
 
-                        {/* 안내문구 박스: 타원보다 훨씬 아래에 배치 */}
-                        <div
-                            className="absolute left-1/2 bottom-[150px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white/40 bg-black/40 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem]"
-                        >
-                            <div className="w-[658px] text-white text-center font-aribau text-[24px] font-normal leading-[142%] tracking-[-0.048px]">
-                                Just a moment<br />
-                                We&apos;re scanning your face to find the best frames for you!
+                            {/* 안내문구 박스: 타원보다 훨씬 아래에 배치 */}
+                            <div
+                                className="absolute left-1/2 bottom-[150px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white/40 bg-black/40 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem]"
+                            >
+                                <div className="w-[658px] text-white text-center font-aribau text-[24px] font-normal leading-[142%] tracking-[-0.048px]">
+                                    Just a moment<br />
+                                    We&apos;re scanning your face to find the best frames for you!
+                                </div>
                             </div>
-                        </div>
-
+                        </ResponsiveContainer>
                     </div>
                 )
             }
