@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\seoye\\FaceAiBeta-F\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\scan\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\scan\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
@@ -15,12 +11,20 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\result\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\loading\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\loading\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\seoye\\FaceAiBeta-F\\src\\components\\ResponsiveContainer.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ResponsiveContainer.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\seoye\\FaceAiBeta-F\\src\\types\\face.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\types\\face.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\globals.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\globals.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\loading\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\app\\loading\\page.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,8 +34,60 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\loading\\page.tsx",
+              "RelativeDocumentMoniker": "src\\app\\loading\\page.tsx",
+              "ToolTip": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\loading\\page.tsx",
+              "RelativeToolTip": "src\\app\\loading\\page.tsx",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-21T04:08:37.394Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "page.tsx",
+              "DocumentMoniker": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\page.tsx",
+              "RelativeDocumentMoniker": "src\\app\\page.tsx",
+              "ToolTip": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\page.tsx",
+              "RelativeToolTip": "src\\app\\page.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-21T04:43:21.076Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ResponsiveContainer.tsx",
+              "DocumentMoniker": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\components\\ResponsiveContainer.tsx",
+              "RelativeDocumentMoniker": "src\\components\\ResponsiveContainer.tsx",
+              "ToolTip": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\components\\ResponsiveContainer.tsx",
+              "RelativeToolTip": "src\\components\\ResponsiveContainer.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-07-22T04:14:59.442Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "globals.css",
+              "DocumentMoniker": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\globals.css",
+              "RelativeDocumentMoniker": "src\\app\\globals.css",
+              "ToolTip": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\globals.css",
+              "RelativeToolTip": "src\\app\\globals.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-07-22T04:08:09.078Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -40,65 +96,27 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "page.tsx",
-              "DocumentMoniker": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\page.tsx",
-              "RelativeDocumentMoniker": "src\\app\\page.tsx",
-              "ToolTip": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\page.tsx",
-              "RelativeToolTip": "src\\app\\page.tsx",
-              "ViewState": "AgIAABEAAAAAAAAAAAAYwDUAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-07-21T04:43:21.076Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "page.tsx",
-              "DocumentMoniker": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\loading\\page.tsx",
-              "RelativeDocumentMoniker": "src\\app\\loading\\page.tsx",
-              "ToolTip": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\loading\\page.tsx",
-              "RelativeToolTip": "src\\app\\loading\\page.tsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-07-21T04:08:37.394Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "page.tsx",
               "DocumentMoniker": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\scan\\page.tsx",
               "RelativeDocumentMoniker": "src\\app\\scan\\page.tsx",
               "ToolTip": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\scan\\page.tsx",
               "RelativeToolTip": "src\\app\\scan\\page.tsx",
-              "ViewState": "AgIAACoBAAAAAAAAAAAAAE0BAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAM4AAAAAAAAAAAAYwOUAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2025-07-17T06:02:03.444Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "page.tsx",
               "DocumentMoniker": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\result\\page.tsx",
               "RelativeDocumentMoniker": "src\\app\\result\\page.tsx",
               "ToolTip": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\app\\result\\page.tsx",
               "RelativeToolTip": "src\\app\\result\\page.tsx",
-              "ViewState": "AgIAACkAAAAAAAAAAAAYwDcAAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAYwDcAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2025-07-17T06:14:35.865Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "face.ts",
-              "DocumentMoniker": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\types\\face.ts",
-              "RelativeDocumentMoniker": "src\\types\\face.ts",
-              "ToolTip": "C:\\Users\\seoye\\FaceAiBeta-F\\src\\types\\face.ts",
-              "RelativeToolTip": "src\\types\\face.ts",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-07-17T06:04:27.892Z"
             }
           ]
         },
