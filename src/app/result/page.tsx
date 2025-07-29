@@ -10,13 +10,13 @@ import Link from 'next/link';
 import { faceShapeDetails } from '@/data/faceData';
 import { frameRecommendations } from '@/data/reconMap';
 import { frameShapeDetails } from '@/data/frameData';
-import { FaceShapeDetail, FrameShapeDetail } from '@/types/face';
+import { FaceShapeDetail, FrameShapeDetail , Celebrity} from '@/types/face';
 
 function ResultContent() {
     // const router = useRouter();
     const searchParams = useSearchParams();
     const [showQRModel, setShowQRModel] = useState(false);
-    const [selectedCelebrity, setSelectedCelebrity] = useState<string | null>(null);
+    const [selectedCelebrity, setSelectedCelebrity] = useState<Celebrity | null>(null);
 
     // 뷰포트 크기에 따른 스케일 상태
     const [scale, setScale] = useState(1);
@@ -24,7 +24,7 @@ function ResultContent() {
     useEffect(() => {
         function updateScale() {
             const wScale = window.innerWidth / 810;
-            const hScale = window.innerHeight / 1492;
+            const hScale = window.innerHeight / 1705;
             setScale(Math.min(wScale, hScale, 1));
         }
         updateScale();
@@ -33,11 +33,10 @@ function ResultContent() {
     }, []);
 
     // URL 파라미터에서 데이터 가져오기
-    const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
-    const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
+    // const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
+    // const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-    // const confidence = parseFloat(searchParams.get('confidence') || '0');
-    // const ratios = JSON.parse(searchParams.get('ratios') || '{}');
+    const faceShape = searchParams.get('faceShape') || 'Oval';
 
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
@@ -153,7 +152,7 @@ function ResultContent() {
                         <span className="text-3xl font-semibold text-white">Celebs with Your Face Type</span>
                         <hr className="w-full border-t border-white border-opacity-30 my-3" />
                         {/* 셀럽 이름 */}
-                        <span className="text-2xl text-white mb-6">{selectedCelebrity}</span>
+                        <span className="text-2xl text-white mb-6">{selectedCelebrity?.name}</span>
                         {/* 셀럽 사진 */}
                         <div
                             className="flex items-center justify-center mb-8"
@@ -165,8 +164,8 @@ function ResultContent() {
                             }}
                         >
                             <Image
-                                src={`/model/Model_${selectedCelebrity}.png`}
-                                alt={selectedCelebrity}
+                                src={`/model/Model_${selectedCelebrity?.name}.png`}
+                                alt={selectedCelebrity?.name}
                                 width={500}
                                 height={500}
                                 className="rounded-2xl object-cover w-full h-full"
@@ -186,7 +185,7 @@ function ResultContent() {
             <div
                 style={{
                     width: 810,
-                    height: 1492,
+                    height: 1705,
                     position: 'absolute',
                     left: '50%',
                     top: '50%',
@@ -196,7 +195,7 @@ function ResultContent() {
                 }}
                 className="bg-transparent"
             >
-                <main className="w-full mx-auto px-6 flex flex-col gap-6 pt-[130px]">
+                <main className="w-full mx-auto px-6 flex flex-col pt-[130px]">
                     <Image
                         src={`/result/${faceShape}.png`}
                         alt={`${faceShape} 결과 이미지`}
@@ -206,75 +205,16 @@ function ResultContent() {
                         priority
                     />
 
-                    {/* 추천 프레임 */}
-                    {frameDetails.length > 0 && (
-                        <div style={{ display: 'flex', gap: '18px', justifyContent: 'center' }}>
-                            {frameDetails.map((frame, index) =>
-                                frame && index < 2 ? (
-                                    <div
-                                        key={index}
-                                        style={{
-                                            position: 'relative',
-                                            width: 360,
-                                            height: 360,
-                                        }}
-                                    >
-                                        <Image
-                                            src={`/frame/${frame.image}`}
-                                            alt="frame"
-                                            width={360}
-                                            height={360}
-                                            style={{ display: 'block' }}
-                                        />
-                                        <span
-                                            className="text-3xl text-white/50"
-                                            style={{
-                                                position: 'absolute',
-                                                top: '16px',
-                                                left: '10px',
-                                                borderRadius: '10px',
-                                                padding: '6px 16px',
-                                            }}
-                                        >
-                                            {index === 0
-                                                ? '1st Recommendation'
-                                                : '2nd Recommendation'}
-                                        </span>
-                                        <h3
-                                            className="text-5xl text-white"
-                                            style={{
-                                                position: 'absolute',
-                                                top: '60px',
-                                                left: '10px',
-                                                borderRadius: '10px',
-                                                padding: '6px 16px',
-                                                margin: 0,
-                                            }}
-                                        >
-                                            {frame.shape}
-                                        </h3>
-                                    </div>
-                                ) : null
-                            )}
-                        </div>
-                    )}
-
-                    {/* 얼굴형 설명 및 셀럽 */}
+                    {/* 얼굴형 설명*/}
                     <section
-                        className="p-[32px] w-[738px] h-[502px] mx-auto"
+                        className="p-[32px] w-[738px] h-[210px] mx-auto mb-6"
                         style={{
                             borderRadius: "40px",
-                            background: "rgba(0, 0, 0, 0.15)",
+                            background: "rgba(255, 255, 255, 0.2)",
                             backdropFilter: "blur(6px)",
                         }}
                     >
-                        {/* 상단: 좌측 얼굴형 박스 + 우측 설명 */}
                         <div className="flex flex-row items-start gap-8">
-                            {/* 좌측: 얼굴형 텍스트 박스 */}
-                            <div className="bg-white/20 rounded-3xl flex items-center justify-center w-[181px] h-[86px] shadow">
-                                <span className="text-3xl text-white">{faceShape}</span>
-                            </div>
-                            {/* 우측: 설명 */}
                             <div className="flex-1">
                                 <h3 className="text-3xl text-white mb-4">Understanding Your Face Shape</h3>
                                 {faceDetail?.description && (
@@ -282,63 +222,148 @@ function ResultContent() {
                                 )}
                             </div>
                         </div>
-
-                        {/* 흰색 반투명 실선 */}
-                        <hr className="my-6 border-t-2 border-white/20" />
-
-                        {/* 하단: 셀럽 리스트 */}
-                        <h4 className="text-3xl text-white mb-6">Celebs with Your Face Type</h4>
-                        {faceDetail?.celebrities && (
-                            <div className="flex flex-wrap gap-3 mt-4">
-                                {faceDetail.celebrities.map((name, idx) => (
-                                    <span
-                                        key={idx}
-                                        className="
-                                            bg-gray-400/50
-                                            rounded-full
-                                            px-3
-                                            py-3
-                                            text-2xl
-                                            text-white
-                                            flex
-                                            items-center
-                                            gap-3
-                                            cursor-pointer
-                                            max-w-[200px]
-                                            h-[68px]
-                                            overflow-hidden
-                                            whitespace-nowrap
-                                            text-ellipsis
-                                        "
-                                        onClick={() => setSelectedCelebrity(name)}
-                                        title={name}
-                                    >
-                                        <Image
-                                            src={`/button/Button_${name}.png`}
-                                            alt={name}
-                                            width={44}
-                                            height={44}
-                                            className="w-8 h-8 rounded-full object-cover shrink-0"
-                                        />
-                                        <span className="truncate">{name}</span>
-                                    </span>
-                                ))}
-                            </div>
-                        )}
                     </section>
 
+                    {/* Recommendation Frame 문구 추가 */}
+                    <div className="w-[738px] mx-auto mt-6 mb-6">
+                        <h3 className="text-4xl text-white">Recommendation Frame</h3>
+                    </div>
+
+                    {/* 추천 프레임 */}
+                    {frameDetails.length > 0 && (
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '24px',
+                                alignItems: 'center',
+                                justifyContent: 'flex-start',
+                            }}
+                        >
+                            {frameDetails.map((frame, index) =>
+                                frame && index < 2 ? (
+                                    <div
+                                        key={index}
+                                        style={{
+                                            position: 'relative',
+                                            width: 738,
+                                            height: 392,
+                                            borderRadius: 40,
+                                            overflow: 'hidden',
+                                        }}
+                                    >
+                                        <Image
+                                            src={`/frame/${frame.image}`}
+                                            alt="frame"
+                                            width={738}
+                                            height={392}
+                                            style={{ display: 'block', borderRadius: '40px' }}
+                                        />
+                                        <span
+                                            className="text-4xl text-white/50"
+                                            style={{
+                                                position: 'absolute',
+                                                top: '16px',
+                                                borderRadius: '40px',
+                                                padding: '20px 42px',
+                                            }}
+                                        >
+                                            {index === 0
+                                                ? '1st'
+                                                : '2nd'}
+                                        </span>
+                                        <h3
+                                            className="text-5xl text-white"
+                                            style={{
+                                                position: 'absolute',
+                                                top: '60px',
+                                                borderRadius: '40px',
+                                                padding: '25px 42px',
+                                                margin: 0,
+                                            }}
+                                        >
+                                            {frame.shape}
+                                        </h3>
+
+                                        {/* 우측 상단부에 "faceShape Celebs" */}
+                                        <div
+                                            style={{
+                                                position: 'absolute',
+                                                top: '16px',
+                                                left: '350px',
+                                                borderRadius: '40px',
+                                                padding: '20px 42px',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        >
+                                            <h4 className="text-4xl text-white"
+                                                style={{ margin: 0, marginBottom: 10 }}
+                                            >   
+                                                {faceShape} Celebs
+                                            </h4>
+
+                                            {/* 셀럽 3인 버튼 리스트 출력 */}
+                                            <div style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                gap: '12px',
+                                                alignItems: 'flex-start',
+                                                width: '100%'
+                                            }}>
+                                                {faceDetail?.celebrities
+                                                    ?.slice(index * 3, index * 3 + 3)
+                                                    .map((celeb, btnIdx) => (
+                                                        <button
+                                                            key={btnIdx}
+                                                            type="button"
+                                                            className="text-2xl"
+                                                            style={{
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                color: '#fff',
+                                                                fontWeight: 400,
+                                                                border: 'none',
+                                                                borderBottom: `4px solid ${celeb.gender === 'female' ? '#FF69B4' : '#00BFFF'}`,
+                                                                outline: 'none',
+                                                                cursor: 'pointer',
+                                                                gap: '8px',
+                                                                paddingTop: 8,
+                                                                paddingBottom: 8,
+                                                            }}
+                                                            onClick={() => setSelectedCelebrity(celeb)}
+                                                        >
+                                                            <Image
+                                                                src={`/button/Button_${celeb.name}.png`}
+                                                                alt={celeb.name}
+                                                                width={64}
+                                                                height={64}
+                                                            />
+                                                            <span>
+                                                                {celeb.name}
+                                                            </span>
+                                                        </button>
+                                                    ))}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                ) : null
+                            )}
+                        </div>
+                    )}
+
                     {/* QR 코드 버튼 */}
-                    <div className="w-[738px] h-[88px] mx-auto mt-4">
+                    <div className="w-[738px] h-[88px] mx-auto mt-10">
                         <button
                             onClick={() => setShowQRModel(true)}
-                            className="w-full py-5 bg-gray-500/50 text-2xl text-white rounded-full hover:bg-black/60 transition flex items-center justify-center"
+                            className="w-full py-5 bg-gray-500/40 text-2xl text-white rounded-full hover:bg-black/60 transition flex items-center justify-center"
                         >
                             Get QR Code
                             <Image
                                 src="/upload.png"
                                 alt="Upload"
-                                width={35}
-                                height={35}
+                                width={44}
+                                height={44}
                                 className="ml-2"
                             />
                         </button>

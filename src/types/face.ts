@@ -1,8 +1,13 @@
+export interface Celebrity {
+  name: string;
+  gender: 'male' | 'female';
+}
+
 export interface FaceShapeDetail {
   shape: string;
   image: string;
   description: string;
-  celebrities: string[];
+  celebrities: Celebrity[];
 }
 
 export interface FrameRecommendation {

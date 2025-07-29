@@ -1,16 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\.next",
+    "\\.next\\static",
     "\\public",
-    "\\public\\icon",
-    "\\src",
-    "\\src\\app",
-    "\\src\\app\\loading",
-    "\\src\\app\\result",
-    "\\src\\app\\scan",
-    "\\src\\components",
-    "\\src\\data"
+    "\\src"
   ],
-  "SelectedNode": "\\src\\app\\scan\\page.tsx",
   "PreviewInSolutionExplorer": false
 }
