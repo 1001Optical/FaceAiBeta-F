@@ -13,6 +13,8 @@ import { FaceShapeDetail, FrameShapeDetail , Celebrity} from '@/types/face';
 
 function ResultContent() {
     // const router = useRouter();
+    const TOP_OFFSET = 50;
+
     const searchParams = useSearchParams();
     const [showQRModel, setShowQRModel] = useState(false);
     const [selectedCelebrity, setSelectedCelebrity] = useState<Celebrity | null>(null);
@@ -32,10 +34,10 @@ function ResultContent() {
     }, []);
 
     // URL 파라미터에서 데이터 가져오기
-    const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
-    const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
+    // const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
+    // const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-    // const faceShape = searchParams.get('faceShape') || 'Oval';
+    const faceShape = searchParams.get('faceShape') || 'Oval';
 
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
@@ -187,9 +189,9 @@ function ResultContent() {
                     height: 1705,
                     position: 'absolute',
                     left: '50%',
-                    top: '50%',
-                    transform: `translate(-50%, -50%) scale(${scale})`,
-                    transformOrigin: 'center',
+                    top: TOP_OFFSET,
+                    transform: `translate(-50%) scale(${scale})`,
+                    transformOrigin: 'top center',
                     overflowY: 'auto',
                 }}
                 className="bg-transparent"

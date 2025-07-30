@@ -35,8 +35,8 @@ export const faceShapeDetails: FaceShapeDetail[] = [
     description:
       "The width of the forehead and jawline are similar, with the widest part at the cheeks. Will look good in almost any frame style.",
       celebrities: [
-      { name: 'Millie Bobby Brown', gender: 'female' },
       { name: 'Cha Eunwoo', gender: 'male' },
+      { name: 'Millie Bobby Brown', gender: 'female' },
       { name: 'Jake Gyllenhaal', gender: 'male' },
       { name: 'Mary J. Blige', gender: 'female' },
       { name: 'Brad Pitt', gender: 'male' },
@@ -49,9 +49,9 @@ export const faceShapeDetails: FaceShapeDetail[] = [
     description:
       'This face is round with full cheeks and a broad forehead. Structured frames define and balance the natural curves beautifully.',
       celebrities: [
-      { name: 'Jill Scott', gender: 'female' },
-      { name: 'BTS Jin', gender: 'male' },
       { name: 'Ed Sheeran', gender: 'male' },
+      { name: 'BTS Jin', gender: 'male' },
+      { name: 'Jill Scott', gender: 'female' },
       { name: 'Selena Gomez', gender: 'female' },
       { name: 'Jack Black', gender: 'male' },
       { name: 'Chrissy Teigen', gender: 'female' }

@@ -47,7 +47,6 @@ export default function Home() {
                         />
                     </div>
                 </header>
-
                 <ResponsiveContainer>
                     {/* 메인 콘텐츠 영역 */}
                     <div className="max-w-[768px] mx-auto flex flex-col items-center justify-center pt-8">
@@ -119,7 +118,6 @@ export default function Home() {
                     </div>
                 </ResponsiveContainer>
             </div>
-
             <PolicyModal
                 isOpen={isPolicyModalOpen}
                 onClose={() => setIsPolicyModalOpen(false)}
