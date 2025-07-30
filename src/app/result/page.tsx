@@ -13,7 +13,7 @@ import { FaceShapeDetail, FrameShapeDetail , Celebrity} from '@/types/face';
 
 function ResultContent() {
     // const router = useRouter();
-    const TOP_OFFSET = 50;
+    const TOP_OFFSET = 30;
 
     const searchParams = useSearchParams();
     const [showQRModel, setShowQRModel] = useState(false);
@@ -37,7 +37,7 @@ function ResultContent() {
     const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
     const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-    // const faceShape = searchParams.get('faceShape') || 'Oval';
+    //const faceShape = searchParams.get('faceShape') || 'Oval';
 
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
