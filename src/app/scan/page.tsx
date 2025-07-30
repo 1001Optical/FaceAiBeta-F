@@ -249,13 +249,13 @@ export default function ScanPage() {
         }
     }, [apiUrl, isLoading, router]);
 
-    // 얼굴이 타원 안에 들어오면 3초 후 자동 캡처 (임시: 버튼 없이 타이머)
+    // 얼굴이 타원 안에 들어오면 2초 후 자동 캡처 (임시: 버튼 없이 타이머)
     useEffect(() => {
         if (step === 'guide' && !captured) {
-            setCountdown(3);
+            setCountdown(2);
             const timer = setTimeout(() => {
                 handleCapture();
-            }, 3000);
+            }, 2000);
             return () => clearTimeout(timer);
         } else {
             setCountdown(null);
@@ -312,7 +312,7 @@ export default function ScanPage() {
                     {/* 로고: 메인화면과 동일한 위치/크기 */}
                     <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                         <Link href="/" passHref>
-                            <div className="relative w-[100px] h-[64px] mb-12 cursor-pointer">
+                            <div className="relative w-[94px] h-[46px] mb-12 cursor-pointer">
                                 <Image
                                     src="/1001Logo.png"
                                     alt="1001Logo"
@@ -558,7 +558,7 @@ export default function ScanPage() {
                         {/* 로고: 메인화면과 동일한 위치/크기 */}
                         <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                             <Link href="/" passHref>
-                                <div className="relative w-[100px] h-[64px] mb-12 cursor-pointer">
+                                <div className="relative w-[94px] h-[46px] mb-12 cursor-pointer">
                                     <Image
                                         src="/1001Logo.png"
                                         alt="1001Logo"

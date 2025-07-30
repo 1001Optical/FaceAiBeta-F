@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
-// import { useRouter, useSearchParams } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -36,7 +35,7 @@ function ResultContent() {
     const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
     const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-    //const faceShape = searchParams.get('faceShape') || 'Oval';
+    // const faceShape = searchParams.get('faceShape') || 'Oval';
 
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
@@ -55,9 +54,9 @@ function ResultContent() {
 
     // 반응형 모달 스타일
     const getModalSize = () => {
-        // 예시: 화면의 90vw/90vh를 넘지 않도록 제한
-        const maxWidth = Math.min(window.innerWidth * 0.9, 500);
-        const maxHeight = Math.min(window.innerHeight * 0.9, 600);
+        // 예시: 화면의 80vw/80vh를 넘지 않도록 제한
+        const maxWidth = Math.min(window.innerWidth * 0.8, 500);
+        const maxHeight = Math.min(window.innerHeight * 0.8, 600);
         return {
             width: maxWidth,
             height: maxHeight,
@@ -88,7 +87,7 @@ function ResultContent() {
             {/* 상단 로고 고정 */}
             <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                 <Link href="/" passHref>
-                    <div className="relative w-[100px] h-[64px] cursor-pointer">
+                    <div className="relative w-[94px] h-[46px] cursor-pointer">
                         <Image src="/1001Logo.png" alt="1001Logo" fill className="object-contain" priority />
                     </div>
                 </Link>
@@ -98,7 +97,7 @@ function ResultContent() {
             {showQRModel && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
                     <div
-                        className="relative flex flex-col items-center bg-[rgba(0,0,0,0.67)] border-[2px] border-white/40 shadow-[0_4px_30px_0_rgba(0,0,0,0.4)] backdrop-blur-[12.5px] rounded-[48px] px-4 py-8"
+                        className="relative flex flex-col items-center bg-[rgba(0,0,0,0.3)] border-[2px] border-white/40 shadow-[0_4px_30px_0_rgba(0,0,0,0.4)] backdrop-blur-[12.5px] rounded-[48px] px-4 py-8"
                         style={{
                             width: modalSize.width,
                             maxWidth: "90vw",
@@ -106,9 +105,9 @@ function ResultContent() {
                             maxHeight: "90vh",
                         }}
                     >
-                        <span className="text-3xl font-semibold text-white">QR Code</span>
+                        <span className="text-2xl font-semibold text-white">QR Code</span>
                         <hr className="w-full border-t border-white border-opacity-30 my-3" />
-                        <span className="text-2xl text-white mb-6">{faceShape}</span>
+                        <span className="text-xl text-white mb-6">{faceShape}</span>
                         <div
                             className="flex items-center justify-center mb-8"
                             style={{
@@ -128,7 +127,7 @@ function ResultContent() {
                         </div>
                         <button
                             onClick={() => setShowQRModel(false)}
-                            className="w-full py-4 bg-white/20 text-2xl text-white rounded-full hover:bg-white/40 transition"
+                            className="w-full py-4 bg-white/20 text-xl text-white rounded-full hover:bg-white/40 transition"
                         >
                             Got it
                         </button>
@@ -140,7 +139,7 @@ function ResultContent() {
             {selectedCelebrity && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md">
                     <div
-                        className="relative flex flex-col items-center bg-[rgba(0,0,0,0.67)] border-[2px] border-white/40 shadow-[0_4px_30px_0_rgba(0,0,0,0.4)] backdrop-blur-[12.5px] rounded-[48px] px-4 py-8"
+                        className="relative flex flex-col items-center bg-[rgba(0,0,0,0.3)] border-[2px] border-white/40 shadow-[0_4px_30px_0_rgba(0,0,0,0.4)] backdrop-blur-[12.5px] rounded-[48px] px-4 py-8"
                         style={{
                             width: modalSize.width,
                             maxWidth: "90vw",
@@ -149,10 +148,10 @@ function ResultContent() {
                         }}
                         onClick={e => e.stopPropagation()}
                     >
-                        <span className="text-3xl font-semibold text-white">Celebs with Your Face Type</span>
+                        <span className="text-2xl font-semibold text-white text-center">Celebs with Your Face Type</span>
                         <hr className="w-full border-t border-white border-opacity-30 my-3" />
                         {/* 셀럽 이름 */}
-                        <span className="text-2xl text-white mb-6">{selectedCelebrity?.name}</span>
+                        <span className="text-xl text-white mb-6">{selectedCelebrity?.name}</span>
                         {/* 셀럽 사진 */}
                         <div
                             className="flex items-center justify-center mb-8"
@@ -173,7 +172,7 @@ function ResultContent() {
                         </div>
                         <button
                             onClick={() => setSelectedCelebrity(null)}
-                            className="w-full py-4 bg-white/20 text-2xl text-white rounded-full hover:bg-white/40 transition"
+                            className="w-full py-4 bg-white/20 text-xl text-white rounded-full hover:bg-white/40 transition"
                         >
                             Got it
                         </button>
