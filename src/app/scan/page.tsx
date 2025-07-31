@@ -277,13 +277,6 @@ export default function ScanPage() {
             {/* 캡처된 이미지 미리보기 (디버그용) */}
             <canvas ref={canvasRef} className="hidden" />
 
-            {/* 에러 메시지 */}
-            {error && (
-                <div className="absolute top-5 left-1/2 -translate-x-1/2 z-30 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg w-11/12 max-w-md text-center">
-                    <p>{error}</p>
-                </div>
-            )}
-
             {/* 반투명 오버레이 + 안내문구 + 버튼 (1번 화면) */}
             {step === 'intro' && (
                 <div
@@ -605,11 +598,14 @@ export default function ScanPage() {
 
                             {/* 안내문구 박스: 타원보다 훨씬 아래에 배치 */}
                             <div
-                                className="absolute left-1/2 bottom-[200px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white/40 bg-black/40 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem]"
+                                className={`absolute left-1/2 bottom-[200px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white/40 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem] 
+                                    ${error ? 'bg-red/40' : 'bg-black/40'}`}
                             >
                                 <div className="w-[658px] text-white text-center font-aribau text-[24px] font-normal leading-[142%] tracking-[-0.048px]">
-                                    Just a moment<br />
-                                    We&apos;re scanning your face to find the best frames for you!
+                                    {error
+                                        ? <>We couldn&apos;t recognize your face.<br />Make sure your face is clearly visible and try again.</>
+                                        : <>Just a moment<br />We&apos;re scanning your face to find the best frames for you!</>
+                                    }
                                 </div>
                             </div>
                         </ResponsiveContainer>
