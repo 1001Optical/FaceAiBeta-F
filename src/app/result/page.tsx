@@ -22,28 +22,16 @@ function ResultContent() {
     // 뷰포트 크기에 따른 스케일 상태
     const [scale, setScale] = useState(1);
 
-   useEffect(() => {
-    function updateScale() {
-        const containerWidth = 810;
-        const containerHeight = 1705;
-        const headerHeight = 100; // 헤더 높이(px)
-        const availableWidth = window.innerWidth;
-        const availableHeight = window.innerHeight - headerHeight;
-
-        const newScale = Math.min(
-            availableWidth / containerWidth,
-            availableHeight / containerHeight,
-            1, // 최대 scale은 1 (확대하지 않음)
-        );
-
-        setScale(newScale);
-    }
-
-    updateScale();
-    window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
-}, []);
-
+    useEffect(() => {
+        function updateScale() {
+            const wScale = window.innerWidth / 810;
+            const hScale = window.innerHeight / 1080;
+            setScale(Math.min(wScale, hScale, 1));
+        }
+        updateScale();
+        window.addEventListener('resize', updateScale);
+        return () => window.removeEventListener('resize', updateScale);
+    }, []);
 
     // URL 파라미터에서 데이터 가져오기
     const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
@@ -201,7 +189,7 @@ function ResultContent() {
             <div
                 style={{
                     width: 810,
-                    height: 1705,
+                    height: 1080,
                     transform: `scale(${scale})`,
                     transformOrigin: 'top center',
                     position: 'relative',
