@@ -13,7 +13,7 @@ import { FaceShapeDetail, FrameShapeDetail , Celebrity} from '@/types/face';
 
 function ResultContent() {
     // const router = useRouter();
-    const TOP_OFFSET = 30;
+    // const TOP_OFFSET = 30;
 
     const searchParams = useSearchParams();
     const [showQRModel, setShowQRModel] = useState(false);
