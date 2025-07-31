@@ -594,7 +594,7 @@ export default function ScanPage() {
                                     />
                                 </svg>
                                 <FaceScanBar />
-                                ResponsiveContainer</div>
+                            </div>
 
                             {/* 안내문구 박스: 타원보다 훨씬 아래에 배치 */}
                             <div
