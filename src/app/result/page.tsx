@@ -22,16 +22,28 @@ function ResultContent() {
     // 뷰포트 크기에 따른 스케일 상태
     const [scale, setScale] = useState(1);
 
-    useEffect(() => {
-        function updateScale() {
-            const wScale = window.innerWidth / 810;
-            const hScale = window.innerHeight / 1705;
-            setScale(Math.min(wScale, hScale, 1));
-        }
-        updateScale();
-        window.addEventListener('resize', updateScale);
-        return () => window.removeEventListener('resize', updateScale);
-    }, []);
+   useEffect(() => {
+    function updateScale() {
+        const containerWidth = 810;
+        const containerHeight = 1705;
+        const headerHeight = 100; // 헤더 높이(px)
+        const availableWidth = window.innerWidth;
+        const availableHeight = window.innerHeight - headerHeight;
+
+        const newScale = Math.min(
+            availableWidth / containerWidth,
+            availableHeight / containerHeight,
+            1, // 최대 scale은 1 (확대하지 않음)
+        );
+
+        setScale(newScale);
+    }
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+}, []);
+
 
     // URL 파라미터에서 데이터 가져오기
     const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
@@ -76,7 +88,7 @@ function ResultContent() {
     }, []);
 
     return (
-        <div className="fixed inset-0 z-20">
+        <div className="fixed inset-0 flex flex-col z-20">
             {/* 배경 이미지 전체 화면 */}
             <Image
                 src="/Bg_result.png"
@@ -182,17 +194,17 @@ function ResultContent() {
                 </div>
             )}
 
+            {/* 메인 영역 */}
+            <div className="absolute top-[100px] left-0 w-full h-[calc(100vh-110px)] flex justify-center overflow-y-auto">
+
             {/* 컨텐츠 박스: 고정 크기 + scale + 중앙 정렬 */}
             <div
                 style={{
                     width: 810,
                     height: 1705,
-                    position: 'absolute',
-                    left: '50%',
-                    top: TOP_OFFSET,
-                    transform: `translate(-50%) scale(${scale})`,
+                    transform: `scale(${scale})`,
                     transformOrigin: 'top center',
-                    overflowY: 'auto',
+                    position: 'relative',
                 }}
                 className="bg-transparent"
             >
@@ -370,6 +382,7 @@ function ResultContent() {
                         </button>
                     </div>
                 </main>
+            </div>
             </div>
         </div>
     );
