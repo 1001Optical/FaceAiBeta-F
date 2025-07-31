@@ -329,7 +329,7 @@ export default function ScanPage() {
                         <div
                             style={{
                                 position: 'absolute',
-                                top: '50%',
+                                top: '45%',
                                 left: '50%',
                                 transform: 'translate(-50%, -50%)',
                                 width: 738,
@@ -577,7 +577,7 @@ export default function ScanPage() {
                                     width: 1200,
                                     height: 1200,
                                     left: "50%",
-                                    top: "50%",
+                                    top: "40%",
                                     transform: "translate(-50%, -50%)",
                                     pointerEvents: "none",
                                     zIndex: 20,
@@ -605,7 +605,7 @@ export default function ScanPage() {
 
                             {/* 안내문구 박스: 타원보다 훨씬 아래에 배치 */}
                             <div
-                                className="absolute left-1/2 bottom-[150px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white/40 bg-black/40 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem]"
+                                className="absolute left-1/2 bottom-[200px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white/40 bg-black/40 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem]"
                             >
                                 <div className="w-[658px] text-white text-center font-aribau text-[24px] font-normal leading-[142%] tracking-[-0.048px]">
                                     Just a moment<br />

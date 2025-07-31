@@ -37,7 +37,7 @@ function ResultContent() {
     const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
     const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-    //const faceShape = searchParams.get('faceShape') || 'Oval';
+    // const faceShape = searchParams.get('faceShape') || 'Oval';
 
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
@@ -129,7 +129,7 @@ function ResultContent() {
                         </div>
                         <button
                             onClick={() => setShowQRModel(false)}
-                            className="w-full py-4 bg-white/20 text-xl text-white rounded-full hover:bg-white/40 transition"
+                            className="w-full py-4 bg-white/20 text-xl text-white rounded-full hover:bg-white/40 transition mt-auto"
                         >
                             Got it
                         </button>
@@ -174,7 +174,7 @@ function ResultContent() {
                         </div>
                         <button
                             onClick={() => setSelectedCelebrity(null)}
-                            className="w-full py-4 bg-white/20 text-xl text-white rounded-full hover:bg-white/40 transition"
+                            className="w-full py-4 bg-white/20 text-xl text-white rounded-full hover:bg-white/40 transition mt-auto"
                         >
                             Got it
                         </button>
@@ -196,7 +196,7 @@ function ResultContent() {
                 }}
                 className="bg-transparent"
             >
-                <main className="w-full mx-auto px-6 flex flex-col pt-[130px]">
+                <main className="w-full mx-auto px-6 flex flex-col pt-[80px]">
                     <Image
                         src={`/result/${faceShape}.png`}
                         alt={`${faceShape} 결과 이미지`}
