@@ -12,9 +12,7 @@ import { frameShapeDetails } from '@/data/frameData';
 import { FaceShapeDetail, FrameShapeDetail , Celebrity} from '@/types/face';
 
 function ResultContent() {
-    // const router = useRouter();
-    // const TOP_OFFSET = 30;
-
+ 
     const searchParams = useSearchParams();
     const [showQRModel, setShowQRModel] = useState(false);
     const [selectedCelebrity, setSelectedCelebrity] = useState<Celebrity | null>(null);
