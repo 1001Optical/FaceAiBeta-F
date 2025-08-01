@@ -35,7 +35,7 @@ export default function Home() {
 
             <div className="relative z-20 max-w-[834px] mx-auto px-6 py-8">
                 <header className="flex flex-col items-center justify-center space-y-8">
-                    <div className="relative w-[94px] h-[46px]">
+                    <div className="relative w-[100px] h-[64px]">
                         <Image
                             src="/1001Logo.png"
                             alt="1001Logo"

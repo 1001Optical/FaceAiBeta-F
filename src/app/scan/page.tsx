@@ -305,7 +305,7 @@ export default function ScanPage() {
                     {/* 로고: 메인화면과 동일한 위치/크기 */}
                     <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                         <Link href="/" passHref>
-                            <div className="relative w-[94px] h-[46px] mb-12 cursor-pointer">
+                            <div className="relative w-[100px] h-[64px] mb-12 cursor-pointer">
                                 <Image
                                     src="/1001Logo.png"
                                     alt="1001Logo"
@@ -551,7 +551,7 @@ export default function ScanPage() {
                         {/* 로고: 메인화면과 동일한 위치/크기 */}
                         <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                             <Link href="/" passHref>
-                                <div className="relative w-[94px] h-[46px] mb-12 cursor-pointer">
+                                <div className="relative w-[100px] h-[64px] mb-12 cursor-pointer">
                                     <Image
                                         src="/1001Logo.png"
                                         alt="1001Logo"

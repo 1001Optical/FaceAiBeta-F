@@ -89,7 +89,7 @@ function ResultContent() {
             {/* 상단 로고 고정 */}
             <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                 <Link href="/" passHref>
-                    <div className="relative w-[94px] h-[46px] cursor-pointer">
+                    <div className="relative w-[100px] h-[64px] cursor-pointer">
                         <Image src="/1001Logo.png" alt="1001Logo" fill className="object-contain" priority />
                     </div>
                 </Link>
