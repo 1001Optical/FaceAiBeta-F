@@ -86,15 +86,16 @@ export default function Home() {
                                         shrink-0
                                         rounded-full
                                         bg-black/40
+                                        border border-white/40
+                                        backdrop-blur-lg
                                         text-white
                                         font-normal
                                         text-[30px]
                                         leading-[142%]
-                                        backdrop-blur
                                         shadow-md
                                         transition-colors
                                         duration-200
-                                        hover:bg-black/60
+                                        hover:bg-white/35
                                         font-aribau
                                     "
                                         style={{

@@ -290,7 +290,7 @@ export default function ScanPage() {
 
                     {/* 내비게이션바 이미지 */}
                     <div
-                        className="absolute top-10 left-6 z-30 cursor-pointer w-[44px] h-[44px]"
+                        className="absolute top-8 left-6 z-30 cursor-pointer w-[44px] h-[44px]"
                         onClick={() => router.back()}
                     >
                         <Image
@@ -536,7 +536,7 @@ export default function ScanPage() {
 
                         {/* 내비게이션바 이미지 */}
                         <div
-                            className="absolute top-10 left-6 z-30 cursor-pointer w-[44px] h-[44px]"
+                            className="absolute top-8 left-6 z-30 cursor-pointer w-[44px] h-[44px]"
                             onClick={() => window.location.reload()}
                         >
                             <Image

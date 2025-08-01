@@ -127,7 +127,7 @@ function ResultContent() {
                         </div>
                         <button
                             onClick={() => setShowQRModel(false)}
-                            className="w-full py-4 bg-white/20 text-lg text-white rounded-full hover:bg-white/40 transition mt-auto"
+                            className="w-full py-4 bg-white/20 text-lg text-white rounded-full hover:bg-white/35 transition-colors duration-200 mt-auto border border-white/40 backdrop-blur-lg shadow-md"
                         >
                             Got it
                         </button>
@@ -172,7 +172,7 @@ function ResultContent() {
                         </div>
                         <button
                             onClick={() => setSelectedCelebrity(null)}
-                            className="w-full py-4 bg-white/20 text-lg text-white rounded-full hover:bg-white/40 transition mt-auto"
+                            className="w-full py-4 bg-white/20 text-lg text-white rounded-full hover:bg-white/35 transition-colors duration-200 mt-auto border border-white/40 backdrop-blur-lg shadow-md"
                         >
                             Got it
                         </button>
@@ -355,7 +355,17 @@ function ResultContent() {
                     <div className="w-[738px] h-[88px] mx-auto mt-10">
                         <button
                             onClick={() => setShowQRModel(true)}
-                            className="w-full py-5 bg-gray-500/40 text-2xl text-white rounded-full hover:bg-black/60 transition flex items-center justify-center"
+                            className="
+                                w-full py-5
+                                bg-gray-500/40
+                                text-2xl text-white
+                                rounded-full
+                                hover:bg-white/35
+                                transition flex items-center justify-center
+                                backdrop-blur  
+                                border border-white/40 
+                                shadow-md 
+                            "
                         >
                             Get QR Code
                             <Image
