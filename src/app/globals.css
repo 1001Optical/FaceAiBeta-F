@@ -42,7 +42,7 @@ body {
     inset: 0;
     width: 100vw;
     height: 100vh;
-    background: #000; /* 배경 확장만 필요할 때 */
+    background: #000;
     overflow: hidden;
     z-index: 0;
 }
@@ -54,6 +54,4 @@ body {
     left: 50%;
     top: 50%;
     transform-origin: top left;
-    /* scale 값은 JS로 계산해 적용 */
-    /* 예시: transform: scale(0.7) translate(-50vw, -50vh) */
 }
