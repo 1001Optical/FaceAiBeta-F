@@ -34,19 +34,20 @@ export default function Home() {
             </div>
 
             <div className="relative z-20 max-w-[834px] mx-auto px-6 py-8">
-                <header className="flex flex-col items-center justify-center space-y-8">
-                    <div className="relative w-[100px] h-[64px]">
-                        <Image
-                            src="/1001Logo.png"
-                            alt="1001Logo"
-                            fill
-                            sizes="200px"
-                            className="object-contain"
-                            priority
-                            style={{ width: '100%', height: '100%' }}
-                        />
-                    </div>
-                </header>
+                <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
+                        <Link href="/" passHref>
+                            <div className="relative w-[100px] h-[64px] mb-12 cursor-pointer">
+                                <Image
+                                    src="/1001Logo.png"
+                                    alt="1001Logo"
+                                    fill
+                                    sizes="100px"
+                                    className="object-contain"
+                                    priority
+                                />
+                            </div>
+                        </Link>
+                    </header>
                 <ResponsiveContainer>
                     {/* 메인 콘텐츠 영역 */}
                     <div className="max-w-[768px] mx-auto flex flex-col items-center justify-center pt-16">
