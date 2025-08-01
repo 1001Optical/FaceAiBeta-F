@@ -49,7 +49,7 @@ export default function Home() {
                 </header>
                 <ResponsiveContainer>
                     {/* 메인 콘텐츠 영역 */}
-                    <div className="max-w-[768px] mx-auto flex flex-col items-center justify-center pt-8">
+                    <div className="max-w-[768px] mx-auto flex flex-col items-center justify-center pt-16">
 
                         <div className="flex flex-col items-center justify-center">
                             <h1 className="font-aribau font-bold text-[68px] leading-[90%] text-center text-white mt-4 mb-2"
@@ -71,7 +71,7 @@ export default function Home() {
                                 From AI face scan to perfect frames
                             </p>
                             <OrbitEyewear />
-                            <div className="absolute bottom-0 left-0 w-full flex justify-center pb-28">
+                            <div className="absolute bottom-0 left-0 w-full flex justify-center pb-24">
                                 <Link href="/scan" className="flex justify-center">
                                     <button
                                         className="
