@@ -88,7 +88,7 @@ function ResultContent() {
             <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                 <Link href="/" passHref>
                     <div className="relative w-[100px] h-[64px] cursor-pointer">
-                        <Image src="/1001Logo.png" alt="1001Logo" fill className="object-contain" priority />
+                        <Image src="/1001Logo.png" alt="1001Logo" fill sizes="100px" className="object-contain" priority />
                     </div>
                 </Link>
             </header>

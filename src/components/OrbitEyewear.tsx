@@ -12,7 +12,7 @@ export default function OrbitEyewear() {
                 loop
                 background="transparent"
                 speed={1}
-                style={{ width: 810, height: 720 }}
+                style={{ width: 810, height: 705 }}
             />
         </div>
     );

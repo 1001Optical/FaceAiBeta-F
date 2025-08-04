@@ -53,24 +53,16 @@ export default function Home() {
                     <div className="max-w-[768px] mx-auto flex flex-col items-center justify-center pt-16">
 
                         <div className="flex flex-col items-center justify-center">
-                            <h1 className="font-aribau font-bold text-[68px] leading-[90%] text-center text-white mt-4 mb-2"
-                                style={{
-                                    textShadow: '1px 0px 1px rgba(255, 255, 255, 0.50)',
-                                    fontStyle: 'normal',
-                                }}
-                            >
-                                AI Eyewear Recommendation
-                            </h1>
-                            <p className="font-aribau font-normal text-[30px] leading-[136%] text-center"
-                                style={{
-                                    color: 'rgba(255, 255, 255, 0.60)',
-                                    fontStyle: 'normal',
-                                    letterSpacing: '-0.75px',
-                                    marginBottom: '-40px'
-                                }}
-                            >
-                                From AI face scan to perfect frames
-                            </p>
+                            <div className="w-[700px] max-w-[90%] mx-auto flex justify-center">
+                                <Image
+                                    src="/Title.png"
+                                    alt="AI Eyewear Recommendation, From AI face scan to perfect frames"
+                                    width={579}
+                                    height={176} 
+                                    className="object-contain"
+                                    priority
+                                />
+                            </div>
                             <OrbitEyewear />
                             <div className="absolute bottom-0 left-0 w-full flex justify-center pb-24">
                                 <Link href="/scan" className="flex justify-center">

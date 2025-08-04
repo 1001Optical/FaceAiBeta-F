@@ -50,6 +50,7 @@ function LoadingInner() {
                             src="/1001Logo.png"
                             alt="1001Logo"
                             fill
+                            sizes="100px"
                             className="object-contain"
                             priority
                         />

@@ -310,6 +310,7 @@ export default function ScanPage() {
                                     src="/1001Logo.png"
                                     alt="1001Logo"
                                     fill
+                                    sizes="100px"
                                     className="object-contain"
                                     priority
                                 />
@@ -556,6 +557,7 @@ export default function ScanPage() {
                                         src="/1001Logo.png"
                                         alt="1001Logo"
                                         fill
+                                        sizes="100px"
                                         className="object-contain"
                                         priority
                                     />
