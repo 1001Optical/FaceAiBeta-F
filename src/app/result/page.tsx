@@ -36,7 +36,7 @@ function ResultContent() {
     const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
     // const faceShape = searchParams.get('faceShape') || 'Oval';
-
+    
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
         (f: FaceShapeDetail) =>

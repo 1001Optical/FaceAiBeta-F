@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import localFont from 'next/font/local';
 import './globals.css';
 
 const geistSans = Geist({
@@ -11,18 +10,6 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
-});
-
-const aribau = localFont({
-  src: [
-    {
-      path: '/fonts/Aribau-Grotesk-Regular.otf',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-aribau-grotesk',
-  display: 'swap', // or 'block'
 });
 
 export const metadata: Metadata = {
@@ -38,13 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`
-          ${geistSans.variable} 
-          ${geistMono.variable}
-          ${aribau.variable} 
-          antialiased
-        `}
-        style={{ fontFamily: 'var(--font-aribau-grotesk), var(--font-geist-sans), var(--font-geist-mono), Arial, Helvetica, sans-serif' }}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>
