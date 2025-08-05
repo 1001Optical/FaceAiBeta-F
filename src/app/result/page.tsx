@@ -148,10 +148,10 @@ function ResultContent() {
                         }}
                         onClick={e => e.stopPropagation()}
                     >
-                        <span className="text-xl font-semibold text-white text-center">Celebs with Your Face Type</span>
+                        <span className="text-xl font-aribau font-semibold text-white text-center">Celebs with Your Face Type</span>
                         <hr className="w-full border-t border-white border-opacity-30 my-3" />
                         {/* 셀럽 이름 */}
-                        <span className="text-lg text-white mb-6">{selectedCelebrity?.name}</span>
+                        <span className="text-lg font-aribau text-white mb-6">{selectedCelebrity?.name}</span>
                         {/* 셀럽 사진 */}
                         <div
                             className="flex items-center justify-center mb-8"
@@ -172,7 +172,7 @@ function ResultContent() {
                         </div>
                         <button
                             onClick={() => setSelectedCelebrity(null)}
-                            className="w-full py-4 bg-white/20 text-lg text-white rounded-full hover:bg-white/35 transition-colors duration-200 mt-auto border border-white/40 backdrop-blur-lg shadow-md"
+                            className="w-full py-4 bg-white/20 text-lg font-aribau text-white rounded-full hover:bg-white/35 transition-colors duration-200 mt-auto border border-white/40 backdrop-blur-lg shadow-md"
                         >
                             Got it
                         </button>
@@ -215,9 +215,9 @@ function ResultContent() {
                     >
                         <div className="flex flex-row items-start gap-8">
                             <div className="flex-1">
-                                <h3 className="text-3xl text-white mb-4">Understanding Your Face Shape</h3>
+                                <h3 className="text-3xl font-aribau text-white mb-4">Understanding Your Face Shape</h3>
                                 {faceDetail?.description && (
-                                    <p className="text-2xl text-white/70">{faceDetail.description}</p>
+                                    <p className="text-2xl font-aribau text-white/70">{faceDetail.description}</p>
                                 )}
                             </div>
                         </div>
@@ -225,7 +225,7 @@ function ResultContent() {
 
                     {/* Recommendation Frame 문구 추가 */}
                     <div className="w-[738px] mx-auto mt-6 mb-6">
-                        <h3 className="text-4xl text-white">Recommendation Frame</h3>
+                        <h3 className="text-4xl font-aribau text-white">Recommendation Frame</h3>
                     </div>
 
                     {/* 추천 프레임 */}
@@ -259,7 +259,7 @@ function ResultContent() {
                                             style={{ display: 'block', borderRadius: '40px' }}
                                         />
                                         <span
-                                            className="text-4xl text-white/50"
+                                            className="text-4xl text-white/50 font-aribau"
                                             style={{
                                                 position: 'absolute',
                                                 top: '16px',
@@ -272,7 +272,7 @@ function ResultContent() {
                                                 : '2nd'}
                                         </span>
                                         <h3
-                                            className="text-5xl text-white"
+                                            className="text-5xl text-white font-aribau"
                                             style={{
                                                 position: 'absolute',
                                                 top: '60px',
@@ -295,7 +295,7 @@ function ResultContent() {
                                                 boxSizing: 'border-box',
                                             }}
                                         >
-                                            <h4 className="text-4xl text-white"
+                                            <h4 className="text-4xl text-white font-aribau"
                                                 style={{ margin: 0, marginBottom: 10 }}
                                             >   
                                                 {faceShape} Celebs
@@ -315,7 +315,7 @@ function ResultContent() {
                                                         <button
                                                             key={btnIdx}
                                                             type="button"
-                                                            className="text-2xl"
+                                                            className="text-2xl font-aribau"
                                                             style={{
                                                                 display: 'flex',
                                                                 alignItems: 'center',
@@ -359,6 +359,7 @@ function ResultContent() {
                                 w-full py-5
                                 bg-gray-500/40
                                 text-2xl text-white
+                                font-aribau
                                 rounded-full
                                 hover:bg-white/35
                                 transition flex items-center justify-center
