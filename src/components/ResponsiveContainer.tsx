@@ -14,7 +14,7 @@ export default function ResponsiveContainer({ children }: { children: React.Reac
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const TOP_OFFSET = 70;
+    const TOP_OFFSET = 80;
 
     return (
         <div className="fixed-container"
