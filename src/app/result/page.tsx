@@ -105,9 +105,9 @@ function ResultContent() {
                             maxHeight: "90vh",
                         }}
                     >
-                        <span className="text-xl font-semibold text-white">QR Code</span>
+                        <span className="text-xl font-aribau font-semibold text-white">QR Code</span>
                         <hr className="w-full border-t border-white border-opacity-30 my-3" />
-                        <span className="text-lg text-white mb-6">{faceShape}</span>
+                        <span className="text-lg font-aribau text-white mb-6">{faceShape}</span>
                         <div
                             className="flex items-center justify-center mb-8"
                             style={{
@@ -127,7 +127,7 @@ function ResultContent() {
                         </div>
                         <button
                             onClick={() => setShowQRModel(false)}
-                            className="w-full py-4 bg-white/20 text-lg text-white rounded-full hover:bg-white/35 transition-colors duration-200 mt-auto border border-white/40 backdrop-blur-lg shadow-md"
+                            className="w-full py-4 bg-white/20 text-lg font-aribau text-white rounded-full hover:bg-white/35 transition-colors duration-200 mt-auto border border-white/40 backdrop-blur-lg shadow-md"
                         >
                             Got it
                         </button>
