@@ -32,10 +32,10 @@ function ResultContent() {
     }, []);
 
     // URL 파라미터에서 데이터 가져오기
-    const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
-    const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
+    // const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
+    // const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-    // const faceShape = searchParams.get('faceShape') || 'Oval';
+    const faceShape = searchParams.get('faceShape') || 'Oval';
     
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
@@ -87,7 +87,13 @@ function ResultContent() {
             {/* 상단 로고 고정 */}
             <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                 <Link href="/" passHref>
-                    <div className="relative w-[100px] h-[64px] cursor-pointer">
+                    <div 
+                        className="relative cursor-pointer"
+                         style={{
+                            width: 'clamp(60px, 10vw, 100px)', 
+                            height: 'clamp(38px, 6.4vw, 64px)',     
+                        }}
+                    >
                         <Image src="/1001Logo.png" alt="1001Logo" fill sizes="100px" className="object-contain" priority />
                     </div>
                 </Link>

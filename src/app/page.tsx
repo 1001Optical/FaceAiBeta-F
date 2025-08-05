@@ -28,27 +28,27 @@ export default function Home() {
                 }}
                 priority
             />
-
+            
             <div className="absolute inset-0 z-10 pointer-events-none">
                 <LottiePlayer />
             </div>
 
             <div className="relative z-20 max-w-[834px] mx-auto px-6 py-8">
-                <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
-                        <Link href="/" passHref>
-                            <div className="relative w-[100px] h-[64px] mb-12 cursor-pointer">
-                                <Image
-                                    src="/1001Logo.png"
-                                    alt="1001Logo"
-                                    fill
-                                    sizes="100px"
-                                    className="object-contain"
-                                    priority
-                                />
-                            </div>
-                        </Link>
-                    </header>
-                <ResponsiveContainer>
+            <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
+                <Link href="/" passHref>
+                    <div 
+                        className="relative cursor-pointer"
+                         style={{
+                            width: 'clamp(60px, 10vw, 100px)', 
+                            height: 'clamp(38px, 6.4vw, 64px)',     
+                        }}
+                    >
+                        <Image src="/1001Logo.png" alt="1001Logo" fill sizes="100px" className="object-contain" priority />
+                    </div>
+                </Link>
+            </header>
+        
+            <ResponsiveContainer>
                     {/* 메인 콘텐츠 영역 */}
                     <div className="max-w-[768px] mx-auto flex flex-col items-center justify-center pt-16">
 
@@ -110,8 +110,10 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                </ResponsiveContainer>
+                </ResponsiveContainer> 
             </div>
+                           
+
             <PolicyModal
                 isOpen={isPolicyModalOpen}
                 onClose={() => setIsPolicyModalOpen(false)}
