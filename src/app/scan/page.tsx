@@ -290,7 +290,7 @@ export default function ScanPage() {
                     {/* 내비게이션바 (뒤로가기 버튼) */}
                     <div
                         onClick={() => router.back()}
-                        className="fixed top-8 left-6 cursor-pointer z-30"
+                        className="fixed top-9 left-6 cursor-pointer z-30"
                         style={{
                             width: 'clamp(28px, 7vw, 44px)',
                             height: 'clamp(28px, 7vw, 44px)',
@@ -551,7 +551,7 @@ export default function ScanPage() {
                         {/* 내비게이션바 (뒤로가기 버튼) */}
                         <div
                             onClick={() => router.back()}
-                            className="fixed top-8 left-6 cursor-pointer z-30"
+                            className="fixed top-9 left-6 cursor-pointer z-30"
                             style={{
                                 width: 'clamp(28px, 7vw, 44px)',
                                 height: 'clamp(28px, 7vw, 44px)',

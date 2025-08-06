@@ -35,7 +35,7 @@ function ResultContent() {
     const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
     const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-    // const faceShape = searchParams.get('faceShape') || 'Oval';
+    // const faceShape = searchParams.get('faceShape') || 'Heart';
     
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
@@ -343,7 +343,9 @@ function ResultContent() {
                                                                 width={64}
                                                                 height={64}
                                                             />
-                                                            <span>
+                                                            <span
+                                                                style={{ display: 'block', textAlign: 'left' }}
+                                                            >
                                                                 {celeb.name}
                                                             </span>
                                                         </button>
