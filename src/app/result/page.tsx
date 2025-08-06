@@ -32,10 +32,10 @@ function ResultContent() {
     }, []);
 
     // URL 파라미터에서 데이터 가져오기
-    const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
-    const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
+    // const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
+    // const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-    // const faceShape = searchParams.get('faceShape') || 'Heart';
+    const faceShape = searchParams.get('faceShape') || 'Heart';
     
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
@@ -193,10 +193,11 @@ function ResultContent() {
             <div
                 style={{
                     width: 810,
-                    height: 1080,
+                    // height: 1080,
                     transform: `scale(${scale})`,
                     transformOrigin: 'top center',
                     position: 'relative',
+                    minHeight: 'auto'
                 }}
                 className="bg-transparent"
             >
