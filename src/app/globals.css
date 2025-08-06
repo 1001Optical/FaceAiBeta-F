@@ -55,3 +55,7 @@ body {
     top: 50%;
     transform-origin: top left;
 }
+
+.lf-error {
+  display: none !important;
+}
