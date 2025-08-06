@@ -193,11 +193,10 @@ function ResultContent() {
             <div
                 style={{
                     width: 810,
-                    // height: 1080,
+                    height: 1080,
                     transform: `scale(${scale})`,
                     transformOrigin: 'top center',
                     position: 'relative',
-                    minHeight: 'auto'
                 }}
                 className="bg-transparent"
             >
