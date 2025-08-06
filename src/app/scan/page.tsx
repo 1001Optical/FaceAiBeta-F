@@ -287,52 +287,48 @@ export default function ScanPage() {
                         minHeight: 652,
                     }}
                 >
-
-                    <header
-                        className="w-full relative flex items-center top-8"
+                    {/* 내비게이션바 (뒤로가기 버튼) */}
+                    <div
+                        onClick={() => router.back()}
+                        className="fixed top-8 left-6 cursor-pointer z-30"
                         style={{
-                            minHeight: '80px',
+                            width: 'clamp(28px, 7vw, 44px)',
+                            height: 'clamp(28px, 7vw, 44px)',
                         }}
                     >
-                        {/* 내비게이션바(왼쪽 상단 절대위치) */}
-                        <div
-                            onClick={() => router.back()}
-                            className="absolute left-6 top-1/2 -translate-y-1/2 cursor-pointer z-30"
-                            style={{
-                                width: 'clamp(28px, 7vw, 44px)',
-                                height: 'clamp(28px, 7vw, 44px)',
-                            }}
-                        >
-                            <Image
-                                src="/direction_left.png"
-                                alt="내비게이션 바"
-                                fill
-                                sizes="80px"
-                                className="object-contain"
-                                priority
-                            />
-                        </div>
-                        {/* 로고(가운데) */}
-                        <div className="fixed left-1/2 -translate-x-1/2 z-30">
-                            <Link href="/" passHref>
-                                <div
-                                    className="relative cursor-pointer"
-                                    style={{
-                                        width: 'clamp(60px, 10vw, 100px)',
-                                        height: 'clamp(38px, 6.4vw, 64px)',
-                                    }}
-                                >
-                                    <Image
-                                        src="/1001Logo.png"
-                                        alt="1001Logo"
-                                        fill
-                                        sizes="100px"
-                                        className="object-contain"
-                                        priority
-                                    />
-                                </div>
-                            </Link>
-                        </div>
+                        <Image
+                            src="/direction_left.png"
+                            alt="내비게이션 바"
+                            fill
+                            sizes="80px"
+                            className="object-contain"
+                            priority
+                        />
+                    </div>
+
+                    {/* 로고 (가로 중앙 상단 고정) */}
+                    <header
+                        className="fixed top-8 left-1/2 -translate-x-1/2 z-30"
+                        style={{ pointerEvents: 'none' }} // header 자체에 클릭 무시, 내부만 클릭 가능
+                    >
+                        <Link href="/" passHref>
+                            <div
+                                className="relative cursor-pointer pointer-events-auto"
+                                style={{
+                                    width: 'clamp(60px, 10vw, 100px)',
+                                    height: 'clamp(38px, 6.4vw, 64px)',
+                                }}
+                            >
+                                <Image
+                                    src="/1001Logo.png"
+                                    alt="1001Logo"
+                                    fill
+                                    sizes="100px"
+                                    className="object-contain"
+                                    priority
+                                />
+                            </div>
+                        </Link>
                     </header>
 
                     <ResponsiveContainer>
@@ -552,53 +548,49 @@ export default function ScanPage() {
                         style={{ background: 'rgba(0,0,0,0.35)' }}
                     >
 
-                        <header
-                            className="w-full relative flex items-center top-8"
+                        {/* 내비게이션바 (뒤로가기 버튼) */}
+                        <div
+                            onClick={() => router.back()}
+                            className="fixed top-8 left-6 cursor-pointer z-30"
                             style={{
-                                minHeight: '80px',
+                                width: 'clamp(28px, 7vw, 44px)',
+                                height: 'clamp(28px, 7vw, 44px)',
                             }}
                         >
-                            {/* 내비게이션바(왼쪽 상단 절대위치) */}
-                            <div
-                                onClick={() => router.back()}
-                                className="absolute left-6 top-1/2 -translate-y-1/2 cursor-pointer z-30"
-                                style={{
-                                    width: 'clamp(28px, 7vw, 44px)',
-                                    height: 'clamp(28px, 7vw, 44px)',
-                                }}
-                            >
-                                <Image
-                                    src="/direction_left.png"
-                                    alt="내비게이션 바"
-                                    fill
-                                    sizes="80px"
-                                    className="object-contain"
-                                    priority
-                                />
-                            </div>
-                            {/* 로고(가운데) */}
-                            <div className="fixed left-1/2 -translate-x-1/2 z-30">
-                                <Link href="/" passHref>
-                                    <div
-                                        className="relative cursor-pointer"
-                                        style={{
-                                            width: 'clamp(60px, 10vw, 100px)',
-                                            height: 'clamp(38px, 6.4vw, 64px)',
-                                        }}
-                                    >
-                                        <Image
-                                            src="/1001Logo.png"
-                                            alt="1001Logo"
-                                            fill
-                                            sizes="100px"
-                                            className="object-contain"
-                                            priority
-                                        />
-                                    </div>
-                                </Link>
-                            </div>
-                        </header>
+                            <Image
+                                src="/direction_left.png"
+                                alt="내비게이션 바"
+                                fill
+                                sizes="80px"
+                                className="object-contain"
+                                priority
+                            />
+                        </div>
 
+                        {/* 로고 (가로 중앙 상단 고정) */}
+                        <header
+                            className="fixed top-8 left-1/2 -translate-x-1/2 z-30"
+                            style={{ pointerEvents: 'none' }} // header 자체에 클릭 무시, 내부만 클릭 가능
+                        >
+                            <Link href="/" passHref>
+                                <div
+                                    className="relative cursor-pointer pointer-events-auto"
+                                    style={{
+                                        width: 'clamp(60px, 10vw, 100px)',
+                                        height: 'clamp(38px, 6.4vw, 64px)',
+                                    }}
+                                >
+                                    <Image
+                                        src="/1001Logo.png"
+                                        alt="1001Logo"
+                                        fill
+                                        sizes="100px"
+                                        className="object-contain"
+                                        priority
+                                    />
+                                </div>
+                            </Link>
+                        </header>
                         <ResponsiveContainer>
                             <div
                                 style={{
