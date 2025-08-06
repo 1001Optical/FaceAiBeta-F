@@ -249,13 +249,13 @@ export default function ScanPage() {
         }
     }, [apiUrl, isLoading, router]);
 
-    // 얼굴이 타원 안에 들어오면 2초 후 자동 캡처 (임시: 버튼 없이 타이머)
+    // 얼굴이 타원 안에 들어오면 1초 후 자동 캡처 (임시: 버튼 없이 타이머)
     useEffect(() => {
         if (step === 'guide' && !captured) {
-            setCountdown(2);
+            setCountdown(1);
             const timer = setTimeout(() => {
                 handleCapture();
-            }, 2000);
+            }, 1000);
             return () => clearTimeout(timer);
         } else {
             setCountdown(null);
