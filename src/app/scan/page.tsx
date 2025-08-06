@@ -276,7 +276,7 @@ export default function ScanPage() {
             />
             {/* 캡처된 이미지 미리보기 (디버그용) */}
             <canvas ref={canvasRef} className="hidden" />
-            
+
             {/* 반투명 오버레이 + 안내문구 + 버튼 (1번 화면) */}
             {step === 'intro' && (
                 <div
@@ -288,33 +288,51 @@ export default function ScanPage() {
                     }}
                 >
 
-                    {/* 내비게이션바 이미지 */}
-                    <div
-                        className="absolute top-8 left-6 z-30 cursor-pointer w-[44px] h-[44px]"
-                        onClick={() => router.back()}
+                    <header
+                        className="w-full relative flex items-center top-8"
+                        style={{
+                            minHeight: '80px',
+                        }}
                     >
-                        <Image
-                            src="/direction_left.png"
-                            alt="내비게이션 바"
-                            fill
-                            sizes="44px"
-                            className="object-contain"
-                        />
-                    </div>
-
-                    {/* 로고: 메인화면과 동일한 위치/크기 */}
-                    <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
-                        <Link href="/" passHref>
-                            <div 
-                                className="relative cursor-pointer"
-                                style={{
-                                    width: 'clamp(60px, 10vw, 100px)', 
-                                height: 'clamp(38px, 6.4vw, 64px)',     
-                                }}
-                            >
-                                <Image src="/1001Logo.png" alt="1001Logo" fill sizes="100px" className="object-contain" priority />
-                            </div>
-                        </Link>
+                        {/* 내비게이션바(왼쪽 상단 절대위치) */}
+                        <div
+                            onClick={() => router.back()}
+                            className="absolute left-6 top-1/2 -translate-y-1/2 cursor-pointer z-30"
+                            style={{
+                                width: 'clamp(28px, 7vw, 44px)',
+                                height: 'clamp(28px, 7vw, 44px)',
+                            }}
+                        >
+                            <Image
+                                src="/direction_left.png"
+                                alt="내비게이션 바"
+                                fill
+                                sizes="80px"
+                                className="object-contain"
+                                priority
+                            />
+                        </div>
+                        {/* 로고(가운데) */}
+                        <div className="fixed left-1/2 -translate-x-1/2 z-30">
+                            <Link href="/" passHref>
+                                <div
+                                    className="relative cursor-pointer"
+                                    style={{
+                                        width: 'clamp(60px, 10vw, 100px)',
+                                        height: 'clamp(38px, 6.4vw, 64px)',
+                                    }}
+                                >
+                                    <Image
+                                        src="/1001Logo.png"
+                                        alt="1001Logo"
+                                        fill
+                                        sizes="100px"
+                                        className="object-contain"
+                                        priority
+                                    />
+                                </div>
+                            </Link>
+                        </div>
                     </header>
 
                     <ResponsiveContainer>
@@ -530,37 +548,55 @@ export default function ScanPage() {
             {
                 step === 'guide' && (
                     <div
-                        className="absolute inset-0 flex flex-col items-center justify-center z-10 p-4"
+                        className="fixed inset-0 z-10"
                         style={{ background: 'rgba(0,0,0,0.35)' }}
                     >
 
-                        {/* 내비게이션바 이미지 */}
-                        <div
-                            className="absolute top-8 left-6 z-30 cursor-pointer w-[44px] h-[44px]"
-                            onClick={() => window.location.reload()}
+                        <header
+                            className="w-full relative flex items-center top-8"
+                            style={{
+                                minHeight: '80px',
+                            }}
                         >
-                            <Image
-                                src="/direction_left.png"
-                                alt="내비게이션 바"
-                                fill
-                                sizes="44px"
-                                className="object-contain"
-                            />
-                        </div>
-
-                        {/* 로고: 메인화면과 동일한 위치/크기 */}
-                        <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
-                            <Link href="/" passHref>
-                                <div 
-                                    className="relative cursor-pointer"
-                                    style={{
-                                        width: 'clamp(60px, 10vw, 100px)', 
-                                        height: 'clamp(38px, 6.4vw, 64px)',     
-                                    }}
-                                >
-                                    <Image src="/1001Logo.png" alt="1001Logo" fill sizes="100px" className="object-contain" priority />
-                                </div>
-                            </Link>
+                            {/* 내비게이션바(왼쪽 상단 절대위치) */}
+                            <div
+                                onClick={() => router.back()}
+                                className="absolute left-6 top-1/2 -translate-y-1/2 cursor-pointer z-30"
+                                style={{
+                                    width: 'clamp(28px, 7vw, 44px)',
+                                    height: 'clamp(28px, 7vw, 44px)',
+                                }}
+                            >
+                                <Image
+                                    src="/direction_left.png"
+                                    alt="내비게이션 바"
+                                    fill
+                                    sizes="80px"
+                                    className="object-contain"
+                                    priority
+                                />
+                            </div>
+                            {/* 로고(가운데) */}
+                            <div className="fixed left-1/2 -translate-x-1/2 z-30">
+                                <Link href="/" passHref>
+                                    <div
+                                        className="relative cursor-pointer"
+                                        style={{
+                                            width: 'clamp(60px, 10vw, 100px)',
+                                            height: 'clamp(38px, 6.4vw, 64px)',
+                                        }}
+                                    >
+                                        <Image
+                                            src="/1001Logo.png"
+                                            alt="1001Logo"
+                                            fill
+                                            sizes="100px"
+                                            className="object-contain"
+                                            priority
+                                        />
+                                    </div>
+                                </Link>
+                            </div>
                         </header>
 
                         <ResponsiveContainer>
