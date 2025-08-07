@@ -50,8 +50,8 @@ export const faceShapeDetails: FaceShapeDetail[] = [
       'This face is round with full cheeks and a broad forehead. Structured frames define and balance the natural curves beautifully.',
       celebrities: [
       { name: 'Ed Sheeran', gender: 'male' },
-      { name: 'BTS Jin', gender: 'male' },
       { name: 'Jill Scott', gender: 'female' },
+      { name: 'BTS Jin', gender: 'male' },
       { name: 'Selena Gomez', gender: 'female' },
       { name: 'Jack Black', gender: 'male' },
       { name: 'Chrissy Teigen', gender: 'female' }
