@@ -9,10 +9,10 @@ import Link from 'next/link';
 import { faceShapeDetails } from '@/data/faceData';
 import { frameRecommendations } from '@/data/reconMap';
 import { frameShapeDetails } from '@/data/frameData';
-import { FaceShapeDetail, FrameShapeDetail , Celebrity} from '@/types/face';
+import { FaceShapeDetail, FrameShapeDetail, Celebrity } from '@/types/face';
 
 function ResultContent() {
- 
+
     const searchParams = useSearchParams();
     const [showQRModel, setShowQRModel] = useState(false);
     const [selectedCelebrity, setSelectedCelebrity] = useState<Celebrity | null>(null);
@@ -32,11 +32,11 @@ function ResultContent() {
     }, []);
 
     // URL 파라미터에서 데이터 가져오기
-    const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
-    const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
+    // const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
+    // const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-    // const faceShape = searchParams.get('faceShape') || 'Heart';
-    
+    const faceShape = searchParams.get('faceShape') || 'Heart';
+
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
         (f: FaceShapeDetail) =>
@@ -87,11 +87,11 @@ function ResultContent() {
             {/* 상단 로고 고정 */}
             <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
                 <Link href="/" passHref>
-                    <div 
+                    <div
                         className="relative cursor-pointer"
-                         style={{
-                            width: 'clamp(60px, 10vw, 100px)', 
-                            height: 'clamp(38px, 6.4vw, 64px)',     
+                        style={{
+                            width: 'clamp(60px, 10vw, 100px)',
+                            height: 'clamp(38px, 6.4vw, 64px)',
                         }}
                     >
                         <Image src="/1001Logo.png" alt="1001Logo" fill sizes="100px" className="object-contain" priority />
@@ -187,183 +187,184 @@ function ResultContent() {
             )}
 
             {/* 메인 영역 */}
-            <div className="absolute top-[100px] left-0 w-full h-[calc(100vh-110px)] flex justify-center overflow-y-auto">
+            <div className="absolute top-[100px] left-0 w-full h-[calc(100vh-110px)] flex justify-center overflow-y-auto pb-8">
 
-            {/* 컨텐츠 박스: 고정 크기 + scale + 중앙 정렬 */}
-            <div
-                style={{
-                    width: 810,
-                    height: 1080,
-                    transform: `scale(${scale})`,
-                    transformOrigin: 'top center',
-                    position: 'relative',
-                }}
-                className="bg-transparent"
-            >
-                <main className="w-full mx-auto px-6 flex flex-col">
-                    <Image
-                        src={`/result/${faceShape}.png`}
-                        alt={`${faceShape} 결과 이미지`}
-                        width={738}
-                        height={290}
-                        className="w-full max-w-[738px] mx-auto rounded-[40px] shadow-lg"
-                        priority
-                    />
+                {/* 컨텐츠 박스: 고정 크기 + scale + 중앙 정렬 */}
+                <div
+                    style={{
+                        width: 810,
+                        height: 'min(1080px, calc(100vh - 132px))',
+                        minHeight: 0,
+                        transform: `scale(${scale})`,
+                        transformOrigin: 'top center',
+                        position: 'relative',
+                    }}
+                    className="bg-transparent"
+                >
+                    <main className="w-full mx-auto px-6 flex flex-col">
+                        <Image
+                            src={`/result/${faceShape}.png`}
+                            alt={`${faceShape} 결과 이미지`}
+                            width={738}
+                            height={290}
+                            className="w-full max-w-[738px] mx-auto rounded-[40px] shadow-lg"
+                            priority
+                        />
 
-                    {/* 얼굴형 설명*/}
-                    <section
-                        className="p-[32px] w-[738px] h-[210px] mx-auto mb-6"
-                        style={{
-                            borderRadius: "40px",
-                            background: "rgba(255, 255, 255, 0.2)",
-                            backdropFilter: "blur(6px)",
-                        }}
-                    >
-                        <div className="flex flex-row items-start gap-8">
-                            <div className="flex-1">
-                                <h3 className="text-3xl font-aribau text-white mb-4">Understanding Your Face Shape</h3>
-                                {faceDetail?.description && (
-                                    <p className="text-2xl font-aribau text-white/70">{faceDetail.description}</p>
-                                )}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Recommendation Frame 문구 추가 */}
-                    <div className="w-[738px] mx-auto mt-6 mb-6">
-                        <h3 className="text-4xl font-aribau text-white">Recommendation Frame</h3>
-                    </div>
-
-                    {/* 추천 프레임 */}
-                    {frameDetails.length > 0 && (
-                        <div
+                        {/* 얼굴형 설명*/}
+                        <section
+                            className="p-[32px] w-[738px] h-[210px] mx-auto mb-6"
                             style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '24px',
-                                alignItems: 'center',
-                                justifyContent: 'flex-start',
+                                borderRadius: "40px",
+                                background: "rgba(255, 255, 255, 0.2)",
+                                backdropFilter: "blur(6px)",
                             }}
                         >
-                            {frameDetails.map((frame, index) =>
-                                frame && index < 2 ? (
-                                    <div
-                                        key={index}
-                                        style={{
-                                            position: 'relative',
-                                            width: 738,
-                                            height: 392,
-                                            borderRadius: 40,
-                                            overflow: 'hidden',
-                                        }}
-                                    >
-                                        <Image
-                                            src={`/frame/${frame.image}`}
-                                            alt="frame"
-                                            width={738}
-                                            height={392}
-                                            style={{ display: 'block', borderRadius: '40px' }}
-                                        />
-                                        <span
-                                            className="text-4xl text-white/50 font-aribau"
-                                            style={{
-                                                position: 'absolute',
-                                                top: '16px',
-                                                borderRadius: '40px',
-                                                padding: '20px 42px',
-                                            }}
-                                        >
-                                            {index === 0
-                                                ? '1st'
-                                                : '2nd'}
-                                        </span>
-                                        <h3
-                                            className="text-5xl text-white font-aribau"
-                                            style={{
-                                                position: 'absolute',
-                                                top: '60px',
-                                                borderRadius: '40px',
-                                                padding: '25px 42px',
-                                                margin: 0,
-                                            }}
-                                        >
-                                            {frame.shape}
-                                        </h3>
+                            <div className="flex flex-row items-start gap-8">
+                                <div className="flex-1">
+                                    <h3 className="text-3xl font-aribau text-white mb-4">Understanding Your Face Shape</h3>
+                                    {faceDetail?.description && (
+                                        <p className="text-2xl font-aribau text-white/70">{faceDetail.description}</p>
+                                    )}
+                                </div>
+                            </div>
+                        </section>
 
-                                        {/* 우측 상단부에 "faceShape Celebs" */}
-                                        <div
-                                            style={{
-                                                position: 'absolute',
-                                                top: '16px',
-                                                left: '350px',
-                                                borderRadius: '40px',
-                                                padding: '20px 42px',
-                                                boxSizing: 'border-box',
-                                            }}
-                                        >
-                                            <h4 className="text-4xl text-white font-aribau"
-                                                style={{ margin: 0, marginBottom: 10 }}
-                                            >   
-                                                {faceShape} Celebs
-                                            </h4>
-
-                                            {/* 셀럽 3인 버튼 리스트 출력 */}
-                                            <div style={{
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                                gap: '12px',
-                                                alignItems: 'flex-start',
-                                                width: '100%'
-                                            }}>
-                                                {faceDetail?.celebrities
-                                                    ?.slice(index * 3, index * 3 + 3)
-                                                    .map((celeb, btnIdx) => (
-                                                        <button
-                                                            key={btnIdx}
-                                                            type="button"
-                                                            className="text-2xl font-aribau"
-                                                            style={{
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                color: '#fff',
-                                                                fontWeight: 400,
-                                                                border: 'none',
-                                                                borderBottom: `4px solid ${celeb.gender === 'female' ? '#FF69B4' : '#00BFFF'}`,
-                                                                outline: 'none',
-                                                                cursor: 'pointer',
-                                                                gap: '8px',
-                                                                paddingTop: 8,
-                                                                paddingBottom: 8,
-                                                            }}
-                                                            onClick={() => setSelectedCelebrity(celeb)}
-                                                        >
-                                                            <Image
-                                                                src={`/button/Button_${celeb.name}.png`}
-                                                                alt={celeb.name}
-                                                                width={64}
-                                                                height={64}
-                                                            />
-                                                            <span
-                                                                style={{ display: 'block', textAlign: 'left' }}
-                                                            >
-                                                                {celeb.name}
-                                                            </span>
-                                                        </button>
-                                                    ))}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                ) : null
-                            )}
+                        {/* Recommendation Frame 문구 추가 */}
+                        <div className="w-[738px] mx-auto mt-6 mb-6">
+                            <h3 className="text-4xl font-aribau text-white">Recommendation Frame</h3>
                         </div>
-                    )}
 
-                    {/* QR 코드 버튼 */}
-                    <div className="w-[738px] h-[88px] mx-auto mt-10">
-                        <button
-                            onClick={() => setShowQRModel(true)}
-                            className="
+                        {/* 추천 프레임 */}
+                        {frameDetails.length > 0 && (
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '24px',
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-start',
+                                }}
+                            >
+                                {frameDetails.map((frame, index) =>
+                                    frame && index < 2 ? (
+                                        <div
+                                            key={index}
+                                            style={{
+                                                position: 'relative',
+                                                width: 738,
+                                                height: 392,
+                                                borderRadius: 40,
+                                                overflow: 'hidden',
+                                            }}
+                                        >
+                                            <Image
+                                                src={`/frame/${frame.image}`}
+                                                alt="frame"
+                                                width={738}
+                                                height={392}
+                                                style={{ display: 'block', borderRadius: '40px' }}
+                                            />
+                                            <span
+                                                className="text-4xl text-white/50 font-aribau"
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: '16px',
+                                                    borderRadius: '40px',
+                                                    padding: '20px 42px',
+                                                }}
+                                            >
+                                                {index === 0
+                                                    ? '1st'
+                                                    : '2nd'}
+                                            </span>
+                                            <h3
+                                                className="text-5xl text-white font-aribau"
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: '60px',
+                                                    borderRadius: '40px',
+                                                    padding: '25px 42px',
+                                                    margin: 0,
+                                                }}
+                                            >
+                                                {frame.shape}
+                                            </h3>
+
+                                            {/* 우측 상단부에 "faceShape Celebs" */}
+                                            <div
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: '16px',
+                                                    left: '350px',
+                                                    borderRadius: '40px',
+                                                    padding: '20px 42px',
+                                                    boxSizing: 'border-box',
+                                                }}
+                                            >
+                                                <h4 className="text-4xl text-white font-aribau"
+                                                    style={{ margin: 0, marginBottom: 10 }}
+                                                >
+                                                    {faceShape} Celebs
+                                                </h4>
+
+                                                {/* 셀럽 3인 버튼 리스트 출력 */}
+                                                <div style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: '12px',
+                                                    alignItems: 'flex-start',
+                                                    width: '100%'
+                                                }}>
+                                                    {faceDetail?.celebrities
+                                                        ?.slice(index * 3, index * 3 + 3)
+                                                        .map((celeb, btnIdx) => (
+                                                            <button
+                                                                key={btnIdx}
+                                                                type="button"
+                                                                className="text-2xl font-aribau"
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    alignItems: 'center',
+                                                                    color: '#fff',
+                                                                    fontWeight: 400,
+                                                                    border: 'none',
+                                                                    borderBottom: `4px solid ${celeb.gender === 'female' ? '#FF69B4' : '#00BFFF'}`,
+                                                                    outline: 'none',
+                                                                    cursor: 'pointer',
+                                                                    gap: '8px',
+                                                                    paddingTop: 8,
+                                                                    paddingBottom: 8,
+                                                                }}
+                                                                onClick={() => setSelectedCelebrity(celeb)}
+                                                            >
+                                                                <Image
+                                                                    src={`/button/Button_${celeb.name}.png`}
+                                                                    alt={celeb.name}
+                                                                    width={64}
+                                                                    height={64}
+                                                                />
+                                                                <span
+                                                                    style={{ display: 'block', textAlign: 'left' }}
+                                                                >
+                                                                    {celeb.name}
+                                                                </span>
+                                                            </button>
+                                                        ))}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    ) : null
+                                )}
+                            </div>
+                        )}
+
+                        {/* QR 코드 버튼 */}
+                        <div className="w-[738px] h-[88px] mx-auto mt-10">
+                            <button
+                                onClick={() => setShowQRModel(true)}
+                                className="
                                 w-full py-5
                                 bg-gray-500/40
                                 text-2xl text-white
@@ -375,19 +376,19 @@ function ResultContent() {
                                 border border-white/40 
                                 shadow-md 
                             "
-                        >
-                            Get QR Code
-                            <Image
-                                src="/upload.png"
-                                alt="Upload"
-                                width={44}
-                                height={44}
-                                className="ml-2"
-                            />
-                        </button>
-                    </div>
-                </main>
-            </div>
+                            >
+                                Get QR Code
+                                <Image
+                                    src="/upload.png"
+                                    alt="Upload"
+                                    width={44}
+                                    height={44}
+                                    className="ml-2"
+                                />
+                            </button>
+                        </div>
+                    </main>
+                </div>
             </div>
         </div>
     );
