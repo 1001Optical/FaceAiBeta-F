@@ -189,7 +189,7 @@ function ResultContent() {
             {/* 메인 영역 */}
             <div
                 className="absolute top-[100px] left-0 w-full h-[calc(100vh-100px)] flex justify-center overflow-y-auto"
-                style={{ paddingBottom: 32 }}
+                style={{ paddingBottom: 120 }}
             >
                 {/* 컨텐츠 박스: 고정 크기 + scale + 중앙 정렬 */}
                 <div
@@ -363,7 +363,7 @@ function ResultContent() {
                         )}
 
                         {/* QR 코드 버튼 */}
-                        <div className="w-[738px] h-[88px] mx-auto mt-10">
+                        <div className="w-[738px] h-[88px] mx-auto mt-10 mb-8">
                             <button
                                 onClick={() => setShowQRModel(true)}
                                 className="
