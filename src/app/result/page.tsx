@@ -23,7 +23,7 @@ function ResultContent() {
     useEffect(() => {
         function updateScale() {
             const wScale = window.innerWidth / 810;
-            const hScale = window.innerHeight / 1705;
+            const hScale = window.innerHeight / 1080;
             setScale(Math.min(wScale, hScale, 1));
         }
         updateScale();
@@ -194,7 +194,7 @@ function ResultContent() {
                 <div
                     style={{
                         width: 810,
-                        height: 1705,
+                        height: 1080,
                         position: 'relative',
                         transform: `scale(${scale})`,
                         transformOrigin: 'top center',
@@ -361,7 +361,7 @@ function ResultContent() {
                         )}
 
                         {/* QR 코드 버튼 */}
-                        <div className="w-[738px] h-[88px] mx-auto mt-10 mb-8">
+                        <div className="w-[738px] h-[88px] mx-auto mt-10 mb-12">
                             <button
                                 onClick={() => setShowQRModel(true)}
                                 className="
