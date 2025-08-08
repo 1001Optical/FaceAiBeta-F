@@ -56,7 +56,7 @@ export default function Home() {
                             <div className="w-[700px] max-w-[90%] mx-auto flex justify-center">
                                 <Image
                                     src="/Title.png"
-                                    alt="AI Eyewear Recommendation, From AI face scan to perfect frames"
+                                    alt="AI Eyewear Recommendation, Perfect Frames. Powered by AI."
                                     width={579}
                                     height={176} 
                                     className="object-contain"
