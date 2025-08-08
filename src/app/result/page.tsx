@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -16,6 +16,7 @@ function ResultContent() {
     const searchParams = useSearchParams();
     const [showQRModel, setShowQRModel] = useState(false);
     const [selectedCelebrity, setSelectedCelebrity] = useState<Celebrity | null>(null);
+    const router = useRouter();
 
     // 뷰포트 크기에 따른 스케일 상태
     const [scale, setScale] = useState(1);
@@ -32,10 +33,10 @@ function ResultContent() {
     }, []);
 
     // URL 파라미터에서 데이터 가져오기
-    const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
-    const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
+    // const faceShapeRaw = searchParams.get('faceShape') || 'Unknown';
+    // const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-    // const faceShape = searchParams.get('faceShape') || 'Heart';
+    const faceShape = searchParams.get('faceShape') || 'Heart';
 
     // 얼굴형 상세 정보
     const faceDetail = faceShapeDetails.find(
@@ -361,7 +362,7 @@ function ResultContent() {
                         )}
 
                         {/* QR 코드 버튼 */}
-                        <div className="w-[738px] h-[88px] mx-auto mt-10 mb-12">
+                        <div className="w-[738px] h-[88px] mx-auto mt-10">
                             <button
                                 onClick={() => setShowQRModel(true)}
                                 className="
@@ -381,6 +382,34 @@ function ResultContent() {
                                 <Image
                                     src="/upload.png"
                                     alt="Upload"
+                                    width={44}
+                                    height={44}
+                                    className="ml-2"
+                                />
+                            </button>
+                        </div>
+
+                        {/* Go Back 버튼 */}
+                        <div className="w-[738px] h-[88px] mx-auto mt-4 mb-12">
+                            <button
+                                onClick={() => router.push('/')}
+                                className="
+                                w-full py-5
+                                bg-gray-500/40
+                                text-2xl text-white
+                                font-aribau
+                                rounded-full
+                                hover:bg-white/35
+                                transition flex items-center justify-center
+                                backdrop-blur  
+                                border border-white/40 
+                                shadow-md 
+                            "
+                            >
+                                Scan Another Face
+                                <Image
+                                    src="/face.png"
+                                    alt="face"
                                     width={44}
                                     height={44}
                                     className="ml-2"
