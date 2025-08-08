@@ -23,7 +23,7 @@ function ResultContent() {
     useEffect(() => {
         function updateScale() {
             const wScale = window.innerWidth / 810;
-            const hScale = window.innerHeight / 1080;
+            const hScale = window.innerHeight / 1705;
             setScale(Math.min(wScale, hScale, 1));
         }
         updateScale();
@@ -187,13 +187,14 @@ function ResultContent() {
             )}
 
             {/* 메인 영역 */}
-            <div className="absolute top-[100px] left-0 w-full h-[calc(100vh-100px)] flex justify-center overflow-y-auto mb-20">
+            <div
+                className="absolute top-[100px] left-0 w-full h-[calc(100vh-100px)] flex justify-center overflow-y-auto"
+            >
                 {/* 컨텐츠 박스: 고정 크기 + scale + 중앙 정렬 */}
                 <div
                     style={{
                         width: 810,
-                        height: 1080,
-                        maxHeight: 'calc(100vh - 132px)',
+                        height: 1705,
                         position: 'relative',
                         transform: `scale(${scale})`,
                         transformOrigin: 'top center',
