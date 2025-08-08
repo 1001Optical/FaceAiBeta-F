@@ -187,17 +187,19 @@ function ResultContent() {
             )}
 
             {/* 메인 영역 */}
-            <div className="absolute top-[100px] left-0 w-full h-[calc(100vh-110px)] flex justify-center overflow-y-auto pb-8">
-
+            <div
+                className="absolute top-[100px] left-0 w-full h-[calc(100vh-100px)] flex justify-center overflow-y-auto"
+                style={{ paddingBottom: 32 }}
+            >
                 {/* 컨텐츠 박스: 고정 크기 + scale + 중앙 정렬 */}
                 <div
                     style={{
                         width: 810,
-                        height: 'min(1080px, calc(100vh - 132px))',
-                        minHeight: 0,
+                        height: 1080,
+                        maxHeight: 'calc(100vh - 132px)',
+                        position: 'relative',
                         transform: `scale(${scale})`,
                         transformOrigin: 'top center',
-                        position: 'relative',
                     }}
                     className="bg-transparent"
                 >
