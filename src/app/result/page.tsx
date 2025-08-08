@@ -187,10 +187,7 @@ function ResultContent() {
             )}
 
             {/* 메인 영역 */}
-            <div
-                className="absolute top-[100px] left-0 w-full h-[calc(100vh-100px)] flex justify-center overflow-y-auto"
-                style={{ paddingBottom: 120 }}
-            >
+            <div className="absolute top-[100px] left-0 w-full h-[calc(100vh-100px)] flex justify-center overflow-y-auto mb-20">
                 {/* 컨텐츠 박스: 고정 크기 + scale + 중앙 정렬 */}
                 <div
                     style={{
