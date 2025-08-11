@@ -35,7 +35,7 @@ export default function ResponsiveContainer({ children }: { children: React.Reac
                     position: 'absolute',
                     left: '50%',
                     top: TOP_OFFSET,
-                    transformOrigin: 'center left',
+                    transformOrigin: 'top left',
                     transform: `scale(${scale}) translateX(-50%)`
                 }}
             >
