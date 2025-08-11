@@ -14,7 +14,7 @@ export default function ResponsiveContainer({ children }: { children: React.Reac
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const TOP_OFFSET = 80;
+    const TOP_OFFSET = 70;
 
     return (
         <div className="fixed-container"
@@ -35,7 +35,7 @@ export default function ResponsiveContainer({ children }: { children: React.Reac
                     position: 'absolute',
                     left: '50%',
                     top: TOP_OFFSET,
-                    transformOrigin: 'top left',
+                    transformOrigin: 'center left',
                     transform: `scale(${scale}) translateX(-50%)`
                 }}
             >
