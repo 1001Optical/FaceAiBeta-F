@@ -2,8 +2,8 @@
 
 const cx = 600;
 const cy = 540;
-const rx = 207;
-const ry = 265;
+const rx = 240;
+const ry = 307;
 
 const FaceScanBar: React.FC = () => {
     const [scanY, setScanY] = useState(cy); // 반드시 cy로 초기화

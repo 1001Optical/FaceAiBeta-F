@@ -249,13 +249,13 @@ export default function ScanPage() {
         }
     }, [apiUrl, isLoading, router]);
 
-    // 얼굴이 타원 안에 들어오면 1초 후 자동 캡처 (임시: 버튼 없이 타이머)
+    // 얼굴이 타원 안에 들어오면 2초 후 자동 캡처 (임시: 버튼 없이 타이머)
     useEffect(() => {
         if (step === 'guide' && !captured) {
-            setCountdown(1);
+            setCountdown(2);
             const timer = setTimeout(() => {
                 handleCapture();
-            }, 1000);
+            }, 2000);
             return () => clearTimeout(timer);
         } else {
             setCountdown(null);
@@ -613,8 +613,8 @@ export default function ScanPage() {
                                     <ellipse
                                         cx="600"
                                         cy="540"
-                                        rx={207}
-                                        ry={265}
+                                        rx={240}
+                                        ry={307}
                                         stroke="var(--opacity-white-1000, #FFF)"
                                         strokeWidth={8}
                                         fill="none"
