@@ -22,3 +22,8 @@ export interface FrameShapeDetail {
 export interface FrameRecommendations {
   [key: string]: FrameRecommendation;
 }
+
+export interface CelebType {
+  name: string;
+  img_src: string;
+}

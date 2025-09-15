@@ -3,7 +3,7 @@ import { FrameShapeDetail } from '@/types/face';
 export const frameShapeDetails: FrameShapeDetail[] = [
   {
     shape: 'Cat Eye',
-    image: 'Cat Eye.png',  
+    image: 'Cat Eye.png',
   },
   {
     shape: 'Pilot',

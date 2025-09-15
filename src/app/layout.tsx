@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import SiteHeader from '@/components/header';
+import MainBg from '@/components/Background/mainBg';
+import ResponsiveContainer from '@/components/ResponsiveContainer';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,7 +29,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Google Analytics (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XTQVR6NYTP"></script>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-XTQVR6NYTP"
+        ></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -65,7 +71,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         {/* Google Tag Manager (body - noscript) */}
         <noscript>
           <iframe
@@ -80,4 +88,3 @@ export default function RootLayout({
     </html>
   );
 }
-

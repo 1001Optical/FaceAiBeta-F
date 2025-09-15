@@ -22,40 +22,48 @@
 }
 
 @font-face {
-    font-family: "Aribau Grotesk";
-    src: url("/fonts/Aribau-Grotesk-Regular.otf") format("opentype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Aribau Grotesk';
+  src: url('/fonts/Aribau-Grotesk-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family: 'Aribau Grotesk';
-    min-height: 100vh;
-    width: 100%;
-}
-
-.fixed-container {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #000;
-    overflow: hidden;
-    z-index: 0;
-}
-
-.content-container {
-    width: 810px;
-    height: 1080px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform-origin: top left;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Aribau Grotesk';
+  min-height: 100vh;
+  width: 100%;
 }
 
 .lf-error {
   display: none !important;
+}
+
+/* Typography */
+@layer components {
+  .display-xl { @apply text-[56px] leading-[128%] tracking-[-0.5%] }
+  .display-lg { @apply text-5xl leading-[132%] tracking-[-0.4%] };
+  .heading-xl { @apply text-[40px] leading-[120%] tracking-[-0.3%] };
+  .heading-lg { @apply text-[36px] leading-[128%] tracking-[-0.28%] };
+  .heading-md { @apply text-[28px] leading-[136%] tracking-[-0.2%] };
+  .heading-sm { @apply text-[24px] leading-[133%] tracking-[-0.15%] };
+  .heading-xs { @apply text-[20px] leading-[140%] tracking-[-0.12%] };
+  .body-lg { @apply text-[18px] leading-[155%] font-aribau};
+  .body-md { @apply text-[16px] leading-[150%] };
+  .label-xl { @apply text-[24px] leading-[142%] };
+  .label-lg { @apply text-[20px] leading-[138%] };
+  .label-md { @apply text-[16px] leading-[140%] };
+  .caption-md { @apply text-[12px] leading-[150%] };
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

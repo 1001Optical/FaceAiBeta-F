@@ -1,123 +1,48 @@
 'use client';
 
+import styles from "@/css/main.module.css"
 import Image from 'next/image';
-import { useState } from 'react';
-import PolicyModal from '@/components/PolicyModal';
-import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import OrbitEyewear from '@/components/OrbitEyewear';
 import ResponsiveContainer from '../components/ResponsiveContainer';
+import DotPlayer from '@/components/dotLottiePlayer';
+import SiteHeader from '@/components/header';
+import MainBg from '@/components/Background/mainBg';
+import IooIBtn from '@/components/IooIBtn';
 
-export default function Home() {
-    const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
+const Home = () =>  {
 
-    const LottiePlayer = dynamic(() => import('@/components/MainPage'), {
-        ssr: false,
-    });
-
-    return (
-        <main className="min-h-screen w-full relative overflow-hidden">
-            <Image
-                src="/Blur.jpg"
-                alt="배경"
-                fill
-                style={{
-                    objectFit: 'cover',
-                    objectPosition: 'center',
-                    zIndex: 0,
-                }}
-                priority
-            />
-            
-            <div className="absolute inset-0 z-10 pointer-events-none">
-                <LottiePlayer />
+  return (
+    <main className={styles.main}>
+      <MainBg>
+        <ResponsiveContainer>
+          <SiteHeader />
+          {/* 메인 콘텐츠 영역 */}
+          <div className={styles.contents}>
+            <div className={styles.title_box}>
+              <div className={"relative"}>
+                <div className={styles.title_img}>
+                  <Image
+                    src="/Title.png"
+                    alt="AI Eyewear Recommendation, Perfect Frames. Powered by AI."
+                    width={579}
+                    height={176}
+                    className="object-contain"
+                    priority
+                  />
+                  <DotPlayer
+                    src={"https://lottie.host/c992f4c3-1b27-4dff-8586-f6d9af8192da/Rpb2UtV7ND.lottie"}
+                    style={"w-[810px] h-fit relative"}
+                  />
+                </div>
+              </div>
+              <div className={"w-full"}>
+                <IooIBtn text={"Start Face Scan"} icon={"/arrow_right.png"} />
+              </div>
             </div>
-
-            <div className="relative z-20 max-w-[834px] mx-auto px-6 py-8">
-            <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
-                <Link href="/" passHref>
-                    <div 
-                        className="relative cursor-pointer"
-                         style={{
-                            width: 'clamp(60px, 10vw, 100px)', 
-                            height: 'clamp(38px, 6.4vw, 64px)',     
-                        }}
-                    >
-                        <Image src="/1001Logo.png" alt="1001Logo" fill sizes="100px" className="object-contain" priority />
-                    </div>
-                </Link>
-            </header>
-        
-            <ResponsiveContainer>
-                    {/* 메인 콘텐츠 영역 */}
-                    <div className="max-w-[768px] mx-auto flex flex-col items-center justify-center pt-16">
-
-                        <div className="flex flex-col items-center justify-center">
-                            <div className="w-[700px] max-w-[90%] mx-auto flex justify-center">
-                                <Image
-                                    src="/Title.png"
-                                    alt="AI Eyewear Recommendation, Perfect Frames. Powered by AI."
-                                    width={579}
-                                    height={176} 
-                                    className="object-contain"
-                                    priority
-                                />
-                            </div>
-                            <OrbitEyewear />
-                            <div className="absolute bottom-0 left-0 w-full flex justify-center pb-24">
-                                <Link href="/scan" className="flex justify-center">
-                                    <button
-                                        className="
-                                        flex
-                                        w-[738px]
-                                        h-[88px]
-                                        px-8
-                                        py-2.5
-                                        justify-center
-                                        items-center
-                                        gap-1
-                                        shrink-0
-                                        rounded-full
-                                        bg-black/40
-                                        border border-white/40
-                                        backdrop-blur-lg
-                                        text-white
-                                        font-normal
-                                        text-[30px]
-                                        leading-[142%]
-                                        shadow-md
-                                        transition-colors
-                                        duration-200
-                                        hover:bg-white/35
-                                        font-aribau
-                                    "
-                                        style={{
-                                            color: '#FFF',
-                                            fontStyle: 'normal',
-                                            letterSpacing: '-0.048px',
-                                        }}
-                                    >
-                                        Start Face Scan
-                                        <Image
-                                            src="/arrow_right.png"
-                                            alt="오른쪽 화살표"
-                                            width={43}
-                                            height={43}
-                                            className="ml-2"
-                                        />
-                                    </button>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </ResponsiveContainer> 
-            </div>
-                           
-
-            <PolicyModal
-                isOpen={isPolicyModalOpen}
-                onClose={() => setIsPolicyModalOpen(false)}
-            />
-        </main>
-    );
+          </div>
+        </ResponsiveContainer>
+      </MainBg>
+    </main>
+  );
 }
+
+export default Home
