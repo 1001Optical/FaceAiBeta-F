@@ -23,9 +23,10 @@ export default function ResponsiveContainer({
     <div
       className={"inset-0 w-screen h-screen overflow-hidden bg-none flex flex-col justify-start items-center"}>
       <div
-        className={"w-[810px] h-screen origin-top overflow-auto no-scrollbar"}
+        className={"w-[810px] h-full origin-top overflow-auto no-scrollbar"}
         style={{
           transform: `scale(${scale}) `,
+          height: `calc(100% / ${scale})`,
         }}
       >
         {children}

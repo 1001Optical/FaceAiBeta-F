@@ -1,11 +1,25 @@
 "use client"
 
+import { useEffect, useState } from 'react';
+
 interface IProps {
   onClose: () => void;
   children: React.ReactNode;
 }
 
 const Modal = ({onClose, children}: IProps) => {
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    function handleResize() {
+      const wScale = window.innerWidth / 810;
+      const hScale = window.innerHeight / 1080;
+      setScale(Math.min(wScale, hScale, 1));
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div
@@ -14,6 +28,9 @@ const Modal = ({onClose, children}: IProps) => {
     >
       <div
         className="w-[738px] h-[868px] relative flex flex-col items-center bg-[rgba(0,0,0,0.3)] border-[2px] border-white/40 shadow-[0_4px_30px_0_rgba(0,0,0,0.4)] backdrop-blur-[12.5px] rounded-[48px] px-4 py-8"
+        style={{
+          transform: `scale(${scale}) `,
+        }}
         onClick={e => e.stopPropagation()}
       >
         {children}

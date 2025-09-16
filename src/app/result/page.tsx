@@ -14,6 +14,7 @@ import SiteHeader from '@/components/header';
 import IooIModal from '@/components/Modal/IooIModal';
 import QRModal from '@/components/Modal/qrModal';
 import ResultBtn from '@/components/resultBtn';
+import ResponsiveContainer from '@/components/ResponsiveContainer';
 
 function ResultContent() {
   const searchParams = useSearchParams();
@@ -85,6 +86,7 @@ function ResultContent() {
 
   return (
     <div className="fixed inset-0 flex flex-col z-20 bg-[url(/Bg_result.png)] bg-cover bg-center">
+      <ResponsiveContainer>
       {/* 상단 로고 고정 */}
       <SiteHeader />
 
@@ -102,9 +104,12 @@ function ResultContent() {
       {
         selectedCelebrity &&
         <IooIModal
-          items={selectedCelebrity}
+          items={{
+            title: "Celebs with Your Face Type",
+            sub_title: selectedCelebrity.name,
+            img_src: `/model/Model_${selectedCelebrity.name}.png`,
+          }}
           onClose={() => setSelectedCelebrity(null)}
-          modalSize={modalSize}
         />
       }
 
@@ -223,6 +228,7 @@ function ResultContent() {
           </div>
         </div>
       </div>
+      </ResponsiveContainer>
     </div>
   );
 }
