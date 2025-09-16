@@ -1,19 +1,9 @@
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
-import SiteHeader from '@/components/header';
-import MainBg from '@/components/Background/mainBg';
-import ResponsiveContainer from '@/components/ResponsiveContainer';
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'AI Eyewear Recommendation',
@@ -69,6 +59,13 @@ export default function RootLayout({
               })(window,document,'script','dataLayer','GTM-NHK8HJ9W');
             `,
           }}
+        />
+        <link
+          rel="preload"
+          as="font"
+          type="font/opentype"
+          href="/fonts/Aribau-Grotesk-Regular.otf"
+          crossOrigin="anonymous"
         />
       </head>
       <body

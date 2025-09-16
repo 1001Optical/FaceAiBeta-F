@@ -2,11 +2,19 @@
 
 import React, { useEffect, useState } from 'react';
 
-export default function ResponsiveContainer({
-  children,
-}: {
+const backgroundType = {
+  "result": "bg-[url(/background/bg_result.svg)]",
+  "main": "bg-[url(/background/bg_main.svg)]",
+}
+
+interface IProps {
   children: React.ReactNode;
-}) {
+  page?: "result" | "main";
+}
+
+export default function ResponsiveContainer({
+  children, page
+}: IProps) {
   const [scale, setScale] = useState(1);
 
   useEffect(() => {
@@ -21,9 +29,9 @@ export default function ResponsiveContainer({
 
   return (
     <div
-      className={"inset-0 w-screen h-screen overflow-hidden bg-none flex flex-col justify-start items-center"}>
+      className={"inset-0 w-screen h-screen overflow-auto bg-cover bg-local flex flex-col justify-start items-center "+ (page ? backgroundType[page] : "")}>
       <div
-        className={"w-[810px] h-full origin-top overflow-auto no-scrollbar"}
+        className={"w-[810px] h-full origin-top"}
         style={{
           transform: `scale(${scale}) `,
           height: `calc(100% / ${scale})`,

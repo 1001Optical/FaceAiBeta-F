@@ -1,6 +1,5 @@
 "use client"
 import styles from "@/css/main.module.css"
-import ResultBg from '@/components/Background/resultBg';
 import SiteHeader from '@/components/header';
 import FaceTypeResult from '@/components/faceTypeResult';
 import ResponsiveContainer from '@/components/ResponsiveContainer';
@@ -12,12 +11,12 @@ import IooIModal from '@/components/Modal/IooIModal';
 import { useState } from 'react';
 import IooISelectModal from '@/components/Modal/IooISelectModal';
 import { FaceShapeData } from '@/data/faceShapeData';
-import { FrameProducts } from '@/data/frameData';
+import { FrameProducts, ProductType } from '@/data/frameData';
 
 export default function Test() {
   const [selectCeleb, setSelectCeleb] = useState<CelebType | undefined>(undefined)
+  const [selectProduct, setSelectProduct] = useState<ProductType | undefined>(undefined)
   const [isOpenQR, setIsOpenQR] = useState<boolean>(false)
-  const [isOpenProduct, setIsOpenProduct] = useState<boolean>(false)
   const [faceShape] = useState<"Oval" | "Round" | "Heart" | "Angular" | "Diamond">('Angular')
 
   const celebList: CelebType[] = [
@@ -36,8 +35,8 @@ export default function Test() {
   ]
 
   return (
-    <ResultBg>
-      <ResponsiveContainer>
+    <>
+      <ResponsiveContainer page={'result'}>
         <SiteHeader />
         <div className={'pt-6 px-9 h-full'}>
           <div className={'w-full h-full flex flex-col gap-8'}>
@@ -50,13 +49,13 @@ export default function Test() {
                   return (
                     <div
                       className={'cursor-pointer'}
-                      onClick={() => setIsOpenProduct(true)}
+                      onClick={() => setSelectProduct(product[0])}
                       key={index}
                     >
                       <RecommendedFrame
                         key={index}
                         item={{
-                          shape: item, vendor: "string", name: product[0].name, img_url: `${product[0].src}/Product.png`
+                          shape: item, vendor: product[0].vendor, name: product[0].name, img_url: `${product[0].src}/Product.png`
                         }}
                         ranking={index + 1}
                       />
@@ -76,7 +75,7 @@ export default function Test() {
                     {FaceShapeData[faceShape].description}
                   </p>
                 </div>
-                <div className={'flex '}>
+                <div className={'flex gap-6'}>
                   <CelebList
                     gender={'Woman'}
                     list={celebList}
@@ -125,15 +124,15 @@ export default function Test() {
       ) : (
         <></>
       )}
-      {isOpenProduct ? (
+      {selectProduct ? (
         <IooISelectModal
-          title={'LITEN 3 LT32'}
-          src={'/frame/LITEN_3_LT32'}
-          onClose={() => setIsOpenProduct(false)}
+          title={selectProduct.name}
+          src={selectProduct.src}
+          onClose={() => setSelectProduct(undefined)}
         />
       ) : (
         <></>
       )}
-    </ResultBg>
+    </>
   );
 }

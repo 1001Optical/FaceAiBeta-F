@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        aribau: ['"Aribau Grotesk"', 'sans-serif'],
+        aribau: ['"Aribau Grotesk"', 'system-ui', 'sans-serif'],
       },
       colors: {
         primary: {

@@ -27,7 +27,13 @@ export const frameShapeDetails: FrameShapeDetail[] = [
   },
 ];
 
-interface FrameProductType {
+export interface ProductType  {
+  name: string;
+  vendor: string
+  src: string;
+}
+
+export interface FrameProductType {
   [frame: string]: {
     name: string;
     vendor: string

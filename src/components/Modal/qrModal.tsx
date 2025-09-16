@@ -12,7 +12,7 @@ interface IProps {
 const QRModal = ({faceShape, onClose, modalSize}: IProps) => {
 
   return (
-    <Modal onClose={onClose} modalSize={modalSize}>
+    <Modal onClose={onClose}>
          <span className="text-xl font-aribau font-semibold text-white">
               QR Code
             </span>

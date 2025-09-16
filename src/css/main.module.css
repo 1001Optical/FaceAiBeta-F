@@ -11,9 +11,9 @@
 .result_main { @apply w-full mx-auto px-6 flex flex-col }
 .result_img { @apply w-full max-w-[738px] mx-auto rounded-[40px] shadow-lg }
 
-.result_recommended_frame { @apply w-full h-[514px] p-8 flex gap-[34px] rounded-[40px] bg-opacity-white-200 shadow-[inset_0_0_8px_0_#F2F2F2,_inset_0_0_3px_0_#FFFFFF80,_inset_-1px_-1px_0.5px_-1px_#FFFFFF,_inset_1px_1px_0.5px_-1px_#FFFFFF,_inset_-1px_-1px_0_-0.5px_#262626,_inset_1px_1px_0_-0.5px_#333333,_0_1px_8px_0_#0000001F,_0_0_2px_0_#0000001A] backdrop-blur-[12px] }
-.result_celeb { @apply flex flex-col w-[738px] h-[498px] rounded-[40px] p-8 gap-6 bg-opacity-black-200 backdrop-blur-[12px] shadow-[inset_0_0_16px_0_#F2F2F2,inset_0_0_3px_0_#FFFFFF80,inset_-1px_-1px_0.5px_-1px_#FFFFFF,inset_1px_1px_0.5px_-1px_#FFFFFF,inset_-1px_-1px_0_-0.5px_#262626,inset_1px_1px_0_-0.5px_#333333,0_1px_8px_0_#0000001F,0_0_2px_0_#0000001A] }
-.result_celeb_type { @apply w-[296px] h-[96px] rounded-[24px] p-[24px] bg-[#00EAFF7A] backdrop-blur-[13.098590850830078px] shadow-[inset_0_0_17.46px_0_#F2F2F2,inset_0_0_3.27px_0_#FFFFFF80,inset_-1.09px_-1.09px_0.55px_-1.09px_#FFFFFF,inset_1.09px_1.09px_0.55px_-1.09px_#FFFFFF,inset_-1.09px_-1.09px_0_-0.55px_#262626,inset_1.09px_1.09px_0_-0.55px_#333333,0_1.09px_8.73px_0_#0000001F,0_0_2.18px_0_#0000001A] }
+.result_recommended_frame { @apply w-full h-[514px] p-8 flex gap-[34px] rounded-[40px] bg-opacity-white-200 shadow-[inset_0_0_3px_0_#FFFFFF80,_inset_-1px_-1px_0.5px_-1px_#FFFFFF,_inset_1px_1px_0.5px_-1px_#FFFFFF,_inset_-1px_-1px_0_-0.5px_#262626,_inset_1px_1px_0_-0.5px_#333333,_0_1px_8px_0_#0000001F,_0_0_2px_0_#0000001A] backdrop-blur-[12px] }
+.result_celeb { @apply flex flex-col w-[738px] h-[498px] rounded-[40px] p-8 gap-6 bg-opacity-black-200 backdrop-blur-[12px] shadow-[inset_0_0_3px_0_#FFFFFF80,inset_-1px_-1px_0.5px_-1px_#FFFFFF,inset_1px_1px_0.5px_-1px_#FFFFFF,inset_-1px_-1px_0_-0.5px_#262626,inset_1px_1px_0_-0.5px_#333333,0_1px_8px_0_#0000001F,0_0_2px_0_#0000001A] }
+.result_celeb_type { @apply w-[296px] h-[96px] rounded-[24px] p-[24px] bg-[#00EAFF7A] backdrop-blur-[13.098590850830078px] shadow-[inset_0_0_3.27px_0_#FFFFFF80,inset_-1.09px_-1.09px_0.55px_-1.09px_#FFFFFF,inset_1.09px_1.09px_0.55px_-1.09px_#FFFFFF,inset_-1.09px_-1.09px_0_-0.55px_#262626,inset_1.09px_1.09px_0_-0.55px_#333333,0_1.09px_8.73px_0_#0000001F,0_0_2.18px_0_#0000001A] }
 
 /* btn */
 .result_btn { @apply w-full py-5 bg-gray-500/40 rounded-full hover:bg-white/35 transition flex items-center justify-center backdrop-blur border border-white/40 shadow-md }

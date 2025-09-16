@@ -15,7 +15,6 @@ const IooIModal = ({items, onClose}: IProps) => {
 
   return (
     <Modal onClose={onClose}>
-
       <span className="text-xl font-aribau font-semibold text-white text-center">
         {items?.title ?? ""}
       </span>

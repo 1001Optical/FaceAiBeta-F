@@ -1,9 +1,9 @@
 "use client";
 
-import { TFaceShape } from '@/types/faceTypes';
 import IooIIcon from '@/components/icon';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { TFaceShape } from '@/types/face';
 
 interface IProps {
   type: TFaceShape
