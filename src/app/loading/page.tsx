@@ -1,7 +1,6 @@
 ﻿'use client';
 
 import React, { useEffect, Suspense } from 'react';
-import Image from 'next/image';
 import LottieCanvas from '@/components/LottieCanvas';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ResponsiveContainer from '../../components/ResponsiveContainer';
@@ -24,82 +23,47 @@ function LoadingInner() {
   }, []);
 
   // 3초 후 자동 이동
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      // /result?뒤에 현재 쿼리스트링 그대로 붙이기
-      router.push(`/result?${params.toString()}`);
-    }, 3000);
-
-    return () => clearTimeout(timeout);
-  }, [router, params]);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     // /result?뒤에 현재 쿼리스트링 그대로 붙이기
+  //     router.push(`/result?${params.toString()}`);
+  //   }, 3000);
+  //
+  //   return () => clearTimeout(timeout);
+  // }, [router, params]);
 
   return (
-    <div className="fixed inset-0 z-20">
-      {/* 배경 이미지 */}
-      <Image
-        src="/Bg_loading.png"
-        alt="로딩 배경"
-        fill
-        className="object-cover object-center z-0"
-        priority
-      />
-      {/* 상단 로고 */}
+    <ResponsiveContainer page={'loading'}>
       <SiteHeader />
-
-      <ResponsiveContainer>
-        {/* 로딩 콘텐츠 */}
-        <div className="flex flex-col items-center justify-center h-full">
-          {/* 중앙 텍스트 및 얼굴 스캔 이미지 */}
-          <div className="flex flex-col items-center justify-center flex-1 mt-[130px]">
-            {/* Smart AI face scan */}
-            <p
-              className="font-aribau text-[28px] font-normal leading-[1.36] tracking-[-0.084px] text-white text-center mb-4"
-              style={{ color: 'var(--opacity-white-1000, #FFF)' }}
-            >
+      <div className={'w-full py-[64px] flex justify-center items-center'}>
+        <div
+          className={'w-full px-9 flex flex-col justify-center items-center gap-10'}
+        >
+          <div
+            className={
+              'w-[420px] h-fit flex flex-col justify-center items-center gap-2'
+            }
+          >
+            <p className={'heading-md text-opacity-white-1000'}>
               Smart AI face scan
             </p>
-            {/* 흰색 바 */}
-            <div
-              className="w-[270px] h-[2px] rounded-[24px] mb-4"
-              style={{
-                background: 'var(--opacity-white-200, rgba(255,255,255,0.12))',
-              }}
-            />
-            {/* in progress */}
-            <p
-              className="font-aribau text-[24px] font-light leading-[1.33] tracking-[-0.036px] text-center"
-              style={{
-                color: 'var(--opacity-white-800, rgba(255,255,255,0.87))',
-              }}
-            >
-              in progress
+            <div className={'bg-opacity-white-200 w-[270px] h-0.5'} />
+            <p className={'heading-sm text-opacity-white-800'}>
+              In progress
             </p>
-
-            {/* Lottie 애니메이션 (중앙에 겹치게) */}
-            <div className="relative w-[420px] h-[420px] mt-5 flex items-center justify-center">
-              <LottieCanvas />
-            </div>
           </div>
-          {/* 하단 안내 메시지 (반투명 박스) */}
-          <div className="flex justify-center items-center w-full h-full">
-            <div
-              className="inline-flex flex-col justify-center items-center p-8 px-10 rounded-[3rem] border-2 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[12.5px] w-[738px] h-[132px] mt-[-70px]"
-              style={{
-                borderColor: 'var(--opacity-white-400, rgba(255,255,255,0.38))',
-                background: 'var(--opacity-black-400, rgba(0,0,0,0.38))',
-              }}
-            >
-              <p
-                className="font-aribau text-[24px] font-normal leading-[1.42] tracking-[-0.048px] text-center w-[658px]"
-                style={{ color: 'var(--opacity-white-1000, #FFF)' }}
-              >
-                We&apos;re analyzing which eyewears suit you best!
-              </p>
-            </div>
+          <div className={'size-[420px]'}>
+            <LottieCanvas />
+          </div>
+          <div className={'w-full h-[132px] px-10 py-8 bg-opacity-black-400 border-2 border-opacity-white-400 rounded-[48px]'}>
+            <p className={'label-xl text-opacity-white-1000 text-center'}>
+              We’re analyzing which eyewears<br/>
+              suit you best!
+            </p>
           </div>
         </div>
-      </ResponsiveContainer>
-    </div>
+      </div>
+    </ResponsiveContainer>
   );
 }
 

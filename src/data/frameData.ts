@@ -52,6 +52,11 @@ export const FrameProducts: FrameProductType = {
     vendor: "1001 Premium",
     src: "/frame/LITEN_3_LT32",
   }],
+  Rectangle: [{
+    name: "LITEN 3 LT32",
+    vendor: "1001 Premium",
+    src: "/frame/LITEN_3_LT32",
+  }],
   Heart: [{
     name: "LITEN 3 LT32",
     vendor: "1001 Premium",

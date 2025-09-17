@@ -106,8 +106,8 @@ function ResultContent() {
         <IooIModal
           items={{
             title: "Celebs with Your Face Type",
-            sub_title: selectedCelebrity.name,
-            img_src: `/model/Model_${selectedCelebrity.name}.png`,
+            subTitle: selectedCelebrity.name,
+            imgSrc: `/model/Model_${selectedCelebrity.name}.png`,
           }}
           onClose={() => setSelectedCelebrity(null)}
         />

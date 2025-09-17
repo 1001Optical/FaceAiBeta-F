@@ -1,5 +1,5 @@
 .main { @apply min-h-screen w-full relative overflow-hidden }
-.contents { @apply mx-auto flex flex-col items-center justify-center }
+.contents { @apply mx-auto flex flex-col items-center justify-center pb-6 }
 .title_box { @apply flex flex-col items-center justify-center h-full gap-36}
 .title_img { @apply w-[700px] max-w-[90%] mx-auto flex justify-center flex-col items-center top-[60px] relative z-10 }
 
@@ -25,3 +25,6 @@
 .scan_warning_text { @apply text-[#FFF] font-aribau text-[24px] font-light text-center w-[206px]}
 .scan_button { @apply w-[658px] h-[88px] flex items-center justify-center rounded-full border border-white/40 bg-white/15 shadow-md transition-colors duration-200 hover:bg-white/35 }
 .scan_button_text { @apply text-white text-[24px] font-aribau font-light }
+
+/* All Component Shadows */
+.sd_face_shape_card { @apply shadow-[inset_0_0_3px_0_#FFFFFF80,_inset_-1px_-1px_0.5px_-1px_#FFFFFF,_inset_1px_1px_0.5px_-1px_#FFFFFF,_inset_-1px_-1px_0_-0.5px_#262626,_inset_1px_1px_0_-0.5px_#333333,_0_1px_8px_0_#0000001F,_0_0_2px_0_#0000001A] }

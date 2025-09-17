@@ -1,7 +1,7 @@
 "use client"
 import styles from "@/css/main.module.css"
 import SiteHeader from '@/components/header';
-import FaceTypeResult from '@/components/faceTypeResult';
+import FaceShapeCard from '@/components/faceShapeCard';
 import ResponsiveContainer from '@/components/ResponsiveContainer';
 import RecommendedFrame from '@/components/Result/recommendedFrame';
 import IooIBtn from '@/components/IooIBtn';
@@ -12,35 +12,29 @@ import { useState } from 'react';
 import IooISelectModal from '@/components/Modal/IooISelectModal';
 import { FaceShapeData } from '@/data/faceShapeData';
 import { FrameProducts, ProductType } from '@/data/frameData';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Test() {
+  const getParams = useSearchParams();
   const [selectCeleb, setSelectCeleb] = useState<CelebType | undefined>(undefined)
   const [selectProduct, setSelectProduct] = useState<ProductType | undefined>(undefined)
   const [isOpenQR, setIsOpenQR] = useState<boolean>(false)
-  const [faceShape] = useState<"Oval" | "Round" | "Heart" | "Angular" | "Diamond">('Angular')
 
-  const celebList: CelebType[] = [
-    {
-      name: "Lisa",
-      img_src: "/celebs/Lisa.png"
-    },
-    {
-      name: "Emma Watson",
-      img_src: "/celebs/EmmaWatson.png"
-    },
-    {
-      name: "Emma Watson1",
-      img_src: "/celebs/EmmaWatson.png"
-    }
-  ]
+  const faceShapeRaw = getParams.get('faceShape') || 'Unknown';
+  const faceShape = faceShapeRaw.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 
-  return (
+  console.log(faceShape)
+
+
+  const router = useRouter()
+
+  return faceShape ? (
     <>
       <ResponsiveContainer page={'result'}>
         <SiteHeader />
         <div className={'pt-6 px-9 h-full'}>
           <div className={'w-full h-full flex flex-col gap-8'}>
-            <FaceTypeResult type={faceShape} />
+            <FaceShapeCard type={faceShape} />
             <div className={'flex flex-col gap-[34px]'}>
               <p className={'heading-xl'}>Recommendation Frame</p>
               <div className={styles.result_recommended_frame}>
@@ -55,7 +49,7 @@ export default function Test() {
                       <RecommendedFrame
                         key={index}
                         item={{
-                          shape: item, vendor: product[0].vendor, name: product[0].name, img_url: `${product[0].src}/Product.png`
+                          shape: item, vendor: product[0].vendor, name: product[0].name, imgUrl: `${product[0].src}/Product.png`
                         }}
                         ranking={index + 1}
                       />
@@ -78,12 +72,12 @@ export default function Test() {
                 <div className={'flex gap-6'}>
                   <CelebList
                     gender={'Woman'}
-                    list={celebList}
+                    list={FaceShapeData[faceShape].celebrities.woman}
                     selectCeleb={(celeb: CelebType) => setSelectCeleb(celeb)}
                   />
                   <CelebList
                     gender={'Man'}
-                    list={celebList}
+                    list={FaceShapeData[faceShape].celebrities.man}
                     selectCeleb={(celeb: CelebType) => setSelectCeleb(celeb)}
                   />
                 </div>
@@ -95,7 +89,7 @@ export default function Test() {
                 icon={'/upload.png'}
                 onClick={() => setIsOpenQR(true)}
               />
-              <IooIBtn text={'Scan Another Face'} icon={'/face.png'} />
+              <IooIBtn text={'Scan Another Face'} icon={'/face.png'} onClick={() => router.push('/')} />
             </div>
           </div>
         </div>
@@ -104,8 +98,8 @@ export default function Test() {
         <IooIModal
           items={{
             title: 'Celebs with Your Face Type',
-            sub_title: selectCeleb.name,
-            img_src: selectCeleb.img_src,
+            subTitle: selectCeleb.name,
+            imgSrc: selectCeleb.img_src,
           }}
           onClose={() => setSelectCeleb(undefined)}
         />
@@ -116,8 +110,8 @@ export default function Test() {
         <IooIModal
           items={{
             title: 'QR Code',
-            sub_title: faceShape,
-            img_src: `/QR/QR_${faceShape}.png`,
+            subTitle: faceShape,
+            imgSrc: `/QR/QR_${faceShape}.png`,
           }}
           onClose={() => setIsOpenQR(false)}
         />
@@ -134,5 +128,5 @@ export default function Test() {
         <></>
       )}
     </>
-  );
+  ) : <></>;
 }

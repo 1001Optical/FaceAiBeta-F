@@ -5,11 +5,12 @@ import React, { useEffect, useState } from 'react';
 const backgroundType = {
   "result": "bg-[url(/background/bg_result.svg)]",
   "main": "bg-[url(/background/bg_main.svg)]",
+  "loading": "bg-[url(/background/bg_loading.svg)]",
 }
 
 interface IProps {
   children: React.ReactNode;
-  page?: "result" | "main";
+  page?: "result" | "main" | "loading";
 }
 
 export default function ResponsiveContainer({
@@ -29,7 +30,7 @@ export default function ResponsiveContainer({
 
   return (
     <div
-      className={"inset-0 w-screen h-screen overflow-auto bg-cover bg-local flex flex-col justify-start items-center "+ (page ? backgroundType[page] : "")}>
+      className={"inset-0 w-screen h-screen overflow-x-hidden overflow-y-auto bg-cover bg-local flex flex-col justify-start items-center "+ (page ? backgroundType[page] : "")}>
       <div
         className={"w-[810px] h-full origin-top"}
         style={{

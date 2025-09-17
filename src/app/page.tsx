@@ -6,8 +6,10 @@ import ResponsiveContainer from '../components/ResponsiveContainer';
 import DotPlayer from '@/components/dotLottiePlayer';
 import SiteHeader from '@/components/header';
 import IooIBtn from '@/components/IooIBtn';
+import { useRouter } from 'next/navigation';
 
 const Home = () =>  {
+  const router = useRouter();
 
   return (
     <main className={styles.main}>
@@ -33,7 +35,7 @@ const Home = () =>  {
               </div>
             </div>
             <div className={"w-full"}>
-              <IooIBtn text={"Start Face Scan"} icon={"/arrow_right.png"} />
+              <IooIBtn text={"Start Face Scan"} icon={"/arrow_right.png"} onClick={() => router.push('/scan')} />
             </div>
           </div>
         </div>

@@ -5,7 +5,18 @@ export const FaceShapeData: IFrameShapeDetail = {
     image: "/result/avatar/oval.png",
     description: "Longer than wide, softly rounded",
     celebrities: {
-      man: [],
+      man: [{
+        name: "Lisa",
+        img_src: "/celebs/Lisa.png"
+      },
+        {
+          name: "Emma Watson",
+          img_src: "/celebs/EmmaWatson.png"
+        },
+        {
+          name: "Emma Watson1",
+          img_src: "/celebs/EmmaWatson.png"
+        }],
       woman: [{
         name: "Lisa",
         img_src: "/celebs/Lisa.png"
@@ -25,8 +36,30 @@ export const FaceShapeData: IFrameShapeDetail = {
     image: "/result/avatar/heart.png",
     description: "Wide forehead, gracefully tapered chin",
     celebrities: {
-      man: [],
-      woman: []
+      man: [{
+        name: "Lisa",
+        img_src: "/celebs/Lisa.png"
+      },
+        {
+          name: "Emma Watson",
+          img_src: "/celebs/EmmaWatson.png"
+        },
+        {
+          name: "Emma Watson1",
+          img_src: "/celebs/EmmaWatson.png"
+        }],
+      woman: [{
+        name: "Lisa",
+        img_src: "/celebs/Lisa.png"
+      },
+        {
+          name: "Emma Watson",
+          img_src: "/celebs/EmmaWatson.png"
+        },
+        {
+          name: "Emma Watson1",
+          img_src: "/celebs/EmmaWatson.png"
+        }]
     },
     frameRecommendation: ["Rectangle", "Square"]
   },
@@ -34,8 +67,30 @@ export const FaceShapeData: IFrameShapeDetail = {
     image: "/result/avatar/round.png",
     description: "Similar width and height, gently curved",
     celebrities: {
-      man: [],
-      woman: []
+      man: [{
+        name: "Lisa",
+        img_src: "/celebs/Lisa.png"
+      },
+        {
+          name: "Emma Watson",
+          img_src: "/celebs/EmmaWatson.png"
+        },
+        {
+          name: "Emma Watson1",
+          img_src: "/celebs/EmmaWatson.png"
+        }],
+      woman: [{
+        name: "Lisa",
+        img_src: "/celebs/Lisa.png"
+      },
+        {
+          name: "Emma Watson",
+          img_src: "/celebs/EmmaWatson.png"
+        },
+        {
+          name: "Emma Watson1",
+          img_src: "/celebs/EmmaWatson.png"
+        }]
     },
     frameRecommendation: ["Round", "Pilot"]
   },
@@ -43,8 +98,30 @@ export const FaceShapeData: IFrameShapeDetail = {
     image: "/result/avatar/angular.png",
     description: "Jawline defined, sculptured facial lines",
     celebrities: {
-      man: [],
-      woman: []
+      man: [{
+        name: "Lisa",
+        img_src: "/celebs/Lisa.png"
+      },
+        {
+          name: "Emma Watson",
+          img_src: "/celebs/EmmaWatson.png"
+        },
+        {
+          name: "Emma Watson1",
+          img_src: "/celebs/EmmaWatson.png"
+        }],
+      woman: [{
+        name: "Lisa",
+        img_src: "/celebs/Lisa.png"
+      },
+        {
+          name: "Emma Watson",
+          img_src: "/celebs/EmmaWatson.png"
+        },
+        {
+          name: "Emma Watson1",
+          img_src: "/celebs/EmmaWatson.png"
+        }]
     },
     frameRecommendation: ["Round", "Oval"]
   },
@@ -52,8 +129,30 @@ export const FaceShapeData: IFrameShapeDetail = {
     image: "/result/avatar/diamond.png",
     description: "Narrow forehead and chin, elegantly wide cheekbones",
     celebrities: {
-      man: [],
-      woman: []
+      man: [{
+        name: "Lisa",
+        img_src: "/celebs/Lisa.png"
+      },
+        {
+          name: "Emma Watson",
+          img_src: "/celebs/EmmaWatson.png"
+        },
+        {
+          name: "Emma Watson1",
+          img_src: "/celebs/EmmaWatson.png"
+        }],
+      woman: [{
+        name: "Lisa",
+        img_src: "/celebs/Lisa.png"
+      },
+        {
+          name: "Emma Watson",
+          img_src: "/celebs/EmmaWatson.png"
+        },
+        {
+          name: "Emma Watson1",
+          img_src: "/celebs/EmmaWatson.png"
+        }]
     },
     frameRecommendation: ["Round", "Square"]
   }

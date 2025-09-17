@@ -5,8 +5,8 @@ import Modal from '@/components/Modal/modal';
 interface IProps {
   items: {
     title: string;
-    sub_title: string;
-    img_src: string;
+    subTitle: string;
+    imgSrc: string;
   };
   onClose: () => void;
 }
@@ -20,14 +20,14 @@ const IooIModal = ({items, onClose}: IProps) => {
       </span>
       <hr className="w-full border-t border-white border-opacity-30 my-3" />
       <span className="text-lg font-aribau text-white mb-6">
-        {items?.sub_title ?? ""}
+        {items?.subTitle ?? ""}
       </span>
       <div
         className="flex items-center justify-center mb-8 size-[562px]"
       >
         <Image
-          src={items?.img_src ?? ""}
-          alt={items?.sub_title ?? ""}
+          src={items?.imgSrc ?? ""}
+          alt={items?.subTitle ?? ""}
           width={500}
           height={500}
           className="rounded-2xl object-cover w-full h-full"

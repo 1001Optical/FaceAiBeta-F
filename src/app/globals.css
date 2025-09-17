@@ -51,19 +51,19 @@ body {
 
 /* Typography */
 @layer components {
-  .display-xl { @apply text-[56px] leading-[128%] tracking-[-0.5%] }
-  .display-lg { @apply text-5xl leading-[132%] tracking-[-0.4%] };
-  .heading-xl { @apply text-[40px] leading-[120%] tracking-[-0.3%] };
-  .heading-lg { @apply text-[36px] leading-[128%] tracking-[-0.28%] };
-  .heading-md { @apply text-[28px] leading-[136%] tracking-[-0.2%] };
-  .heading-sm { @apply text-[24px] leading-[133%] tracking-[-0.15%] };
-  .heading-xs { @apply text-[20px] leading-[140%] tracking-[-0.12%] };
+  .display-xl { @apply text-[56px] leading-[128%] tracking-[-0.5%] font-aribau }
+  .display-lg { @apply text-5xl leading-[132%] tracking-[-0.4%] font-aribau };
+  .heading-xl { @apply text-[40px] leading-[120%] tracking-[-0.3%] font-aribau };
+  .heading-lg { @apply text-[36px] leading-[128%] tracking-[-0.28%] font-aribau };
+  .heading-md { @apply text-[28px] leading-[136%] tracking-[-0.2%] font-aribau };
+  .heading-sm { @apply text-[24px] leading-[133%] tracking-[-0.15%] font-aribau };
+  .heading-xs { @apply text-[20px] leading-[140%] tracking-[-0.12%] font-aribau };
   .body-lg { @apply text-[18px] leading-[155%] font-aribau};
-  .body-md { @apply text-[16px] leading-[150%] };
-  .label-xl { @apply text-[24px] leading-[142%] };
-  .label-lg { @apply text-[20px] leading-[138%] };
-  .label-md { @apply text-[16px] leading-[140%] };
-  .caption-md { @apply text-[12px] leading-[150%] };
+  .body-md { @apply text-[16px] leading-[150%] font-aribau };
+  .label-xl { @apply text-[24px] leading-[142%] font-aribau };
+  .label-lg { @apply text-[20px] leading-[138%] font-aribau };
+  .label-md { @apply text-[16px] leading-[140%] font-aribau };
+  .caption-md { @apply text-[12px] leading-[150%] font-aribau };
 }
 
 @layer utilities {

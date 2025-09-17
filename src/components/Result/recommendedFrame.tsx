@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 interface IProps {
-  item: { shape: string, vendor: string, name: string, img_url: string },
+  item: { shape: string, vendor: string, name: string, imgUrl: string },
   ranking: number
 }
 
@@ -14,7 +14,7 @@ const RecommendedFrame = ({item, ranking}: IProps) => {
     <div className={"px-3 w-full border-t border-opacity-white-200"}/>
     <div className={"size-[320px] rounded-[32.82px] p-[24.62px] overflow-hidden bg-primary-50 shadow-[inset_0_0_14.22px_0_#F2F2F2,_inset_0_0_2.67px_0_#FFFFFF80,_inset_-0.89px_-0.89px_0.44px_-0.89px_#FFFFFF,_inset_0.89px_0.89px_0.44px_-0.89px_#FFFFFF,_inset_-0.89px_-0.89px_0_-0.44px_#262626,_inset_0.89px_0.89px_0_-0.44px_#333333,_0_0.89px_7.11px_0_#0000001F,_0_0_1.78px_0_#0000001A] backdrop-blur-[10.666666030883789px]"}>
       <div className={"bg-opacity-white-1000 w-[220px] h-[180px] rounded-tl-[32px] absolute right-0 bottom-0 z-10"}>
-        <Image src={item.img_url} alt={'frames'} width={296} height={212.44} />
+        <Image src={item.imgUrl} alt={'frames'} width={296} height={212.44} />
       </div>
       <div>
         <p className={"heading-sm text-primary-800"}>{item.vendor}</p>

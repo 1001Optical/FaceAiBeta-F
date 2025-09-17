@@ -21,7 +21,7 @@ export default function LottieCanvas() {
   }, []);
 
   return (
-    <div className="relative w-[420px] h-[420px] mt-16 flex items-center justify-center">
+    <div className="w-[420px] h-[420px]">
       <canvas
         ref={canvasRef}
         width={420}
