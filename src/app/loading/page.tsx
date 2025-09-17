@@ -23,14 +23,14 @@ function LoadingInner() {
   }, []);
 
   // 3초 후 자동 이동
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     // /result?뒤에 현재 쿼리스트링 그대로 붙이기
-  //     router.push(`/result?${params.toString()}`);
-  //   }, 3000);
-  //
-  //   return () => clearTimeout(timeout);
-  // }, [router, params]);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      // /result?뒤에 현재 쿼리스트링 그대로 붙이기
+      router.push(`/result?${params.toString()}`);
+    }, 3000);
+
+    return () => clearTimeout(timeout);
+  }, [router, params]);
 
   return (
     <ResponsiveContainer page={'loading'}>
