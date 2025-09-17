@@ -39,7 +39,7 @@ const QRModal = ({faceShape, onClose, modalSize}: IProps) => {
       </div>
       <button
         onClick={onClose}
-        className="w-full py-4 bg-white/20 text-lg font-aribau text-white rounded-full hover:bg-white/35 transition-colors duration-200 mt-auto border border-white/40 backdrop-blur-lg shadow-md"
+        className="w-full py-4 bg-white-200 text-lg font-aribau text-white rounded-full hover:bg-white-400 transition-colors duration-200 mt-auto border border-white-400 backdrop-blur-lg shadow-md"
       >
         Got it
       </button>

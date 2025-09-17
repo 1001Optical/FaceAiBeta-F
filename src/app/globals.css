@@ -24,8 +24,16 @@
 
 @font-face {
   font-family: 'Aribau Grotesk';
-  src: url('/fonts/Aribau-Grotesk-Regular.otf') format('opentype');
+  src: url('/fonts/AribauGrotesk-Rg.otf') format('opentype');
   font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* FOUT 최소화 */
+}
+
+@font-face {
+  font-family: 'Aribau Grotesk';
+  src: url('/fonts/AribauGrotesk-Bd.otf') format('opentype');
+  font-weight: 700;
   font-style: normal;
   font-display: swap; /* FOUT 최소화 */
 }
@@ -40,7 +48,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Aribau Grotesk';
+  font-family: 'Aribau Grotesk', serif;
   min-height: 100vh;
   width: 100%;
 }

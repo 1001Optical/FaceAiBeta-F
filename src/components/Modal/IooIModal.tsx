@@ -15,11 +15,11 @@ const IooIModal = ({items, onClose}: IProps) => {
 
   return (
     <Modal onClose={onClose}>
-      <span className="text-xl font-aribau font-semibold text-white text-center">
+      <span className="text-xl font-aribau text-white-1000 font-semibold text-white text-center">
         {items?.title ?? ""}
       </span>
       <hr className="w-full border-t border-white border-opacity-30 my-3" />
-      <span className="text-lg font-aribau text-white mb-6">
+      <span className="text-lg font-aribau text-white-1000 mb-6">
         {items?.subTitle ?? ""}
       </span>
       <div
@@ -35,7 +35,7 @@ const IooIModal = ({items, onClose}: IProps) => {
       </div>
       <button
         onClick={onClose}
-        className="w-full py-4 bg-white/20 text-lg font-aribau text-white rounded-full hover:bg-white/35 transition-colors duration-200 mt-auto border border-white/40 backdrop-blur-lg shadow-md"
+        className="w-full py-4 bg-white-200 text-lg font-aribau text-white-1000 rounded-full hover:bg-white-400 transition-colors duration-200 mt-auto border border-white-400 backdrop-blur-lg shadow-md"
       >
         Got it
       </button>

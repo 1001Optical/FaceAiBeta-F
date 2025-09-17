@@ -16,7 +16,7 @@ const FaceShapeCard = ({type}:IProps) => {
       <p className={"heading-xl text-primary-50"}>Your Face Type is</p>
       <div className={"flex overflow-hidden justify-start items-center"}>
         <IooIIcon size={'result'} iconPath={`/result/icon/${type.toLowerCase()}.svg`} />
-        <p className={"w-fit font-bold text-[58px] leading-[90%] tracking-[-2%]"}>{type}</p>
+        <p className={"font-aribau w-fit font-bold text-[58px] leading-[90%] tracking-[-2%] text-white-1000"}>{type}</p>
       </div>
     </div>
   </div>

@@ -11,20 +11,20 @@
 .result_main { @apply w-full mx-auto px-6 flex flex-col }
 .result_img { @apply w-full max-w-[738px] mx-auto rounded-[40px] shadow-lg }
 
-.result_recommended_frame { @apply w-full h-[514px] p-8 flex gap-[34px] rounded-[40px] bg-opacity-white-200 shadow-[inset_0_0_3px_0_#FFFFFF80,_inset_-1px_-1px_0.5px_-1px_#FFFFFF,_inset_1px_1px_0.5px_-1px_#FFFFFF,_inset_-1px_-1px_0_-0.5px_#262626,_inset_1px_1px_0_-0.5px_#333333,_0_1px_8px_0_#0000001F,_0_0_2px_0_#0000001A] backdrop-blur-[12px] }
-.result_celeb { @apply flex flex-col w-[738px] h-[498px] rounded-[40px] p-8 gap-6 bg-opacity-black-200 backdrop-blur-[12px] shadow-[inset_0_0_3px_0_#FFFFFF80,inset_-1px_-1px_0.5px_-1px_#FFFFFF,inset_1px_1px_0.5px_-1px_#FFFFFF,inset_-1px_-1px_0_-0.5px_#262626,inset_1px_1px_0_-0.5px_#333333,0_1px_8px_0_#0000001F,0_0_2px_0_#0000001A] }
+.result_recommended_frame { @apply w-full h-[514px] p-8 flex gap-[34px] rounded-[40px] bg-white-200 shadow-[inset_0_0_3px_0_#FFFFFF80,_inset_-1px_-1px_0.5px_-1px_#FFFFFF,_inset_1px_1px_0.5px_-1px_#FFFFFF,_inset_-1px_-1px_0_-0.5px_#262626,_inset_1px_1px_0_-0.5px_#333333,_0_1px_8px_0_#0000001F,_0_0_2px_0_#0000001A] backdrop-blur-[12px] }
+.result_celeb { @apply flex flex-col w-[738px] h-[498px] rounded-[40px] p-8 gap-6 bg-black-200 backdrop-blur-[12px] shadow-[inset_0_0_3px_0_#FFFFFF80,inset_-1px_-1px_0.5px_-1px_#FFFFFF,inset_1px_1px_0.5px_-1px_#FFFFFF,inset_-1px_-1px_0_-0.5px_#262626,inset_1px_1px_0_-0.5px_#333333,0_1px_8px_0_#0000001F,0_0_2px_0_#0000001A] }
 .result_celeb_type { @apply w-[296px] h-[96px] rounded-[24px] p-[24px] bg-[#00EAFF7A] backdrop-blur-[13.098590850830078px] shadow-[inset_0_0_3.27px_0_#FFFFFF80,inset_-1.09px_-1.09px_0.55px_-1.09px_#FFFFFF,inset_1.09px_1.09px_0.55px_-1.09px_#FFFFFF,inset_-1.09px_-1.09px_0_-0.55px_#262626,inset_1.09px_1.09px_0_-0.55px_#333333,0_1.09px_8.73px_0_#0000001F,0_0_2.18px_0_#0000001A] }
 
 /* btn */
-.result_btn { @apply w-full py-5 bg-gray-500/40 rounded-full hover:bg-white/35 transition flex items-center justify-center backdrop-blur border border-white/40 shadow-md }
-.iooi_btn_dark { @apply w-full h-[88px] backdrop-blur-[20px] rounded-full py-[10px] px-[32px] shadow-[inset_0_0_1.69px_1.69px_#999999,_inset_0_0_1.69px_1.69px_#FFFFFF26,_inset_-1.69px_-1.69px_1.69px_-0.85px_#FFFFFFBF,_inset_1.69px_1.69px_1.69px_-0.85px_#FFFFFFBF,_inset_-5.07px_-5.07px_0.85px_-5.07px_#FFFFFFCC,_inset_5.07px_5.07px_0.85px_-5.92px_#FFFFFFBF,_0_1.69px_13.52px_0_#0000001F,_0_0_3.38px_0_#0000001A] bg-opacity-black-400 disabled:bg-opacity-black-200 text-opacity-white-1000 disabled:text-opacity-white-400 hover:bg-opacity-black-600 }
+.result_btn { @apply w-full py-5 bg-gray-500/40 rounded-full hover:bg-white-400 transition flex items-center justify-center backdrop-blur border border-white-400 shadow-md }
+.iooi_btn_dark { @apply w-full h-[88px] backdrop-blur-[20px] rounded-full py-[10px] px-[32px] shadow-[inset_0_0_1.69px_1.69px_#999999,_inset_0_0_1.69px_1.69px_#FFFFFF26,_inset_-1.69px_-1.69px_1.69px_-0.85px_#FFFFFFBF,_inset_1.69px_1.69px_1.69px_-0.85px_#FFFFFFBF,_inset_-5.07px_-5.07px_0.85px_-5.07px_#FFFFFFCC,_inset_5.07px_5.07px_0.85px_-5.92px_#FFFFFFBF,_0_1.69px_13.52px_0_#0000001F,_0_0_3.38px_0_#0000001A] bg-black-400 disabled:bg-black-200 text-white-1000 disabled:text-white-400 hover:bg-black-600 }
 
 /* scan */
-.scan_warning_box { @apply absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[738px] h-[716px] box-border rounded-[48px] border-2 border-[var(--opacity-white-400,_rgba(255,255,255,0.38))] bg-[var(--opacity-black-600,_rgba(0,0,0,0.60))] shadow-[0_4px_30px_0_rgba(0,0,0,0.10)] backdrop-blur-[12.5px] inline-flex px-10 py-8 flex-col justify-center items-center gap-[42px] }
+.scan_warning_box { @apply absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[738px] h-[716px] box-border rounded-[48px] border-2 border-[var(--white-400,_rgba(255,255,255,0.38))] bg-[var(--black-600,_rgba(0,0,0,0.60))] shadow-[0_4px_30px_0_rgba(0,0,0,0.10)] backdrop-blur-[12.5px] inline-flex px-10 py-8 flex-col justify-center items-center gap-[42px] }
 .scan_warning_title { @apply text-[#888] font-aribau text-[18px] font-medium text-center w-[206px] my-2 tracking-[0.01em] }
 .scan_warning_text { @apply text-[#FFF] font-aribau text-[24px] font-light text-center w-[206px]}
-.scan_button { @apply w-[658px] h-[88px] flex items-center justify-center rounded-full border border-white/40 bg-white/15 shadow-md transition-colors duration-200 hover:bg-white/35 }
-.scan_button_text { @apply text-white text-[24px] font-aribau font-light }
+.scan_button { @apply w-[658px] h-[88px] flex items-center justify-center rounded-full border border-white-400 bg-white-200 shadow-md transition-colors duration-200 hover:bg-white-400 }
+.scan_button_text { @apply text-white-1000 text-[24px] font-aribau font-light }
 
 /* All Component Shadows */
 .sd_face_shape_card { @apply shadow-[inset_0_0_3px_0_#FFFFFF80,_inset_-1px_-1px_0.5px_-1px_#FFFFFF,_inset_1px_1px_0.5px_-1px_#FFFFFF,_inset_-1px_-1px_0_-0.5px_#262626,_inset_1px_1px_0_-0.5px_#333333,_0_1px_8px_0_#0000001F,_0_0_2px_0_#0000001A] }

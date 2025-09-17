@@ -3,10 +3,6 @@
 import styles from '@/css/main.module.css'
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { faceShapeDetails } from '@/data/faceData';
-import { frameRecommendations } from '@/data/reconMap';
-import { frameShapeDetails } from '@/data/frameData';
-import { FaceShapeDetail, FrameShapeDetail } from '@/types/face';
 import Image from 'next/image';
 import './FaceScanner.css';
 import FaceScanBar from './FaceScanBar';
@@ -18,41 +14,6 @@ const intro_guideline = [
   {src: "glassesclose.png", title: "Eyewear", description: "Remove your eyewear for an accurate scan."},
   {src: "haircheck.png", title: "Hair", description: "Pull your hair back to show your face."},
 ]
-
-// 최대 동시 3개씩 이미지를 프리로드, 각 이미지의 로딩이 비동기적으로 병렬 진행
-async function limitedParallelLoad(
-  urls: string[],
-  limit: number = 3
-): Promise<boolean[]> {
-  const results: boolean[] = [];
-  let idx = 0;
-
-  const preloadImage = (url: string): Promise<void> =>
-    new Promise((resolve, reject) => {
-      const img = new window.Image();
-      img.onload = () => resolve();
-      img.onerror = () => reject();
-      img.src = url;
-    });
-
-  async function loadNext(): Promise<void> {
-    if (idx >= urls.length) return;
-    const i = idx++;
-    try {
-      await preloadImage(urls[i]);
-      results[i] = true;
-    } catch {
-      results[i] = false;
-    }
-    await loadNext();
-  }
-  await Promise.all(
-    Array(limit)
-      .fill(0)
-      .map(() => loadNext())
-  );
-  return results;
-}
 
 export default function ScanPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -219,42 +180,7 @@ export default function ScanPage() {
         }),
       }).toString();
 
-      // 얼굴형 이미지와 프레임 이미지들을 미리 로드
-      const faceDetail = faceShapeDetails.find(
-        (f: FaceShapeDetail) => f.shape === detectData.shape
-      );
-      const recommendations =
-        frameRecommendations[
-          detectData.shape as keyof typeof frameRecommendations
-        ];
-      const frameDetails =
-        recommendations?.recommendedFrames
-          .map((frameName: string) =>
-            frameShapeDetails.find(
-              (f: FrameShapeDetail) =>
-                f.shape.toLowerCase() === frameName.toLowerCase()
-            )
-          )
-          .filter(Boolean) || [];
-
-      // 모든 이미지 로드 완료 대기
-      const imageUrls = [
-        faceDetail?.image,
-        ...frameDetails.map(
-          (frame: FrameShapeDetail | undefined) => frame?.image
-        ),
-      ].filter(Boolean) as string[];
-
-      try {
-        // 모든 이미지가 로드될 때까지 대기
-        await limitedParallelLoad(imageUrls, 3);
-        // 이미지 로드가 완료된 후 결과 페이지로 이동
-        router.push(`/loading?${queryParams}`);
-      } catch (error) {
-        // 이미지 로드 실패 시에도 로딩 페이지로 이동
-        console.error(error);
-        router.push(`/loading?${queryParams}`);
-      }
+      router.push(`/loading?${queryParams}`);
     } catch (err) {
       setError(
         'API request failed: ' +
@@ -293,7 +219,7 @@ export default function ScanPage() {
       {/* 캡처된 이미지 미리보기 (디버그용) */}
       <canvas ref={canvasRef} className="hidden" />
       <div
-        className="fixed inset-0 z-10 bg-black/35 min-w-[658px] min-h-[652px]"
+        className="fixed inset-0 z-10 bg-black-400 min-w-[658px] min-h-[652px]"
       >
         <ResponsiveContainer>
         {/* 로고 (가로 중앙 상단 고정) */}
@@ -302,6 +228,7 @@ export default function ScanPage() {
       {/* 반투명 오버레이 + 안내문구 + 버튼 (1번 화면) */}
       {step === 'intro' && (
         <>
+        <div className={"relative w-[810px] h-[1080px]"}>
           {/* 중앙 반투명 박스 */}
           <div className={styles.scan_warning_box}>
             {/* 안내문구 및 아이콘 */}
@@ -319,7 +246,7 @@ export default function ScanPage() {
               </p>
 
               {/* 실선 구분선 */}
-              <div className={"w-[658px] h-0.5 bg-opacity-white-200 m-0 my-2.5 rounded-full"} />
+              <div className={"w-[658px] h-0.5 bg-white-200 m-0 my-2.5 rounded-full"} />
 
               {/* 흰색 반투명 박스 3개 */}
               <div className="flex gap-5 mt-2">
@@ -350,6 +277,7 @@ export default function ScanPage() {
               <p className={styles.scan_button_text}>Let&apos;s Begin</p>
             </button>
           </div>
+        </div>
         </>
       )}
 
@@ -365,7 +293,7 @@ export default function ScanPage() {
                 cy="540"
                 rx={240}
                 ry={307}
-                stroke="var(--opacity-white-1000, #FFF)"
+                stroke="var(--white-1000, #FFF)"
                 strokeWidth={8}
                 fill="none"
                 style={{ filter: 'drop-shadow(0 0 12px #fff)' }}
@@ -376,8 +304,8 @@ export default function ScanPage() {
 
           {/* 안내문구 박스: 타원보다 훨씬 아래에 배치 */}
           <div
-            className={`absolute left-1/2 bottom-[200px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white/40 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem] 
-                                    ${error ? 'bg-red-500/40' : 'bg-black/40'}`}
+            className={`absolute left-1/2 bottom-[200px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white-400 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem] 
+                                    ${error ? 'bg-red-500/40' : 'bg-black-400'}`}
           >
             <div className="w-[658px] text-white text-center font-aribau text-[24px] font-normal leading-[142%] tracking-[-0.048px]">
               {error ? (

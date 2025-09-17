@@ -38,14 +38,14 @@ module.exports = {
           200: "#F5F5F5",
           100: "#FFFFFF",
         },
-        "opacity-black":{
+        "black":{
           1000: "#000000",
           800: "#000000DE",
           600: "#00000099",
           400: "#00000061",
           200: "#0000001F",
         },
-        "opacity-white":{
+        "white":{
           1000: "#FFFFFF",
           800: "#FFFFFFDE",
           600: "#FFFFFF99",

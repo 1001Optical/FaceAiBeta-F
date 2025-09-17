@@ -1,26 +1,15 @@
 ﻿'use client';
 
 import React, { useEffect, Suspense } from 'react';
-import LottieCanvas from '@/components/LottieCanvas';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ResponsiveContainer from '../../components/ResponsiveContainer';
 import SiteHeader from '@/components/header';
+import DotPlayer from '@/components/dotLottiePlayer';
 
 // 내부 컴포넌트 분리
 function LoadingInner() {
   const router = useRouter();
   const params = useSearchParams();
-
-  // dotlottie-player 컴포넌트 스크립트 동적 로드
-  useEffect(() => {
-    if (!window.customElements.get('dotlottie-player')) {
-      const script = document.createElement('script');
-      script.src =
-        'https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs';
-      script.type = 'module';
-      document.body.appendChild(script);
-    }
-  }, []);
 
   // 3초 후 자동 이동
   useEffect(() => {
@@ -44,19 +33,20 @@ function LoadingInner() {
               'w-[420px] h-fit flex flex-col justify-center items-center gap-2'
             }
           >
-            <p className={'heading-md text-opacity-white-1000'}>
+            <p className={'heading-md text-white-1000'}>
               Smart AI face scan
             </p>
-            <div className={'bg-opacity-white-200 w-[270px] h-0.5'} />
-            <p className={'heading-sm text-opacity-white-800'}>
+            <div className={'bg-white-200 w-[270px] h-0.5'} />
+            <p className={'heading-sm text-white-800'}>
               In progress
             </p>
           </div>
           <div className={'size-[420px]'}>
-            <LottieCanvas />
+            {/*<LottieCanvas />*/}
+            <DotPlayer page={'loading'} src={'https://lottie.host/3ee95351-a63f-4806-9414-45d55670a4b0/V8oXQSrKxH.lottie'} />
           </div>
-          <div className={'w-full h-[132px] px-10 py-8 bg-opacity-black-400 border-2 border-opacity-white-400 rounded-[48px]'}>
-            <p className={'label-xl text-opacity-white-1000 text-center'}>
+          <div className={'w-full h-[132px] px-10 py-8 bg-black-400 border-2 border-white-400 rounded-[48px]'}>
+            <p className={'label-xl text-white-1000 text-center'}>
               We’re analyzing which eyewears<br/>
               suit you best!
             </p>

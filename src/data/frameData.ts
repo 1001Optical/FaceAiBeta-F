@@ -1,32 +1,3 @@
-import { FrameShapeDetail } from '@/types/face';
-
-export const frameShapeDetails: FrameShapeDetail[] = [
-  {
-    shape: 'Cat Eye',
-    image: 'Cat Eye.png',
-  },
-  {
-    shape: 'Pilot',
-    image: 'Pilot.png',
-  },
-  {
-    shape: 'Rectangle',
-    image: 'Rectangle.png',
-  },
-  {
-    shape: 'Round',
-    image: 'Round.png',
-  },
-  {
-    shape: 'Square',
-    image: 'Square.png',
-  },
-  {
-    shape: 'Oval',
-    image: 'Oval.png',
-  },
-];
-
 export interface ProductType  {
   name: string;
   vendor: string
@@ -43,33 +14,28 @@ export interface FrameProductType {
 
 export const FrameProducts: FrameProductType = {
   Square: [{
-    name: "LITEN 3 LT32",
-    vendor: "1001 Premium",
-    src: "/frame/LITEN_3_LT32",
+    name: "DN01",
+    vendor: "1001 Signature",
+    src: "/frame/DN01",
   }],
   Round: [{
-    name: "LITEN 3 LT32",
-    vendor: "1001 Premium",
-    src: "/frame/LITEN_3_LT32",
+    name: "DN02",
+    vendor: "1001 Signature",
+    src: "/frame/DN02",
   }],
   Rectangle: [{
-    name: "LITEN 3 LT32",
-    vendor: "1001 Premium",
-    src: "/frame/LITEN_3_LT32",
-  }],
-  Heart: [{
-    name: "LITEN 3 LT32",
-    vendor: "1001 Premium",
-    src: "/frame/LITEN_3_LT32",
+    name: "OG3003",
+    vendor: "1001 Signature",
+    src: "/frame/OG3003",
   }],
   Oval: [{
-    name: "LITEN 3 LT32",
-    vendor: "1001 Premium",
-    src: "/frame/LITEN_3_LT32",
+    name: "SF41",
+    vendor: "Signature",
+    src: "/frame/SF41",
   }],
   Pilot: [{
-    name: "LITEN 3 LT32",
+    name: "LT53",
     vendor: "1001 Premium",
-    src: "/frame/LITEN_3_LT32",
+    src: "/frame/LT53",
   }]
 }
