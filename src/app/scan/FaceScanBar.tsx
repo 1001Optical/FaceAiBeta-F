@@ -15,7 +15,8 @@ const FaceScanBar: React.FC = () => {
     let rafId: number;
 
     function animate() {
-      y += direction * 2;
+      // direction에 곱해지는 값이 커질수록 속도 증가
+      y += direction * 4;
       if (y > cy + ry) {
         y = cy + ry;
         direction = -1;
@@ -38,18 +39,11 @@ const FaceScanBar: React.FC = () => {
 
   return (
     <div
+      className={'absolute h-1 bg-secondary-50 rounded-[2px] shadow-[0_0_8px_10px_rgba(201,241,232,0.25)] z-30 pointer-events-none'}
       style={{
-        position: 'absolute',
         left: cx - width / 2, // 타원 중심 기준 좌우 정렬
         top: scanY, // y좌표
         width: width,
-        height: 4,
-        background: 'var(--semantic-secondary-50, #C9F1E8)',
-        opacity: 1,
-        borderRadius: 2,
-        boxShadow: '0 0 8px 10px rgba(201, 241, 232, 0.25)',
-        zIndex: 30,
-        pointerEvents: 'none',
       }}
     />
   );

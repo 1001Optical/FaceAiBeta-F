@@ -13,6 +13,12 @@ import FaceScanBar from './FaceScanBar';
 import ResponsiveContainer from '../../components/ResponsiveContainer';
 import SiteHeader from '@/components/header';
 
+const intro_guideline = [
+  {src: "cameracheck.png", title: "Camera", description: "Please look straight at the camera."},
+  {src: "glassesclose.png", title: "Eyewear", description: "Remove your eyewear for an accurate scan."},
+  {src: "haircheck.png", title: "Hair", description: "Pull your hair back to show your face."},
+]
+
 // 최대 동시 3개씩 이미지를 프리로드, 각 이미지의 로딩이 비동기적으로 병렬 진행
 async function limitedParallelLoad(
   urls: string[],
@@ -289,31 +295,13 @@ export default function ScanPage() {
       <div
         className="fixed inset-0 z-10 bg-black/35 min-w-[658px] min-h-[652px]"
       >
-        {/* 내비게이션바 (뒤로가기 버튼) */}
-        <div
-          onClick={() => router.back()}
-          className="fixed top-9 left-6 cursor-pointer z-30"
-          style={{
-            width: 'clamp(28px, 7vw, 44px)',
-            height: 'clamp(28px, 7vw, 44px)',
-          }}
-        >
-          <Image
-            src="/direction_left.png"
-            alt="내비게이션 바"
-            fill
-            sizes="80px"
-            className="object-contain"
-            priority
-          />
-        </div>
-
+        <ResponsiveContainer>
         {/* 로고 (가로 중앙 상단 고정) */}
-        <SiteHeader />
+        <SiteHeader leftHref={() => router.back()}/>
 
       {/* 반투명 오버레이 + 안내문구 + 버튼 (1번 화면) */}
       {step === 'intro' && (
-        <ResponsiveContainer>
+        <>
           {/* 중앙 반투명 박스 */}
           <div className={styles.scan_warning_box}>
             {/* 안내문구 및 아이콘 */}
@@ -326,62 +314,34 @@ export default function ScanPage() {
                   height={100}
                 />
               </div>
-              <p className={"text-white font-aribau text-[28px] font-normal leading-[136%] tracking-[-0.084px] text-nowrap overflow-hidden text-ellipsis"}>
+              <p className={"heading-md text-nowrap overflow-hidden text-ellipsis"}>
                 Please adjust face to guidelines
               </p>
 
               {/* 실선 구분선 */}
-              <div className={"w-[658px] h-0.5 bg-[#888888]/55 m-0 my-2.5 rounded-full"} />
+              <div className={"w-[658px] h-0.5 bg-opacity-white-200 m-0 my-2.5 rounded-full"} />
 
-              {/* 흰색 반투명 박스 3개 (아이콘만) */}
-              <div className="flex gap-8 mt-2">
-                <Image
-                  src="/icon/cameracheck.png"
-                  alt="카메라 체크"
-                  width={206}
-                  height={206}
-                  style={{ borderRadius: 42 }}
-                />
-                <Image
-                  src="/icon/glassesclose.png"
-                  alt="안경 클로즈"
-                  width={206}
-                  height={206}
-                  style={{ borderRadius: 42 }}
-                />
-                <Image
-                  src="/icon/haircheck.png"
-                  alt="헤어 체크"
-                  width={206}
-                  height={206}
-                  style={{ borderRadius: 42 }}
-                />
-              </div>
-
-              {/* 카테고리명: Camera, Eyewear, Hair */}
-              <div className="flex gap-8">
-                <span className={styles.scan_warning_title}>
-                  Camera
-                </span>
-                <span className={styles.scan_warning_title}>
-                  Eyewear
-                </span>
-                <span className={styles.scan_warning_title}>
-                  Hair
-                </span>
-              </div>
-
-              {/* 안내문구 3개: 각 박스 하단에 위치 */}
-              <div className="flex gap-8">
-                <span className={styles.scan_warning_text}>
-                  Please look straight at the camera.
-                </span>
-                <span className={styles.scan_warning_text}>
-                  Remove your eyewear for an accurate scan.
-                </span>
-                <span className={styles.scan_warning_text}>
-                  Pull your hair back to show your face.
-                </span>
+              {/* 흰색 반투명 박스 3개 */}
+              <div className="flex gap-5 mt-2">
+                {
+                  intro_guideline.map(v => (
+                    <div key={v.title}>
+                      <Image
+                        src={`/icon/${v.src}`}
+                        alt={`/icon/${v.src}`}
+                        width={206}
+                        height={206}
+                        style={{ borderRadius: 42 }}
+                      />
+                      <div className={styles.scan_warning_title}>
+                        {v.title}
+                      </div>
+                      <div className={styles.scan_warning_text}>
+                        {v.description}
+                      </div>
+                    </div>
+                  ))
+                }
               </div>
             </div>
 
@@ -390,12 +350,13 @@ export default function ScanPage() {
               <p className={styles.scan_button_text}>Let&apos;s Begin</p>
             </button>
           </div>
-        </ResponsiveContainer>
+        </>
       )}
 
       {/* 2번 화면: 타원 가이드라인 + 안내문구 */}
       {step === 'guide' && (
-        <ResponsiveContainer>
+        <>
+          <div className={"relative w-[810px] h-[1080px]"}>
           <div className={"absolute w-[1200px] h-[1200px] left-1/2 top-[40%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-20"}>
             {/* 타원 가이드라인 */}
             <svg width="100%" height="100%" viewBox="0 0 1200 1200">
@@ -435,8 +396,10 @@ export default function ScanPage() {
               )}
             </div>
           </div>
-        </ResponsiveContainer>
+          </div>
+        </>
       )}
+        </ResponsiveContainer>
       </div>
     </div>
   );
