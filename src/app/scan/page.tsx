@@ -167,20 +167,22 @@ export default function ScanPage() {
       }
 
       // 결과 페이지로 이동하면서 데이터 전달
-      const queryParams = new URLSearchParams({
-        faceShape: detectData.shape,
-        confidence: detectData.confidence || '0',
-        ratios: JSON.stringify({
-          cheek: detectData.cheek_ratio,
-          chin: detectData.chin_ratio,
-          forehead: detectData.forehead_ratio,
-          head: detectData.head_ratio,
-          jaw: detectData.jaw_ratio,
-          jawAngle: detectData.jaw_angle,
-        }),
-      }).toString();
+      // const queryParams = new URLSearchParams({
+      //   faceShape: detectData.shape,
+      //   confidence: detectData.confidence || '0',
+      //   ratios: JSON.stringify({
+      //     cheek: detectData.cheek_ratio,
+      //     chin: detectData.chin_ratio,
+      //     forehead: detectData.forehead_ratio,
+      //     head: detectData.head_ratio,
+      //     jaw: detectData.jaw_ratio,
+      //     jawAngle: detectData.jaw_angle,
+      //   }),
+      // }).toString();
 
-      router.push(`/loading?${queryParams}`);
+      const faceShape = detectData.shape.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
+
+      router.push(`/result/${faceShape}`);
     } catch (err) {
       setError(
         'API request failed: ' +
