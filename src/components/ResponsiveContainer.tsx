@@ -21,7 +21,8 @@ export default function ResponsiveContainer({
   useEffect(() => {
     function handleResize() {
       const wScale = window.innerWidth / 810;
-      setScale(Math.min(wScale, 1));
+      const hScale = window.innerHeight / 1080;
+      setScale(Math.min(wScale,hScale));
     }
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -30,7 +31,12 @@ export default function ResponsiveContainer({
 
   return (
     <div
-      className={"inset-0 w-screen h-screen overflow-x-hidden overflow-y-auto bg-cover bg-local flex flex-col justify-start items-center "+ (page ? backgroundType[page] : "")}>
+      className={
+      "inset-0 w-screen h-screen overflow-x-hidden bg-cover bg-local flex flex-col justify-start items-center "
+        + (page ? backgroundType[page] : "")
+        + (page === "result" ? " overflow-y-auto" : " overflow-hidden")
+    }
+    >
       <div
         className={"w-[810px] h-full origin-top"}
         style={{

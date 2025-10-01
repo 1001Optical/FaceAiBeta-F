@@ -27,7 +27,7 @@ const Modal = ({onClose, children}: IProps) => {
       onClick={() => onClose()}
     >
       <div
-        className="w-[738px] h-[868px] relative flex flex-col items-center bg-[rgba(0,0,0,0.3)] border-[2px] border-white-400 shadow-[0_4px_30px_0_rgba(0,0,0,0.4)] backdrop-blur-[12.5px] rounded-[48px] px-4 py-8"
+        className="w-[738px] h-fit relative flex flex-col items-center bg-[rgba(0,0,0,0.3)] border-[2px] border-white-400 shadow-[0_4px_30px_0_rgba(0,0,0,0.4)] backdrop-blur-[12.5px] rounded-[48px] px-4 py-8"
         style={{
           transform: `scale(${scale}) `,
         }}

@@ -1,48 +1,28 @@
 import dynamic from 'next/dynamic';
 import '@dotlottie/react-player/dist/index.css';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
 
 const DotLottiePlayer = dynamic(
-  () => import("@dotlottie/react-player").then(m => m.DotLottiePlayer),
+  () => import('@lottiefiles/dotlottie-react').then(m => m.DotLottieReact),
   { ssr: false }
 );
 
 interface IProps {
   src: string;
-  page: 'main' | 'loading';
-  className?: string
+  className?: string;
+  size?: string;
 }
 
-export default function DotPlayer({src, className, page}: IProps) {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setShow(true), 0); // 마운트 직후 교체 가능
-    return () => clearTimeout(t);
-  }, []);
+export default function DotPlayer({src, className, size}: IProps) {
   return (
     <div
       className={`flex items-center justify-center w-full ${className ?? ''}`}
     >
-      {show ? (
-        <DotLottiePlayer
-          src={src}
-          autoplay
-          loop
-          background={'transparent'}
-          speed={1}
-          className={'w-[400px] h-[400px]'}
-        />
-      ) : (
-        <Image
-          src={`/lottie_preload/${page}.svg`}
-          alt="Hero poster"
-          className="inset-0 object-cover w-[398px] h-[398px]"
-          loading="eager"
-          width={398}
-          height={398}
-        />
-      )}
+      <DotLottiePlayer
+        src={src}
+        loop
+        autoplay
+        className={size ?? 'w-[400px] h-[400px]'}
+      />
     </div>
   );
 }

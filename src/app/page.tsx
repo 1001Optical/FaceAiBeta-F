@@ -29,9 +29,9 @@ const Home = () =>  {
                   priority
                 />
                 <DotPlayer
-                  page={'main'}
                   src={"https://lottie.host/c992f4c3-1b27-4dff-8586-f6d9af8192da/Rpb2UtV7ND.lottie"}
-                  className={"w-[810px] h-fit relative"}
+                  className={"w-[810px] relative h-[532px]"}
+                  size={"h-[532px] w-full"}
                 />
               </div>
             </div>

@@ -51,6 +51,8 @@ export default function ScanPage() {
 
   const startCamera = async () => {
     try {
+      setError(null);
+      
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           width: { ideal: 1280 },
@@ -64,7 +66,7 @@ export default function ScanPage() {
       }
     } catch (err) {
       console.error(err);
-      setError('Cannot access camera. Please check camera permissions.');
+      setError('Camera access denied. Please allow camera permissions to continue.');
     }
   };
 
@@ -137,7 +139,7 @@ export default function ScanPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: process.env.API_TOKEN ?? "",
+          Authorization: process.env.NEXT_PUBLIC_API_TOKEN ?? "",
           Accept: 'application/json',
         },
         body: JSON.stringify({ image_url: data.image_url }),
@@ -165,20 +167,6 @@ export default function ScanPage() {
         setCaptured(false);
         return;
       }
-
-      // 결과 페이지로 이동하면서 데이터 전달
-      // const queryParams = new URLSearchParams({
-      //   faceShape: detectData.shape,
-      //   confidence: detectData.confidence || '0',
-      //   ratios: JSON.stringify({
-      //     cheek: detectData.cheek_ratio,
-      //     chin: detectData.chin_ratio,
-      //     forehead: detectData.forehead_ratio,
-      //     head: detectData.head_ratio,
-      //     jaw: detectData.jaw_ratio,
-      //     jawAngle: detectData.jaw_angle,
-      //   }),
-      // }).toString();
 
       const faceShape = detectData.shape.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
 

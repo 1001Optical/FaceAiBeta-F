@@ -132,6 +132,7 @@ export default function Result({params}: IProps) {
           faceShape={faceShape}
           title={selectProduct.name}
           src={selectProduct.src}
+          vendor={selectProduct.vendor}
           onClose={() => setSelectProduct(undefined)}
         />
       ) : (
@@ -159,7 +160,7 @@ export default function Result({params}: IProps) {
         </div>
         <div className={'size-[420px]'}>
           {/*<LottieCanvas />*/}
-          <DotPlayer page={'loading'} src={'https://lottie.host/3ee95351-a63f-4806-9414-45d55670a4b0/V8oXQSrKxH.lottie'} />
+          <DotPlayer src={'https://lottie.host/3ee95351-a63f-4806-9414-45d55670a4b0/V8oXQSrKxH.lottie'} />
         </div>
         <div className={'w-full h-[132px] px-10 py-8 bg-black-400 border-2 border-white-400 rounded-[48px]'}>
           <p className={'label-xl text-white-1000 text-center'}>
