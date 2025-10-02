@@ -8,13 +8,13 @@ interface IProps {
 }
 
 const Modal = ({onClose, children}: IProps) => {
-  const [scale, setScale] = useState(1);
+  const [scale, setScale] = useState(Math.min(window.innerWidth / 810, window.innerHeight / 1080));
 
   useEffect(() => {
     function handleResize() {
       const wScale = window.innerWidth / 810;
       const hScale = window.innerHeight / 1080;
-      setScale(Math.min(wScale, hScale, 1));
+      setScale(Math.min(wScale, hScale));
     }
     handleResize();
     window.addEventListener('resize', handleResize);

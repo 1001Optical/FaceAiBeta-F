@@ -36,73 +36,114 @@ export default function Result({params}: IProps) {
     }, 3000)
   }, []);
 
-  return <Suspense fallback={null}>{
-    !isLoading ? faceShape ? (
-    <>
-      <ResponsiveContainer page={'result'}>
-        <SiteHeader />
-        <div className={'pt-6 px-9 h-full'}>
-          <div className={'w-full h-full flex flex-col gap-8'}>
-            <FaceShapeCard type={faceShape} />
-            <div className={'flex flex-col gap-[34px]'}>
-              <p className={'heading-xl text-primary-50'}>Recommendation Frame</p>
-              <div className={styles.result_recommended_frame}>
-                {FaceShapeData[faceShape].frameRecommendation.map((item, index) => {
-                  const product = FrameProducts[item]
-                  return (
-                    <div
-                      className={'cursor-pointer'}
-                      onClick={() => setSelectProduct(product[0])}
-                      key={index}
-                    >
-                      <RecommendedFrame
-                        key={index}
-                        item={{
-                          shape: item, vendor: product[0].vendor, name: product[0].name, imgUrl: `${product[0].src}/preview.png`
-                        }}
-                        ranking={index + 1}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className={'flex flex-col gap-[34px]'}>
-              <p className={'heading-xl text-primary-50'}>Celebs with Your Face Type</p>
-              <div className={styles.result_celeb}>
-                <div className={'px-3 flex gap-6 items-center'}>
-                  <div className={styles.result_celeb_type}>
-                    <p className={'heading-xl text-center text-white-1000'}>{faceShape}</p>
-                  </div>
-                  <p className={'w-fit heading-md text-white-800'}>
-                    {FaceShapeData[faceShape].description}
-                  </p>
-                </div>
-                <div className={'flex gap-6'}>
-                  <CelebList
-                    gender={'Woman'}
-                    list={FaceShapeData[faceShape].celebrities.woman}
-                    selectCeleb={(celeb: CelebType) => setSelectCeleb(celeb)}
+  const Loading = () => {
+    return <ResponsiveContainer page={'loading'} className={"absolute top-0 left-0 z-30"}>
+      <SiteHeader />
+      <div className={'w-full py-[64px] flex justify-center items-center'}>
+        <div
+          className={'w-full px-9 flex flex-col justify-center items-center gap-10'}
+        >
+          <div
+            className={
+              'w-[420px] h-fit flex flex-col justify-center items-center gap-2'
+            }
+          >
+            <p className={'heading-md text-white-1000'}>
+              Smart AI face scan
+            </p>
+            <div className={'bg-white-200 w-[270px] h-0.5'} />
+            <p className={'heading-sm text-white-800'}>
+              In progress
+            </p>
+          </div>
+          <div className={'size-[420px]'}>
+            {/*<LottieCanvas />*/}
+            <DotPlayer src={'https://lottie.host/3ee95351-a63f-4806-9414-45d55670a4b0/V8oXQSrKxH.lottie'} />
+          </div>
+          <div className={'w-full h-[132px] px-10 py-8 bg-black-400 border-2 border-white-400 rounded-[48px]'}>
+            <p className={'label-xl text-white-1000 text-center'}>
+              We’re analyzing which eyewears<br/>
+              suit you best!
+            </p>
+          </div>
+        </div>
+      </div>
+    </ResponsiveContainer>
+  }
+
+  const Result = () => {
+    return <div className={'pt-6 px-9 h-full'}>
+      <div className={'w-full h-full flex flex-col gap-8'}>
+        <FaceShapeCard type={faceShape} />
+        <div className={'flex flex-col gap-[34px]'}>
+          <p className={'heading-xl text-primary-50'}>Recommendation Frame</p>
+          <div className={styles.result_recommended_frame}>
+            {FaceShapeData[faceShape].frameRecommendation.map((item, index) => {
+              const product = FrameProducts[item]
+              return (
+                <div
+                  className={'cursor-pointer'}
+                  onClick={() => setSelectProduct(product[0])}
+                  key={index}
+                >
+                  <RecommendedFrame
+                    key={index}
+                    item={{
+                      shape: item, vendor: product[0].vendor, name: product[0].name, imgUrl: `${product[0].src}/preview.png`
+                    }}
+                    ranking={index + 1}
                   />
-                  <CelebList
-                    gender={'Man'}
-                    list={FaceShapeData[faceShape].celebrities.man}
-                    selectCeleb={(celeb: CelebType) => setSelectCeleb(celeb)}
-                  />
                 </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className={'flex flex-col gap-[34px]'}>
+          <p className={'heading-xl text-primary-50'}>Celebs with Your Face Type</p>
+          <div className={styles.result_celeb}>
+            <div className={'px-3 flex gap-6 items-center'}>
+              <div className={styles.result_celeb_type}>
+                <p className={'heading-xl text-center text-white-1000'}>{faceShape}</p>
               </div>
+              <p className={'w-fit heading-md text-white-800'}>
+                {FaceShapeData[faceShape].description}
+              </p>
             </div>
-            <div className={'pb-8 flex flex-col gap-4'}>
-              <IooIBtn
-                text={'Get QR Code'}
-                icon={'/upload.png'}
-                onClick={() => setIsOpenQR(true)}
+            <div className={'flex gap-6'}>
+              <CelebList
+                gender={'Woman'}
+                list={FaceShapeData[faceShape].celebrities.woman}
+                selectCeleb={(celeb: CelebType) => setSelectCeleb(celeb)}
               />
-              <IooIBtn text={'Scan Another Face'} icon={'/face.png'} onClick={() => router.push('/')} />
+              <CelebList
+                gender={'Man'}
+                list={FaceShapeData[faceShape].celebrities.man}
+                selectCeleb={(celeb: CelebType) => setSelectCeleb(celeb)}
+              />
             </div>
           </div>
         </div>
-      </ResponsiveContainer>
+        <div className={'pb-8 flex flex-col gap-4'}>
+          <IooIBtn
+            text={'Get QR Code'}
+            icon={'/upload.png'}
+            onClick={() => setIsOpenQR(true)}
+          />
+          <IooIBtn text={'Scan Another Face'} icon={'/face.png'} onClick={() => router.push('/')} />
+        </div>
+      </div>
+    </div>
+
+  }
+
+  return <Suspense fallback={null}>
+    {isLoading ? <Loading /> : <></>}
+    <ResponsiveContainer page={'result'}>
+      <SiteHeader />
+       <Result />
+    </ResponsiveContainer>
+    {faceShape ? (
+    <>
       {selectCeleb ? (
         <IooIModal
           items={{
@@ -139,37 +180,7 @@ export default function Result({params}: IProps) {
         <></>
       )}
     </>
-  ) : <></> :<ResponsiveContainer page={'loading'}>
-    <SiteHeader />
-    <div className={'w-full py-[64px] flex justify-center items-center'}>
-      <div
-        className={'w-full px-9 flex flex-col justify-center items-center gap-10'}
-      >
-        <div
-          className={
-            'w-[420px] h-fit flex flex-col justify-center items-center gap-2'
-          }
-        >
-          <p className={'heading-md text-white-1000'}>
-            Smart AI face scan
-          </p>
-          <div className={'bg-white-200 w-[270px] h-0.5'} />
-          <p className={'heading-sm text-white-800'}>
-            In progress
-          </p>
-        </div>
-        <div className={'size-[420px]'}>
-          {/*<LottieCanvas />*/}
-          <DotPlayer src={'https://lottie.host/3ee95351-a63f-4806-9414-45d55670a4b0/V8oXQSrKxH.lottie'} />
-        </div>
-        <div className={'w-full h-[132px] px-10 py-8 bg-black-400 border-2 border-white-400 rounded-[48px]'}>
-          <p className={'label-xl text-white-1000 text-center'}>
-            We’re analyzing which eyewears<br/>
-            suit you best!
-          </p>
-        </div>
-      </div>
-    </div>
-  </ResponsiveContainer>
+  ) : <></>
   }</Suspense>;
 }
+

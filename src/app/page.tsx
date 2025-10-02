@@ -27,6 +27,7 @@ const Home = () =>  {
                   height={176}
                   className="object-contain"
                   priority
+                  fetchPriority={"high"}
                 />
                 <DotPlayer
                   src={"https://lottie.host/c992f4c3-1b27-4dff-8586-f6d9af8192da/Rpb2UtV7ND.lottie"}

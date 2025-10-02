@@ -11,10 +11,11 @@ const backgroundType = {
 interface IProps {
   children: React.ReactNode;
   page?: "result" | "main" | "loading";
+  className?: string
 }
 
 export default function ResponsiveContainer({
-  children, page
+  children, page, className
 }: IProps) {
   const [scale, setScale] = useState(1);
 
@@ -35,6 +36,7 @@ export default function ResponsiveContainer({
       "inset-0 w-screen h-screen overflow-x-hidden bg-cover bg-local flex flex-col justify-start items-center "
         + (page ? backgroundType[page] : "")
         + (page === "result" ? " overflow-y-auto" : " overflow-hidden")
+        + (` ${className}`)
     }
     >
       <div
