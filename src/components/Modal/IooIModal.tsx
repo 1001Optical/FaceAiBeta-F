@@ -15,11 +15,11 @@ const IooIModal = ({items, onClose}: IProps) => {
 
   return (
     <Modal onClose={onClose}>
-      <span className="text-xl font-aribau text-white-800 font-semibold text-white text-center">
+      <span className="heading-sm text-white-800 text-white text-center font-light">
         {items?.title ?? ""}
       </span>
       <hr className="border-t border-white-200 border-opacity-30 my-3 w-[562px]" />
-      <span className="text-lg font-aribau text-white-1000 mb-6">
+      <span className="heading-md text-white-1000 mb-6">
         {items?.subTitle ?? ""}
       </span>
       <div

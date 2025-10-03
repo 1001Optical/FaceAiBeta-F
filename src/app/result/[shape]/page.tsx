@@ -75,7 +75,7 @@ export default function Result({params}: IProps) {
     return <div className={'pt-6 px-9 h-full'}>
       <div className={'w-full h-full flex flex-col gap-8'}>
         <FaceShapeCard type={faceShape} />
-        <div className={'flex flex-col gap-[34px]'}>
+        <div className={'flex flex-col gap-5'}>
           <p className={'heading-xl text-primary-50'}>Recommendation Frame</p>
           <div className={styles.result_recommended_frame}>
             {FaceShapeData[faceShape].frameRecommendation.map((item, index) => {
@@ -98,12 +98,12 @@ export default function Result({params}: IProps) {
             })}
           </div>
         </div>
-        <div className={'flex flex-col gap-[34px]'}>
+        <div className={'flex flex-col gap-5'}>
           <p className={'heading-xl text-primary-50'}>Celebs with Your Face Type</p>
           <div className={styles.result_celeb}>
-            <div className={'px-3 flex gap-6 items-center'}>
+            <div className={'px-3 flex gap-6 items-center '}>
               <div className={styles.result_celeb_type}>
-                <p className={'heading-xl text-center text-white-1000'}>{faceShape}</p>
+                <p className={'heading-xl text-center text-white-1000 ml-6'}>{faceShape}</p>
               </div>
               <p className={'w-fit heading-md text-white-800'}>
                 {FaceShapeData[faceShape].description}

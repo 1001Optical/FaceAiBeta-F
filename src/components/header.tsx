@@ -11,7 +11,7 @@ interface IHeaderProps {
 
 const SiteHeader = ({leftHref, rightHref}: IHeaderProps) => {
   return (
-    <div className={'w-full h-[64px] flex justify-between items-center mt-6'}>
+    <div className={'w-full h-[64px] flex justify-between items-center mt-6 px-4'}>
       <div className={"ml-4 size-[44px]"} >{leftHref ? <div className={"cursor-pointer"} onClick={leftHref}> <IooIIcon size={'sm'} iconPath={"/direction_left.png"} /> </div>: <></>}</div>
       <Link href="/" passHref>
         <div className="relative cursor-pointer w-[100px] h-[64px]">
