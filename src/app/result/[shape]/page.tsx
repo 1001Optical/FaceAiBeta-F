@@ -26,7 +26,7 @@ export default function Result({params}: IProps) {
   const [isOpenQR, setIsOpenQR] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
-  const faceShape = shape
+  const faceShape = shape === "Square" ? "Angular" : shape;
 
   const router = useRouter()
 
@@ -103,7 +103,7 @@ export default function Result({params}: IProps) {
           <div className={styles.result_celeb}>
             <div className={'px-3 flex gap-6 items-center '}>
               <div className={styles.result_celeb_type}>
-                <p className={'heading-xl text-center text-white-1000 ml-6'}>{faceShape}</p>
+                <p className={'heading-xl text-center text-white-1000'}>{faceShape}</p>
               </div>
               <p className={'w-fit heading-md text-white-800'}>
                 {FaceShapeData[faceShape].description}
