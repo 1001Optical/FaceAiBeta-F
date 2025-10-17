@@ -62,8 +62,8 @@ export default function Result({params}: IProps) {
           </div>
           <div className={'w-full h-[132px] px-10 py-8 bg-black-400 border-2 border-white-400 rounded-[48px]'}>
             <p className={'label-xl text-white-1000 text-center'}>
-              We’re analyzing which eyewears<br/>
-              suit you best!
+              We’re analyzing which eyewear<br/>
+              suits you best!
             </p>
           </div>
         </div>
