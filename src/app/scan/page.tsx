@@ -136,7 +136,7 @@ export default function ScanPage() {
             formData.append('image', blob, 'capture.jpg');
 
             // Flask API 엔드포인트에 POST 요청
-            const response = await fetch(`${apiUrl}/upload_image`, {
+            const response = await fetch(`/api/upload_image`, {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -157,7 +157,7 @@ export default function ScanPage() {
             }
 
             // 업로드된 이미지 URL을 Face Shape Detection API에 POST
-            const detectRes = await fetch(`${apiUrl}/detect_face_shape`, {
+            const detectRes = await fetch(`/api/detect_face_shape`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
