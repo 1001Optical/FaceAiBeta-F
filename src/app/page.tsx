@@ -3,7 +3,6 @@
 import styles from "@/css/main.module.css"
 import Image from 'next/image';
 import ResponsiveContainer from '../components/ResponsiveContainer';
-import DotPlayer from '@/components/dotLottiePlayer';
 import SiteHeader from '@/components/header';
 import IooIBtn from '@/components/IooIBtn';
 import { useRouter } from 'next/navigation';
@@ -29,10 +28,13 @@ const Home = () =>  {
                   priority
                   fetchPriority={"high"}
                 />
-                <DotPlayer
-                  src={"https://lottie.host/c992f4c3-1b27-4dff-8586-f6d9af8192da/Rpb2UtV7ND.lottie"}
-                  className={"w-[810px] relative h-[532px]"}
-                  size={"h-[532px] w-full"}
+                <Image
+                  src="/lottie_preload/main.svg"
+                  alt=""
+                  width={810}
+                  height={705}
+                  className="w-full h-[532px] object-contain"
+                  unoptimized
                 />
               </div>
             </div>

@@ -13,7 +13,7 @@ import IooISelectModal from '@/components/Modal/IooISelectModal';
 import { FaceShapeData } from '@/data/faceShapeData';
 import { FrameProducts, ProductType } from '@/data/frameData';
 import { useRouter } from 'next/navigation';
-import DotPlayer from '@/components/dotLottiePlayer';
+import Image from 'next/image';
 
 interface IProps {
   params: Promise<{shape: string}>,
@@ -56,9 +56,14 @@ export default function Result({params}: IProps) {
               In progress
             </p>
           </div>
-          <div className={'size-[420px]'}>
-            {/*<LottieCanvas />*/}
-            <DotPlayer src={'https://lottie.host/3ee95351-a63f-4806-9414-45d55670a4b0/V8oXQSrKxH.lottie'} />
+          <div className={'size-[420px] relative'}>
+            <Image
+              src="/lottie_preload/loading.svg"
+              alt=""
+              fill
+              className="object-contain"
+              unoptimized
+            />
           </div>
           <div className={'w-full h-[132px] px-10 py-8 bg-black-400 border-2 border-white-400 rounded-[48px]'}>
             <p className={'label-xl text-white-1000 text-center'}>
@@ -87,9 +92,12 @@ export default function Result({params}: IProps) {
                   key={index}
                 >
                   <RecommendedFrame
-                    key={index}
-                    item={{
-                      shape: item, vendor: product[0].vendor, name: product[0].name, imgUrl: `${product[0].src}/preview.png`
+                    items={{
+                      shape: item, products: product.map(product => ({
+                        vendor: product.vendor,
+                        name: product.name,
+                        imgUrl: `${product.src}/preview.png`
+                      })) ?? []
                     }}
                     ranking={index + 1}
                   />

@@ -67,10 +67,8 @@ export default function RootLayout({
           href="/fonts/Aribau-Grotesk-Regular.otf"
           crossOrigin="anonymous"
         />
-        <link rel="dns-prefetch" href="https://lottie.host" />
-        <link rel="preconnect" href="https://lottie.host" crossOrigin="" />
-        <link rel="preload" href="https://lottie.host/3ee95351-a63f-4806-9414-45d55670a4b0/V8oXQSrKxH.lottie" as="fetch" crossOrigin="anonymous" />
-        <link rel="preload" href="https://lottie.host/c992f4c3-1b27-4dff-8586-f6d9af8192da/Rpb2UtV7ND.lottie" as="fetch" crossOrigin="anonymous" />
+        <link rel="preload" href="/lottie_preload/main.svg" as="image" />
+        <link rel="preload" href="/lottie_preload/loading.svg" as="image" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

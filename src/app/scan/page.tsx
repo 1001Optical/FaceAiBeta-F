@@ -15,62 +15,74 @@ const intro_guideline = [
   {src: "haircheck.png", title: "Hair", description: "Pull your hair back to show your face."},
 ]
 
+function stopStream(stream: MediaStream | null) {
+  stream?.getTracks().forEach((track) => track.stop());
+}
+
 export default function ScanPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
   const [step, setStep] = useState<'intro' | 'guide' | 'loading'>('intro');
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // 캡처 및 얼굴 감지 상태 (useCallback, useEffect보다 위에 선언)
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [captured, setCaptured] = useState(false);
   const [, setCountdown] = useState<number | null>(null);
 
-  // 카메라 프리뷰 시작
+  const stopCamera = useCallback(() => {
+    stopStream(mediaStreamRef.current);
+    mediaStreamRef.current = null;
+    const video = videoRef.current;
+    if (video) {
+      video.srcObject = null;
+    }
+  }, []);
+
+  // 카메라 프리뷰 시작 / 페이지 이탈·step 변경 시 완전히 정리
   useEffect(() => {
-    if (step === 'intro' || step === 'guide') {
-      startCamera();
-    }
+    const shouldRun = step === 'intro' || step === 'guide';
+    let cancelled = false;
 
-    // ref의 값을 클로저 변수로 저장
-    const videoEl = videoRef.current;
-
-    // 정리: 컴포넌트 언마운트 시 카메라 종료
-    return () => {
-      if (videoEl) {
-        const stream = videoEl.srcObject as MediaStream;
-        if (stream) {
-          stream.getTracks().forEach(track => track.stop());
+    if (shouldRun) {
+      (async () => {
+        try {
+          setError(null);
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              width: { ideal: 1280 },
+              height: { ideal: 720 },
+              facingMode: 'user',
+            },
+          });
+          if (cancelled) {
+            stopStream(stream);
+            return;
+          }
+          stopCamera();
+          mediaStreamRef.current = stream;
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        } catch (err) {
+          console.error(err);
+          if (!cancelled) {
+            setError('Camera access denied. Please allow camera permissions to continue.');
+          }
         }
-      }
-    };
-  }, [step]);
-
-  const startCamera = async () => {
-    try {
-      setError(null);
-      
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-          facingMode: 'user',
-        },
-      });
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    } catch (err) {
-      console.error(err);
-      setError('Camera access denied. Please allow camera permissions to continue.');
+      })();
+    } else {
+      stopCamera();
     }
-  };
 
-  // 캡처 함수 useCallback 적용
+    return () => {
+      cancelled = true;
+      stopCamera();
+    };
+  }, [step, stopCamera]);
+
   const handleCapture = useCallback(async () => {
     if (!videoRef.current || !canvasRef.current || isLoading) {
       return;
@@ -112,13 +124,13 @@ export default function ScanPage() {
       formData.append('image', blob, 'capture.jpg');
 
       // Flask API 엔드포인트에 POST 요청
-      const response = await fetch(`/api/upload_image`, {
+      const response = await fetch(`/api/v1/upload_image`, {
         method: 'POST',
         body: formData,
         headers: {
           Accept: 'application/json',
         },
-        signal: AbortSignal.timeout(10000),
+        signal: AbortSignal.timeout(30000),
       });
 
       if (!response.ok) {
@@ -129,21 +141,23 @@ export default function ScanPage() {
       }
 
       const data = await response.json();
+      console.log('upload response:', data);
 
-      if (!data || !data.image_url) {
+      if (!data || !data.image_path) {
+        console.log('image_path missing, keys:', Object.keys(data || {}));
         throw new Error('Image upload failed.');
       }
 
-      // 업로드된 이미지 URL을 Face Shape Detection API에 POST
-      const detectRes = await fetch(`/api/detect_face_shape`, {
+      console.log('calling detect_face_shape with:', data.image_path);
+      const detectRes = await fetch(`/api/v1/detect_face_shape`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: process.env.NEXT_PUBLIC_API_TOKEN ?? "",
           Accept: 'application/json',
         },
-        body: JSON.stringify({ image_url: data.image_url }),
-        signal: AbortSignal.timeout(10000),
+        body: JSON.stringify({ image_path: data.image_path }),
+        signal: AbortSignal.timeout(30000),
       });
 
       if (!detectRes.ok) {
@@ -154,6 +168,7 @@ export default function ScanPage() {
       }
 
       const detectData = await detectRes.json();
+      console.log('detect response:', detectData);
 
       // 얼굴 인식 실패 처리
       if (
@@ -169,9 +184,11 @@ export default function ScanPage() {
       }
 
       const faceShape = detectData.shape.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
-
+      console.log('navigating to:', `/result/${faceShape}`);
+      stopCamera();
       router.push(`/result/${faceShape}`);
     } catch (err) {
+      console.error('catch error:', err);
       setError(
         'API request failed: ' +
           (err instanceof Error ? err.message : String(err))
@@ -181,7 +198,7 @@ export default function ScanPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [apiUrl, isLoading, router]);
+  }, [isLoading, router, stopCamera]);
 
   // 얼굴이 타원 안에 들어오면 2초 후 자동 캡처 (임시: 버튼 없이 타이머)
   useEffect(() => {
@@ -229,6 +246,7 @@ export default function ScanPage() {
                   alt="Record"
                   width={100}
                   height={100}
+                  unoptimized
                 />
               </div>
               <p className={"heading-md text-nowrap overflow-hidden text-ellipsis"}>
@@ -249,6 +267,7 @@ export default function ScanPage() {
                         width={206}
                         height={206}
                         style={{ borderRadius: 42 }}
+                        unoptimized
                       />
                       <div className={styles.scan_warning_title}>
                         {v.title}
