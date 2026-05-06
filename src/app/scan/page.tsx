@@ -30,7 +30,6 @@ export default function ScanPage() {
   // 캡처 및 얼굴 감지 상태 (useCallback, useEffect보다 위에 선언)
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [captured, setCaptured] = useState(false);
-  const [, setCountdown] = useState<number | null>(null);
 
   const stopCamera = useCallback(() => {
     stopStream(mediaStreamRef.current);
@@ -203,14 +202,12 @@ export default function ScanPage() {
   // 얼굴이 타원 안에 들어오면 2초 후 자동 캡처 (임시: 버튼 없이 타이머)
   useEffect(() => {
     if (step === 'guide' && !captured) {
-      setCountdown(2);
       const timer = setTimeout(() => {
         handleCapture();
       }, 2000);
       return () => clearTimeout(timer);
-    } else {
-      setCountdown(null);
     }
+    return undefined;
   }, [step, captured, handleCapture]);
 
   return (
