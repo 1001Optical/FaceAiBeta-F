@@ -16,6 +16,9 @@ const intro_guideline = [
   {src: "haircheck.png", title: "Hair", description: "Pull your hair back to show your face."},
 ]
 
+/** Vercel proxy + EC2 inference can exceed 30s (matches default browser abort otherwise). */
+const API_FETCH_TIMEOUT_MS = 120_000;
+
 function stopStream(stream: MediaStream | null) {
   stream?.getTracks().forEach((track) => track.stop());
 }
@@ -136,7 +139,7 @@ export default function ScanPage() {
         headers: {
           Accept: 'application/json',
         },
-        signal: AbortSignal.timeout(30000),
+        signal: AbortSignal.timeout(API_FETCH_TIMEOUT_MS),
       });
 
       if (!response.ok) {
@@ -163,7 +166,7 @@ export default function ScanPage() {
           Accept: 'application/json',
         },
         body: JSON.stringify({ image_path: data.image_path }),
-        signal: AbortSignal.timeout(30000),
+        signal: AbortSignal.timeout(API_FETCH_TIMEOUT_MS),
       });
 
       if (!detectRes.ok) {

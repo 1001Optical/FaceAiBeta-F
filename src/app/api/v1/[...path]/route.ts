@@ -2,8 +2,12 @@ import { NextRequest } from 'next/server';
 
 export const runtime = 'nodejs';
 
-/** Vercel Pro: raise if uploads + EC2 are slow. Hobby max is typically 10s. */
-export const maxDuration = 60;
+/**
+ * Max wall-clock time for this function (Vercel → EC2 왕복 포함).
+ * - Hobby(무료): 플랫폼 상한이 짧아서(대략 10s) 느린 업로드/추론이면 여기서 잘림 → 브라우저에서 끊김/canceled처럼 보일 수 있음.
+ * - Pro 이상: 대시보드/플랜에 맞게 더 길게 쓰려면 값 올리고 재배포.
+ */
+export const maxDuration = 120;
 
 const defaultBackend = 'http://54.252.234.32:5001';
 
@@ -53,6 +57,9 @@ async function proxy(request: NextRequest, pathSegments: string[]) {
   const base = backendBase();
   const path = pathSegments.join('/');
   const target = `${base}/api/v1/${path}${request.nextUrl.search}`;
+  const started = Date.now();
+
+  console.info('[api/v1 proxy] ->', request.method, path, { target });
 
   const body =
     request.method === 'GET' || request.method === 'HEAD'
@@ -69,20 +76,26 @@ async function proxy(request: NextRequest, pathSegments: string[]) {
     });
   } catch (e) {
     const detail = describeUpstreamFailure(e);
-    console.error('[api/v1 proxy] fetch failed:', target, detail, e);
+    const ms = Date.now() - started;
+    console.error('[api/v1 proxy] fetch failed:', { path, target, ms, detail, e });
     return Response.json(
       {
         error: 'upstream_unreachable',
         target,
         detail,
+        proxy_duration_ms: ms,
       },
       { status: 502 },
     );
   }
 
+  const upstreamMs = Date.now() - started;
+  console.info('[api/v1 proxy] ok', { path, status: res.status, upstreamMs });
+
   const outHeaders = new Headers();
   const ct = res.headers.get('content-type');
   if (ct) outHeaders.set('content-type', ct);
+  outHeaders.set('x-proxy-upstream-ms', String(upstreamMs));
 
   return new Response(res.body, {
     status: res.status,
