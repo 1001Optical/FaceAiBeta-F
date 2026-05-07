@@ -97,7 +97,9 @@ async function proxy(request: NextRequest, pathSegments: string[]) {
   if (ct) outHeaders.set('content-type', ct);
   outHeaders.set('x-proxy-upstream-ms', String(upstreamMs));
 
-  return new Response(res.body, {
+  // Vercel에서 ReadableStream 그대로 넘기면 간헐적으로 플랫폼 502가 나는 경우가 있어 본문을 버퍼링함.
+  const payload = await res.arrayBuffer();
+  return new Response(payload.byteLength ? payload : null, {
     status: res.status,
     statusText: res.statusText,
     headers: outHeaders,
@@ -108,16 +110,38 @@ export async function POST(
   request: NextRequest,
   ctx: { params: Promise<{ path: string[] }> },
 ) {
-  const { path } = await ctx.params;
-  return proxy(request, path ?? []);
+  try {
+    const { path } = await ctx.params;
+    return await proxy(request, path ?? []);
+  } catch (e) {
+    console.error('[api/v1 proxy] POST crashed', e);
+    return Response.json(
+      {
+        error: 'proxy_internal',
+        detail: e instanceof Error ? e.message : String(e),
+      },
+      { status: 500 },
+    );
+  }
 }
 
 export async function GET(
   request: NextRequest,
   ctx: { params: Promise<{ path: string[] }> },
 ) {
-  const { path } = await ctx.params;
-  return proxy(request, path ?? []);
+  try {
+    const { path } = await ctx.params;
+    return await proxy(request, path ?? []);
+  } catch (e) {
+    console.error('[api/v1 proxy] GET crashed', e);
+    return Response.json(
+      {
+        error: 'proxy_internal',
+        detail: e instanceof Error ? e.message : String(e),
+      },
+      { status: 500 },
+    );
+  }
 }
 
 export async function OPTIONS() {
