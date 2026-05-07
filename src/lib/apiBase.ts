@@ -1,10 +1,13 @@
 /**
  * Browser URL for face API routes.
  *
- * - **Default (recommended for HTTPS frontend):** relative `/api/v1/...` — Next.js
- *   `rewrites` proxies to `BACKEND_URL` on the server → no mixed content.
- * - **Direct:** set `NEXT_PUBLIC_API_URL` (e.g. `http://localhost:5001` for local dev).
- *   Do not use plain `http://` API from an `https://` site (browser will block it).
+ * Vercel / HTTPS site (e.g. https://1001face-ai-preview.vercel.app):
+ * - Do **not** set `NEXT_PUBLIC_API_URL` to your EC2 `http://…` URL — the browser
+ *   would call HTTP from an HTTPS page (mixed content).
+ * - Use relative `/api/v1/…` (leave `NEXT_PUBLIC_API_URL` unset).
+ * - Set **`BACKEND_URL`** to override (optional; default `http://54.252.234.32:5001`).
+ *
+ * Local dev hitting API directly: `NEXT_PUBLIC_API_URL=http://localhost:5001`
  */
 export function faceApiUrl(path: string): string {
   const segment = path.replace(/^\//, '').replace(/^api\/v1\/?/, '');

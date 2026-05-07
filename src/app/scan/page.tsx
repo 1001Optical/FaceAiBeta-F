@@ -31,6 +31,7 @@ export default function ScanPage() {
   // 캡처 및 얼굴 감지 상태 (useCallback, useEffect보다 위에 선언)
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [captured, setCaptured] = useState(false);
+  const captureLockRef = useRef(false);
 
   const stopCamera = useCallback(() => {
     stopStream(mediaStreamRef.current);
@@ -84,10 +85,15 @@ export default function ScanPage() {
   }, [step, stopCamera]);
 
   const handleCapture = useCallback(async () => {
-    if (!videoRef.current || !canvasRef.current || isLoading) {
+    if (
+      captureLockRef.current ||
+      !videoRef.current ||
+      !canvasRef.current ||
+      isLoading
+    ) {
       return;
     }
-
+    captureLockRef.current = true;
     const video = videoRef.current;
     const canvas = canvasRef.current;
     canvas.width = video.videoWidth;
@@ -196,6 +202,7 @@ export default function ScanPage() {
       setStep('guide');
       setCaptured(false);
     } finally {
+      captureLockRef.current = false;
       setIsLoading(false);
     }
   }, [isLoading, router, stopCamera]);
