@@ -83,27 +83,19 @@ function ResultBody({
           {FaceShapeData[faceShape].frameRecommendation.map((item, index) => {
             const product = FrameProducts[item]
             return (
-              <div
-                className={'cursor-pointer'}
-                onClick={() => onSelectProduct(product[0])}
-                key={index}
-              >
                 <RecommendedFrame
+                key={item}
+                  onClickProduct={onSelectProduct}
                   items={{
-                    shape: item, products: product.map(product => ({
-                      vendor: product.vendor,
-                      name: product.name,
-                      imgUrl: `${product.src}/preview.png`
-                    })) ?? []
+                    shape: item, products: product.map(product => product as ProductType) ?? []
                   }}
                   ranking={index + 1}
                 />
-              </div>
             );
           })}
         </div>
       </div>
-      <div className={'flex flex-col gap-5'}>
+      {/* <div className={'flex flex-col gap-5'}>
         <p className={'heading-xl text-primary-50'}>Celebs with Your Face Type</p>
         <div className={styles.result_celeb}>
           <div className={'px-3 flex gap-6 items-center '}>
@@ -127,7 +119,7 @@ function ResultBody({
             />
           </div>
         </div>
-      </div>
+      </div> */}
       <div className={'pb-8 flex flex-col gap-4'}>
         <IooIBtn
           text={'Get QR Code'}

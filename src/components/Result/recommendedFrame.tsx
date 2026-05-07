@@ -1,17 +1,13 @@
 import Image from 'next/image';
-
-interface IItem {
-  vendor: string;
-  name: string;
-  imgUrl: string;
-}
+import { ProductType } from '@/data/frameData';
 
 interface IProps {
-  items: { shape: string; products: IItem[] };
+  items: { shape: string; products: ProductType[] };
   ranking: number;
+  onClickProduct?: (product: ProductType) => void;
 }
 
-const RecommendedFrame = ({ items, ranking }: IProps) => {
+const RecommendedFrame = ({ items, ranking, onClickProduct }: IProps) => {
   return (
     <div className={'flex flex-col gap-4'}>
       <div className={'flex flex-col px-3'}>
@@ -27,13 +23,14 @@ const RecommendedFrame = ({ items, ranking }: IProps) => {
           className={
             'relative size-[320px] rounded-[32.82px] p-[24.62px] overflow-hidden bg-primary-50 shadow-[inset_0_0_14.22px_0_#F2F2F2,_inset_0_0_2.67px_0_#FFFFFF80,_inset_-0.89px_-0.89px_0.44px_-0.89px_#FFFFFF,_inset_0.89px_0.89px_0.44px_-0.89px_#FFFFFF,_inset_-0.89px_-0.89px_0_-0.44px_#262626,_inset_0.89px_0.89px_0_-0.44px_#333333,_0_0.89px_7.11px_0_#0000001F,_0_0_1.78px_0_#0000001A] backdrop-blur-[10.666666030883789px]'
           }
+          onClick={() => onClickProduct?.(item)}
         >
           <div
             className={
               'w-[296px] h-[212px] rounded-tl-[32px] absolute -right-14 -bottom-10 z-10 overflow-hidden flex justify-center items-center'
             }
           >
-            <Image src={item.imgUrl} alt={'frames'} fill />
+            <Image src={`${item.src}/preview.png`} alt={'frames'} fill />
           </div>
           <div>
             <p className={'heading-sm text-primary-800'}>{item.vendor}</p>
