@@ -8,6 +8,7 @@ import './FaceScanner.css';
 import FaceScanBar from './FaceScanBar';
 import ResponsiveContainer from '../../components/ResponsiveContainer';
 import SiteHeader from '@/components/header';
+import { API_BASE_URL } from '@/lib/apiBase';
 
 const intro_guideline = [
   {src: "cameracheck.png", title: "Camera", description: "Please look straight at the camera."},
@@ -123,7 +124,7 @@ export default function ScanPage() {
       formData.append('image', blob, 'capture.jpg');
 
       // Flask API 엔드포인트에 POST 요청
-      const response = await fetch(`/api/v1/upload_image`, {
+      const response = await fetch(`${API_BASE_URL}/api/v1/upload_image`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -148,7 +149,7 @@ export default function ScanPage() {
       }
 
       console.log('calling detect_face_shape with:', data.image_path);
-      const detectRes = await fetch(`/api/v1/detect_face_shape`, {
+      const detectRes = await fetch(`${API_BASE_URL}/api/v1/detect_face_shape`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
