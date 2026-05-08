@@ -5,7 +5,7 @@
  * - Do **not** set `NEXT_PUBLIC_API_URL` to your EC2 `http://…` URL — the browser
  *   would call HTTP from an HTTPS page (mixed content).
  * - Use relative `/api/v1/…` (leave `NEXT_PUBLIC_API_URL` unset).
- * - Set **`BACKEND_URL`** to override (optional; default `http://54.252.234.32:5001`).
+ * - Set **`BACKEND_URL`** to override (optional; default `http://15.134.136.129:5001`).
  *
  * Local dev hitting API directly: `NEXT_PUBLIC_API_URL=http://localhost:5001`
  */

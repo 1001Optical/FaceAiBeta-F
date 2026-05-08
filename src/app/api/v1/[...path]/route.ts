@@ -9,7 +9,7 @@ export const runtime = 'nodejs';
  */
 export const maxDuration = 120;
 
-const defaultBackend = 'http://54.252.234.32:5001';
+const defaultBackend = 'http://15.134.136.129:5001';
 
 /**
  * Override with `BACKEND_URL` in `.env` / Vercel. No trailing slash.
