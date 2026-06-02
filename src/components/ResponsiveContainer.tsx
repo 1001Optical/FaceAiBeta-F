@@ -3,19 +3,23 @@
 import React, { useEffect, useState } from 'react';
 
 const backgroundType = {
-  "result": "bg-[url(/background/bg_result.svg)]",
-  "main": "bg-[url(/background/bg_main.svg)]",
-  "loading": "bg-[url(/background/bg_loading.svg)]",
-}
+  result: "bg-[url(/background/bg_result.svg)]",
+  main: "bg-[url(/background/bg_main.svg)]",
+  loading: "bg-[url(/background/bg_loading.svg)]",
+};
 
 interface IProps {
   children: React.ReactNode;
   page?: "result" | "main" | "loading";
-  className?: string
+  className?: string;
+  containerRef?: React.Ref<HTMLDivElement>;
 }
 
 export default function ResponsiveContainer({
-  children, page, className
+  children,
+  page,
+  className,
+  containerRef,
 }: IProps) {
   const [scale, setScale] = useState(1);
 
@@ -23,27 +27,36 @@ export default function ResponsiveContainer({
     function handleResize() {
       const wScale = window.innerWidth / 810;
       const hScale = window.innerHeight / 1080;
-      setScale(Math.min(wScale,hScale));
+      setScale(Math.min(wScale, hScale));
     }
+
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
     <div
+      ref={containerRef}
       className={
-      "inset-0 w-screen h-screen overflow-x-hidden bg-cover bg-local flex flex-col justify-start items-center "
+        "inset-0 w-screen h-screen overflow-x-hidden bg-cover bg-local flex flex-col justify-start items-center "
         + (page ? backgroundType[page] : "")
-        + (page === "result" ? " overflow-y-auto" : " overflow-hidden")
-        + (` ${className}`)
-    }
+        + (page === "result"
+          ? " overflow-y-auto"
+          : " overflow-hidden")
+        + ` ${className ?? ""}`
+      }
     >
       <div
-        className={"w-[810px] h-full origin-top"}
+        className="w-[810px] origin-top"
         style={{
-          transform: `scale(${scale}) `,
-          height: `calc(100% / ${scale})`,
+          transform: `scale(${scale})`,
+          transformOrigin: "top center",
+          minHeight: `calc(100% / ${scale})`,
         }}
       >
         {children}

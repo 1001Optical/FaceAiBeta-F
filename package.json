@@ -20,8 +20,11 @@
     "@lottiefiles/react-lottie-player": "^3.6.0",
     "headlessui": "^0.0.0",
     "heroicons": "^2.2.0",
+    "html2canvas": "^1.4.1",
     "lottie-react": "^2.4.1",
+    "modern-screenshot": "^4.7.0",
     "next": "16.2.4",
+    "qrcode.react": "^4.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

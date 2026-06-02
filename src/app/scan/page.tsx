@@ -195,6 +195,7 @@ export default function ScanPage() {
       const faceShape = detectData.shape.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
       console.log('navigating to:', `/result/${faceShape}`);
       stopCamera();
+      setStep('loading');
       router.push(`/result/${faceShape}`);
     } catch (err) {
       console.error('catch error:', err);
@@ -299,7 +300,7 @@ export default function ScanPage() {
       )}
 
       {/* 2번 화면: 타원 가이드라인 + 안내문구 */}
-      {step === 'guide' && (
+      {step === 'guide' && !isLoading && (
         <>
           <div className={"relative w-[810px] h-[1080px]"}>
           <div className={"absolute w-[1200px] h-[1200px] left-1/2 top-[40%] transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-20"}>
@@ -343,6 +344,13 @@ export default function ScanPage() {
           </div>
           </div>
         </>
+      )}
+
+      {/* ★ 3번 화면 추가: API 통신이 끝나고 router.push로 페이지가 전환되는 찰나의 순간(0.5초~1초)에 보여줄 빈 공간 */}
+      {step === 'loading' && (
+        <div className="relative w-[810px] h-[1080px] flex items-center justify-center">
+          {/* 아무것도 넣지 않거나, 필요하다면 가벼운 스피너 컴포넌트 하나만 배치합니다. */}
+        </div>
       )}
         </ResponsiveContainer>
       </div>
