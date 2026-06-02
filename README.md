@@ -8,4 +8,4 @@ This is a document for [AI FACE DETECTION](https://1001face-ai.vercel.app)
 npm run dev
 # yarn 
 yarn dev
-```
+```# FaceAiBeta-F
