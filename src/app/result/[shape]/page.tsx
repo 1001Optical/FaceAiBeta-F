@@ -8,11 +8,12 @@ import IooIBtn from '@/components/IooIBtn';
 import CelebList from '@/components/Result/celebList';
 import { CelebType, TFaceShape } from '@/types/face';
 import IooIModal from '@/components/Modal/IooIModal';
+import DynamicQrModal from '@/components/Modal/DynamicQrModal';
 import React, { Suspense, use, useEffect, useState } from 'react';
 import IooISelectModal from '@/components/Modal/IooISelectModal';
 import { FaceShapeData } from '@/data/faceShapeData';
 import { FrameProducts, ProductType } from '@/data/frameData';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
 interface IProps {
@@ -65,6 +66,11 @@ interface ResultBodyProps {
   onSelectCeleb: (celeb: CelebType) => void;
   onOpenQr: () => void;
   onScanAnother: () => void;
+  onShare: () => void;
+  // Web Share API is only available on supported (mostly mobile/tablet) browsers.
+  canShare: boolean;
+  // capture mode (used by the QR result-image screenshot): hide the action buttons
+  capture?: boolean;
 }
 
 function ResultBody({
@@ -73,6 +79,9 @@ function ResultBody({
   onSelectCeleb,
   onOpenQr,
   onScanAnother,
+  onShare,
+  canShare,
+  capture = false,
 }: ResultBodyProps) {
   return <div className={'pt-6 px-9 h-full'}>
     <div className={'w-full h-full flex flex-col gap-8'}>
@@ -120,46 +129,82 @@ function ResultBody({
           </div>
         </div>
       </div> */}
-      <div className={'pb-8 flex flex-col gap-4'}>
-        <IooIBtn
-          text={'Get QR Code'}
-          icon={'/upload.png'}
-          onClick={onOpenQr}
-        />
-        <IooIBtn text={'Scan Another Face'} icon={'/face.png'} onClick={onScanAnother} />
-      </div>
+      {!capture && (
+        <div className={'pb-8 flex flex-col gap-4'}>
+          <div className={'flex gap-4'}>
+            {canShare && (
+              <div className={'flex-1'}>
+                <IooIBtn text={'Share'} icon={'/upload.png'} onClick={onShare} />
+              </div>
+            )}
+            <div className={'flex-1'}>
+              <IooIBtn text={'QR Code'} icon={'/qr.png'} onClick={onOpenQr} />
+            </div>
+          </div>
+          <IooIBtn text={'Scan Another Face'} icon={'/face.png'} onClick={onScanAnother} />
+        </div>
+      )}
     </div>
   </div>;
 }
 
-export default function Result({params}: IProps) {
+function ResultContent({params}: IProps) {
   const { shape } = use(params)
+  const searchParams = useSearchParams()
+  const isCapture = searchParams.get('capture') === '1'
+
   const [selectCeleb, setSelectCeleb] = useState<CelebType | undefined>(undefined)
   const [selectProduct, setSelectProduct] = useState<ProductType | undefined>(undefined)
   const [isOpenQR, setIsOpenQR] = useState<boolean>(false)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  // capture mode skips the 3s loading overlay entirely
+  const [isLoading, setIsLoading] = useState<boolean>(!isCapture)
+  // Web Share API support (mostly mobile/tablet) — gate the Share button on it
+  const [canShare, setCanShare] = useState<boolean>(false)
 
   const faceShape = (shape === "Square" ? "Angular" : shape) as TFaceShape;
 
   const router = useRouter()
 
   useEffect(() => {
-    setTimeout(() => {
+    if (isCapture) return;
+    const t = setTimeout(() => {
       setIsLoading(false)
     }, 3000)
+    return () => clearTimeout(t)
+  }, [isCapture]);
+
+  useEffect(() => {
+    setCanShare(typeof navigator !== 'undefined' && typeof navigator.share === 'function')
   }, []);
 
-  return <Suspense fallback={null}>
+  const onShare = async () => {
+    try {
+      await navigator.share({
+        title: '1001 Optometry',
+        text: `My face shape is ${faceShape} — see my frame picks`,
+        url: `${window.location.origin}/share/${faceShape}`,
+      })
+    } catch {
+      // user cancelled the share sheet, or it is unsupported — nothing to do
+    }
+  };
+
+  return <>
     {isLoading ? <ResultLoadingOverlay /> : null}
     <ResponsiveContainer page={'result'}>
-      <SiteHeader />
-      <ResultBody
-        faceShape={faceShape}
-        onSelectProduct={setSelectProduct}
-        onSelectCeleb={setSelectCeleb}
-        onOpenQr={() => setIsOpenQR(true)}
-        onScanAnother={() => router.push('/')}
-      />
+      <div id="capture-root">
+        <SiteHeader />
+        <ResultBody
+          faceShape={faceShape}
+          onSelectProduct={setSelectProduct}
+          onSelectCeleb={setSelectCeleb}
+          onOpenQr={() => setIsOpenQR(true)}
+          onScanAnother={() => router.push('/')}
+          onShare={onShare}
+          canShare={canShare}
+          capture={isCapture}
+        />
+      </div>
     </ResponsiveContainer>
     {faceShape ? (
     <>
@@ -176,14 +221,7 @@ export default function Result({params}: IProps) {
         <></>
       )}
       {isOpenQR ? (
-        <IooIModal
-          items={{
-            title: 'QR Code',
-            subTitle: faceShape,
-            imgSrc: `/QR/QR_${faceShape}.png`,
-          }}
-          onClose={() => setIsOpenQR(false)}
-        />
+        <DynamicQrModal shape={faceShape} onClose={() => setIsOpenQR(false)} />
       ) : (
         <></>
       )}
@@ -200,5 +238,10 @@ export default function Result({params}: IProps) {
       )}
     </>
   ) : <></>
-  }</Suspense>;
+  }</>;
+}
+
+export default function Result(props: IProps) {
+  // useSearchParams() must live inside a Suspense boundary provided by a parent.
+  return <Suspense fallback={null}><ResultContent {...props} /></Suspense>;
 }

@@ -4,6 +4,9 @@
 /node_modules
 /.pnp
 .pnp.*
+
+# this project uses yarn — keep yarn.lock as the single lockfile
+package-lock.json
 .yarn/*
 !.yarn/patches
 !.yarn/plugins

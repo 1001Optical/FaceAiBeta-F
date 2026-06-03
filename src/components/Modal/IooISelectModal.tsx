@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Modal from '@/components/Modal/modal';
+import ModalCtaButton from '@/components/Modal/ModalCtaButton';
 import { useState } from 'react';
 
 interface IProps {
@@ -48,12 +49,7 @@ const IooISelectModal = ({faceShape, src, title, vendor= "", onClose}: IProps) =
           />
         </div>
         </div>
-        <button
-          onClick={onClose}
-          className="w-[658px] h-[88px] py-4 bg-white-200 label-xl text-white-1000 rounded-full hover:bg-white-400 transition-colors duration-200 mt-auto border border-white-400 shadow-[inset_0_0_1.69px_1.69px_#999999,_inset_0_0_1.69px_1.69px_#FFFFFF26,_inset_-1.69px_-1.69px_1.69px_-0.85px_#FFFFFFBF,_inset_1.69px_1.69px_1.69px_-0.85px_#FFFFFFBF,_inset_-5.07px_-5.07px_0.85px_-5.07px_#FFFFFFCC,_inset_5.07px_5.07px_0.85px_-5.92px_#FFFFFFBF,_0_1.69px_13.52px_0_#0000001F,_0_0_3.38px_0_#0000001A] backdrop-blur-[20px]"
-        >
-          Got it
-        </button>
+        <ModalCtaButton onClick={onClose} />
       </div>
     </Modal>
   )
