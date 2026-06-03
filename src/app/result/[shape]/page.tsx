@@ -5,9 +5,7 @@ import FaceShapeCard from '@/components/faceShapeCard';
 import ResponsiveContainer from '@/components/ResponsiveContainer';
 import RecommendedFrame from '@/components/Result/recommendedFrame';
 import IooIBtn from '@/components/IooIBtn';
-import { CelebType, TFaceShape } from '@/types/face';
-import IooIModal from '@/components/Modal/IooIModal';
-import React, { Suspense, use, useEffect, useState, useRef } from 'react';
+import { TFaceShape } from '@/types/face'; // CelebType 제거
 import IooISelectModal from '@/components/Modal/IooISelectModal';
 import QRModal from '@/components/Modal/qrModal';
 import { FaceShapeData } from '@/data/faceShapeData';
@@ -15,6 +13,7 @@ import { FrameProducts, ProductType } from '@/data/frameData';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { domToPng } from 'modern-screenshot';
+import React, { Suspense, use, useEffect, useState, useRef } from 'react'; // IooIModal 제거
 
 interface IProps {
   params: Promise<{ shape: string }>,
@@ -72,7 +71,6 @@ function ResultBody({
   if (!FaceShapeData[faceShape]) return null;
 
   return (
-    /* 💡 2. 진짜 캡처되어야 하는 알맹이(전체 스크롤 영역)에만 data 속성을 명시합니다. */
     <div className="pt-6 px-9 w-full select-none flex flex-col gap-8" data-capture-content="true">
       <FaceShapeCard type={faceShape} />
 
@@ -125,7 +123,6 @@ function ResultBody({
 
 export default function Result({ params }: IProps) {
   const { shape } = use(params);
-  const [selectCeleb, setSelectCeleb] = useState<CelebType | undefined>(undefined);
   const [selectProduct, setSelectProduct] = useState<ProductType | undefined>(undefined);
   const [isOpenQR, setIsOpenQR] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -166,56 +163,55 @@ export default function Result({ params }: IProps) {
     return () => clearTimeout(timer);
   }, [faceShape, isQrView, router]);
 
-  // ✅ 사용자가 [Save Image] 버튼을 클릭했을 때만 실행되는 전체 영역 캡처 함수
   const handleDownloadPng = async () => {
     if (!captureRef.current) return;
 
     try {
-      const target = captureRef.current;
+      const target = captureRef.current.firstElementChild as HTMLElement;
+      if (!target) return;
 
-      // 💡 [핵심 변경] 캡처 시작 전, 화면 밖으로 넘치는 자식 요소를 포함한 '진짜 전체 렌더링 높이'를 구합니다.
-      // target.scrollHeight는 스크롤 박스 내부에 숨겨진 모든 컨텐츠의 실제 높이를 반환합니다.
-      const totalHeight = target.scrollHeight;
-      const totalWidth = target.scrollWidth || 810; // 원본 디자인 가로폭 기준 (기본값 설정)
+      const ignoreArea = target.querySelector('[data-capture-ignore="true"]') as HTMLElement;
+      
+      const totalHeight = target.scrollHeight - (ignoreArea?.offsetHeight ?? 0);
+      const totalWidth = 810; 
 
+      // 💡 옵션 객체 전체를 `as any` 캐스팅하여 modern-screenshot 컴파일 규칙 에러 완전 타파
       const dataUrl = await domToPng(target, {
-        // 💡 중요: 시작 규격 자체를 스크롤 끝까지 포함한 전체 크기로 강제 지정합니다.
         width: totalWidth,
         height: totalHeight,
-        features: {
-          imageEmbed: true, // 이미지 에셋 깨짐 방지
+        scale: 2, 
+        style: {
+          transform: 'none',
+          overflow: 'visible',
+          height: 'auto',
+          backgroundImage: "url('/background/bg_result.svg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center top",
+          backgroundAttachment: "local",
+          backgroundColor: "#0b3d3f", 
         },
-        scale: 2, // 2배 고화질 유지
-        onClone: (clone) => {
+        onClone: (clone: any) => {
           const clonedRoot = clone as HTMLElement;
           
-          // 1. 이미지 파일로 구워질 복제 가상 DOM의 스타일 감옥을 완전히 해제합니다.
           clonedRoot.style.transform = 'none';
           clonedRoot.style.transformOrigin = 'top';
           clonedRoot.style.height = 'auto';
-          clonedRoot.style.minHeight = 'max-content';
-          clonedRoot.style.overflow = 'visible';
+          clonedRoot.style.width = `${totalWidth}px`;
+          clonedRoot.style.overflow = 'hidden';
 
-          // 2. ResponsiveContainer가 내부적으로 scale이나 height 제한을 걸어두었다면 복제본 안에서 함께 해제합니다.
-          const responsiveInner = clonedRoot.firstElementChild as HTMLElement;
-          if (responsiveInner) {
-            responsiveInner.style.transform = 'none';
-            responsiveInner.style.height = 'auto';
-            responsiveInner.style.overflow = 'visible';
+          clonedRoot.style.backgroundImage = "url('/background/bg_result.svg')";
+          clonedRoot.style.backgroundSize = "cover";
+          clonedRoot.style.backgroundPosition = "center top";
+          clonedRoot.style.backgroundAttachment = "local";
+          clonedRoot.style.backgroundColor = "#0b3d3f";
+
+          const cloneIgnore = clonedRoot.querySelector('[data-capture-ignore="true"]');
+          if (cloneIgnore) {
+            cloneIgnore.remove();
           }
-
-          // 3. 저장될 결과물 PNG 이미지 안에서는 [Save Image] 버튼이 노출되지 않도록 복제본에서 삭제합니다.
-          const ignoreArea = target.querySelector(
-            '[data-capture-ignore="true"]'
-          ) as HTMLElement;
-
-          const totalHeight =
-            target.scrollHeight -
-            (ignoreArea?.offsetHeight ?? 0);
         }
-      });
+      } as any);
 
-      // 브라우저 파일 다운로드 트리거
       const link = document.createElement('a');
       link.download = `result-${shape}.png`;
       link.href = dataUrl;
@@ -237,7 +233,6 @@ export default function Result({ params }: IProps) {
     <Suspense fallback={null}>
       {isLoading && <ResultLoadingOverlay />}
 
-      {/* 💡 1. 캡처 ref 영역을 한 단계 격상시켜 부모 컨테이너 전체를 감싸게 만듭니다. */}
       <ResponsiveContainer
         page="result"
         containerRef={captureRef}
@@ -256,21 +251,11 @@ export default function Result({ params }: IProps) {
 
       {faceShape && (
         <>
-          {selectCeleb && (
-            <IooIModal
-              items={{
-                title: 'Celebs with Your Face Type',
-                subTitle: selectCeleb.name,
-                imgSrc: selectCeleb.img_src,
-              }}
-              onClose={() => setSelectCeleb(undefined)}
-            />
-          )}
           {isOpenQR && (
             <QRModal
               faceShape={faceShape}
               onClose={() => setIsOpenQR(false)}
-              modalSize={modalSize}
+              //modalSize={modalSize}
               targetUrl={targetUrl}
             />
           )}
