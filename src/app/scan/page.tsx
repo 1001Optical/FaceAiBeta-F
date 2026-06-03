@@ -192,7 +192,9 @@ export default function ScanPage() {
         return;
       }
 
-      const faceShape = detectData.shape.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
+      const rawShape = detectData.shape.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
+      // The API still labels this shape "Square", but the product name is "Angular".
+      const faceShape = rawShape === 'Square' ? 'Angular' : rawShape;
       console.log('navigating to:', `/result/${faceShape}`);
       stopCamera();
       router.push(`/result/${faceShape}`);
