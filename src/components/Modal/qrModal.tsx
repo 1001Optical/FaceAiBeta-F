@@ -8,15 +8,13 @@ interface IProps {
   faceShape: string;
   onClose: () => void;
   targetUrl: string;
-  modalSize?: { width: number; height: number }; // 💡 부모의 해상도 크기를 받아올 수 있도록 인터페이스 복원
 }
 
-const QRModal = ({ faceShape, onClose, targetUrl, modalSize }: IProps) => {
+const QRModal = ({ faceShape, onClose, targetUrl }: IProps) => {
   const { copySuccess, handleCopyLink, handleShare } = useShare({ targetUrl, faceShape });
 
   return (
-    // 💡 1. 전체 모달 프레임워크 크기는 부모 해상도 설정을 투사하여 첫 번째 코드와 동일한 부피를 확보합니다.
-    <Modal onClose={onClose} modalSize={modalSize}>
+    <Modal onClose={onClose}>
       {/* 전체 콘텐트 영역 */}
       <div className="flex flex-col gap-[42px] items-center justify-center w-full max-w-[658px] mx-auto px-4 box-border">
         
@@ -29,8 +27,7 @@ const QRModal = ({ faceShape, onClose, targetUrl, modalSize }: IProps) => {
           </div>
 
           {/* QR 코드를 감싸는 박스 */}
-          {/* 💡 2. 모바일 화면에서 크기가 너무 줄어들지 않도록 최소 너비(min-w) 및 고정 비율 디바이스 가이드라인을 강화했습니다. */}
-          <div className="flex items-center justify-center w-full max-w-[562px] min-w-[280px] aspect-square bg-white rounded-[48px] p-8 md:p-12 shadow-lg box-border">
+          <div className="flex items-center justify-center w-full max-w-[562px] aspect-square bg-white rounded-[48px] p-8 md:p-12 shadow-lg box-border">
             {targetUrl ? (
               <QRCodeSVG 
                 value={targetUrl} 
@@ -44,7 +41,7 @@ const QRModal = ({ faceShape, onClose, targetUrl, modalSize }: IProps) => {
           </div>
         </div>
 
-        {/* 기능 버튼 영역 */}
+        {/* 기능 버튼 영역 (두 버튼의 디자인을 완전히 동일하게 통일) */}
         <div className="flex gap-4 w-full">
           {/* 링크 복사 버튼 */}
           <button
@@ -65,7 +62,7 @@ const QRModal = ({ faceShape, onClose, targetUrl, modalSize }: IProps) => {
             <span>{copySuccess ? "Copied!" : "Copy Link"}</span>
           </button>
           
-          {/* 공유하기 버튼 */}
+          {/* 공유하기 버튼 (링크 복사 버튼과 완전히 동일한 스타일 클래스로 맞춤 수정) */}
           <button
             onClick={handleShare}
             disabled={!targetUrl}
