@@ -5,15 +5,15 @@ import FaceShapeCard from '@/components/faceShapeCard';
 import ResponsiveContainer from '@/components/ResponsiveContainer';
 import RecommendedFrame from '@/components/Result/recommendedFrame';
 import IooIBtn from '@/components/IooIBtn';
-import { TFaceShape } from '@/types/face'; // CelebType 제거
+import { TFaceShape } from '@/types/face';
 import IooISelectModal from '@/components/Modal/IooISelectModal';
 import QRModal from '@/components/Modal/qrModal';
 import { FaceShapeData } from '@/data/faceShapeData';
 import { FrameProducts, ProductType } from '@/data/frameData';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { domToPng } from 'modern-screenshot';
-import React, { Suspense, use, useEffect, useState, useRef } from 'react'; // IooIModal 제거
+import React, { Suspense, use, useEffect, useState } from 'react';
+import { useCaptureService } from '@/hooks/useCaptureService';
 
 interface IProps {
   params: Promise<{ shape: string }>,
@@ -97,24 +97,12 @@ function ResultBody({
 
       {isQrView ? (
         <div className="pb-8 flex flex-col gap-4" data-capture-ignore="true">
-          <IooIBtn
-            text="Save Image"
-            icon="/upload.png"
-            onClick={onDownloadPng}
-          />
+          <IooIBtn text="Save Image" icon="/upload.png" onClick={onDownloadPng} />
         </div>
       ) : (
         <div className="pb-8 flex flex-col gap-4">
-          <IooIBtn
-            text="Get QR Code"
-            icon="/upload.png"
-            onClick={onOpenQr}
-          />
-          <IooIBtn
-            text="Scan Another Face"
-            icon="/face.png"
-            onClick={onScanAnother}
-          />
+          <IooIBtn text="Get QR Code" icon="/upload.png" onClick={onOpenQr} />
+          <IooIBtn text="Scan Another Face" icon="/face.png" onClick={onScanAnother} />
         </div>
       )}
     </div>
@@ -128,8 +116,6 @@ export default function Result({ params }: IProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [modalSize, setModalSize] = useState({ width: 500, height: 800 });
 
-  const captureRef = useRef<HTMLDivElement>(null);
-
   const searchParams = useSearchParams();
   const isQrView = searchParams.get('view') === 'qr';
   const router = useRouter();
@@ -139,6 +125,9 @@ export default function Result({ params }: IProps) {
   const faceShape = validShapes.includes(rawShape as TFaceShape)
     ? (rawShape as TFaceShape)
     : null;
+
+  // ✅ useCaptureService로 분리
+  const { captureRef, handleDownloadPng } = useCaptureService({ shape });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -163,65 +152,6 @@ export default function Result({ params }: IProps) {
     return () => clearTimeout(timer);
   }, [faceShape, isQrView, router]);
 
-  const handleDownloadPng = async () => {
-    if (!captureRef.current) return;
-
-    try {
-      const target = captureRef.current.firstElementChild as HTMLElement;
-      if (!target) return;
-
-      const ignoreArea = target.querySelector('[data-capture-ignore="true"]') as HTMLElement;
-      
-      const totalHeight = target.scrollHeight - (ignoreArea?.offsetHeight ?? 0);
-      const totalWidth = 810; 
-
-      // 💡 옵션 객체 전체를 `as any` 캐스팅하여 modern-screenshot 컴파일 규칙 에러 완전 타파
-      const dataUrl = await domToPng(target, {
-        width: totalWidth,
-        height: totalHeight,
-        scale: 2, 
-        style: {
-          transform: 'none',
-          overflow: 'visible',
-          height: 'auto',
-          backgroundImage: "url('/background/bg_result.svg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-          backgroundAttachment: "local",
-          backgroundColor: "#0b3d3f", 
-        },
-        onClone: (clone: any) => {
-          const clonedRoot = clone as HTMLElement;
-          
-          clonedRoot.style.transform = 'none';
-          clonedRoot.style.transformOrigin = 'top';
-          clonedRoot.style.height = 'auto';
-          clonedRoot.style.width = `${totalWidth}px`;
-          clonedRoot.style.overflow = 'hidden';
-
-          clonedRoot.style.backgroundImage = "url('/background/bg_result.svg')";
-          clonedRoot.style.backgroundSize = "cover";
-          clonedRoot.style.backgroundPosition = "center top";
-          clonedRoot.style.backgroundAttachment = "local";
-          clonedRoot.style.backgroundColor = "#0b3d3f";
-
-          const cloneIgnore = clonedRoot.querySelector('[data-capture-ignore="true"]');
-          if (cloneIgnore) {
-            cloneIgnore.remove();
-          }
-        }
-      } as any);
-
-      const link = document.createElement('a');
-      link.download = `result-${shape}.png`;
-      link.href = dataUrl;
-      link.click();
-
-    } catch (error) {
-      console.error("전체 스크롤 이미지 저장 중 오류 발생:", error);
-    }
-  };
-
   const targetUrl =
     typeof window !== 'undefined'
       ? `${window.location.origin}/result/${shape}?view=qr`
@@ -233,12 +163,8 @@ export default function Result({ params }: IProps) {
     <Suspense fallback={null}>
       {isLoading && <ResultLoadingOverlay />}
 
-      <ResponsiveContainer
-        page="result"
-        containerRef={captureRef}
-      >
+      <ResponsiveContainer page="result" containerRef={captureRef}>
         <SiteHeader />
-
         <ResultBody
           faceShape={faceShape}
           isQrView={isQrView}
@@ -255,7 +181,6 @@ export default function Result({ params }: IProps) {
             <QRModal
               faceShape={faceShape}
               onClose={() => setIsOpenQR(false)}
-              //modalSize={modalSize}
               targetUrl={targetUrl}
             />
           )}
