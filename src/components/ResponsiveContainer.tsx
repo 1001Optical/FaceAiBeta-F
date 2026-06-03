@@ -1,12 +1,16 @@
-﻿"use client"
+"use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 const backgroundType = {
   "result": "bg-[url(/background/bg_result.svg)]",
   "main": "bg-[url(/background/bg_main.svg)]",
   "loading": "bg-[url(/background/bg_loading.svg)]",
 }
+
+// useLayoutEffect on the server warns; fall back to useEffect there.
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 interface IProps {
   children: React.ReactNode;
@@ -17,13 +21,16 @@ interface IProps {
 export default function ResponsiveContainer({
   children, page, className
 }: IProps) {
-  const [scale, setScale] = useState(1);
+  // null until measured. Keeping the content hidden + applying the scale in a
+  // layout effect (before paint) avoids the flash where the 810px design first
+  // renders at scale 1 (huge on small screens) and then snaps down.
+  const [scale, setScale] = useState<number | null>(null);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     function handleResize() {
       const wScale = window.innerWidth / 810;
       const hScale = window.innerHeight / 1080;
-      setScale(Math.min(wScale,hScale));
+      setScale(Math.min(wScale, hScale));
     }
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -42,8 +49,9 @@ export default function ResponsiveContainer({
       <div
         className={"w-[810px] h-full origin-top"}
         style={{
-          transform: `scale(${scale}) `,
-          height: `calc(100% / ${scale})`,
+          transform: scale != null ? `scale(${scale})` : undefined,
+          height: scale != null ? `calc(100% / ${scale})` : '100%',
+          visibility: scale != null ? 'visible' : 'hidden',
         }}
       >
         {children}
