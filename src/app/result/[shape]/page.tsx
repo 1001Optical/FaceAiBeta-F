@@ -255,7 +255,7 @@ export default function Result({ params }: IProps) {
             <QRModal
               faceShape={faceShape}
               onClose={() => setIsOpenQR(false)}
-              //modalSize={modalSize}
+              modalSize={modalSize}
               targetUrl={targetUrl}
             />
           )}
