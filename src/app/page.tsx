@@ -28,6 +28,7 @@ const Home = () =>  {
                   priority
                   fetchPriority={"high"}
                 />
+                {/* Animated SVG (SMIL) — plays on its own as a plain image. */}
                 <Image
                   src="/lottie_preload/main.svg"
                   alt=""

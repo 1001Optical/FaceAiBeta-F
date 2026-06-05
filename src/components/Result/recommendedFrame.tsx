@@ -30,7 +30,7 @@ const RecommendedFrame = ({ items, ranking, onClickProduct }: IProps) => {
               'w-[296px] h-[212px] rounded-tl-[32px] absolute -right-14 -bottom-10 z-10 overflow-hidden flex justify-center items-center'
             }
           >
-            <Image src={`${item.src}/preview.png`} alt={'frames'} fill />
+            <Image src={`${item.src}/preview.webp`} alt={'frames'} fill />
           </div>
           <div>
             <p className={'heading-sm text-primary-800'}>{item.vendor}</p>

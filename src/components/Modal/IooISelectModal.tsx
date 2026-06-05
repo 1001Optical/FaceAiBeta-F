@@ -11,7 +11,15 @@ interface IProps {
   onClose: () => void;
 }
 
-const selectOptions = ["Product", "Woman", "Man"]
+export const selectOptions = ["Product", "Woman", "Man"] as const;
+
+/**
+ * Modal image path. Shared with the result page preloader so the exact same
+ * URLs are warm in the browser cache before the modal opens.
+ */
+export function modalImageSrc(src: string, faceShape: string, option: string): string {
+  return `${src}/${option !== "Product" ? `${faceShape}_` : ""}${option}.webp`;
+}
 const selectStyle = "bg-[#00EAFF7A] backdrop-blur-[13.098590850830078px] shadow-[inset_0_0_3.27px_0_#FFFFFF80,inset_-1.09px_-1.09px_0.55px_-1.09px_#FFFFFF,inset_1.09px_1.09px_0.55px_-1.09px_#FFFFFF,inset_-1.09px_-1.09px_0_-0.55px_#262626,inset_1.09px_1.09px_0_-0.55px_#333333,0_1.09px_8.73px_0_#0000001F,0_0_2.18px_0_#0000001A]"
 
 const IooISelectModal = ({faceShape, src, title, vendor= "", onClose}: IProps) => {
@@ -41,11 +49,14 @@ const IooISelectModal = ({faceShape, src, title, vendor= "", onClose}: IProps) =
           className="flex items-center justify-center size-[562px]"
         >
           <Image
-            src={`${src}/${selectIndex !== 0 ? `${faceShape}_` : ""}${selectOptions[selectIndex]}.png`}
-            alt={`${src}/${selectOptions[selectIndex]}.png`}
+            src={modalImageSrc(src, faceShape, selectOptions[selectIndex])}
+            alt={modalImageSrc(src, faceShape, selectOptions[selectIndex])}
             width={562}
             height={562}
             className="rounded-[48px] object-cover w-full h-full"
+            // Files are pre-compressed WebP served as-is — skipping the optimizer
+            // keeps the URL identical to the preloaded one (instant open).
+            unoptimized
           />
         </div>
         </div>

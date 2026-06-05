@@ -6,7 +6,7 @@ import IooIBtn from '@/components/IooIBtn';
 import { TFaceShape } from '@/types/face';
 import { SOCIAL_LINKS } from '@/config/socialLinks';
 import { use } from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 
 const SHAPES: TFaceShape[] = ['Diamond', 'Heart', 'Oval', 'Angular', 'Round'];
 
@@ -22,6 +22,7 @@ interface IProps {
  */
 export default function Share({ params }: IProps) {
   const { shape: raw } = use(params);
+  const router = useRouter();
   // API may say "Square"; the UI treats it as "Angular" (matches result page).
   const shape = (raw === 'Square' ? 'Angular' : raw) as TFaceShape;
   if (!SHAPES.includes(shape)) notFound();
@@ -40,6 +41,12 @@ export default function Share({ params }: IProps) {
             Press and hold the image to save &amp; share it
           </p>
           <div className={'pb-8 flex flex-col gap-4'}>
+            {/* Funnel CTA: invite the share-link visitor to run their own scan */}
+            <IooIBtn
+              text={'Try the AI Face Scan'}
+              icon={'/face.png'}
+              onClick={() => router.push('/')}
+            />
             {SOCIAL_LINKS.map((link) => (
               <IooIBtn
                 key={link.href}

@@ -10,7 +10,7 @@ import { CelebType, TFaceShape } from '@/types/face';
 import IooIModal from '@/components/Modal/IooIModal';
 import DynamicQrModal from '@/components/Modal/DynamicQrModal';
 import React, { Suspense, use, useEffect, useState } from 'react';
-import IooISelectModal from '@/components/Modal/IooISelectModal';
+import IooISelectModal, { modalImageSrc, selectOptions } from '@/components/Modal/IooISelectModal';
 import { FaceShapeData } from '@/data/faceShapeData';
 import { FrameProducts, ProductType } from '@/data/frameData';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -176,6 +176,18 @@ function ResultContent({params}: IProps) {
   useEffect(() => {
     setCanShare(typeof navigator !== 'undefined' && typeof navigator.share === 'function')
   }, []);
+
+  // Warm the browser cache for the frame-modal photos (Product / Woman / Man)
+  // while the 3s loading overlay runs, so IooISelectModal opens instantly.
+  useEffect(() => {
+    FaceShapeData[faceShape]?.frameRecommendation.forEach((frame) => {
+      FrameProducts[frame]?.forEach(({ src }) => {
+        selectOptions.forEach((option) => {
+          new window.Image().src = modalImageSrc(src, faceShape, option);
+        });
+      });
+    });
+  }, [faceShape]);
 
   const onShare = async () => {
     try {
