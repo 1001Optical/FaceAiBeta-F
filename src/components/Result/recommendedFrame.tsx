@@ -10,13 +10,14 @@ interface IProps {
 const RecommendedFrame = ({ items, ranking, onClickProduct }: IProps) => {
   return (
     <div className={'flex flex-col gap-4'}>
-      <div className={'flex flex-col px-3'}>
+      <div className={'flex flex-row px-3'}>
         <p className={'heading-xl text-white-600'}>
           {ranking === 1 ? '1st' : '2nd'}
         </p>
-        <p className={'heading-xl text-information-200'}>{items.shape}</p>
+        <p className={'heading-xl text-information-200 ml-2'}>{items.shape}</p>
       </div>
       <div className={'px-3 w-full border-t border-white-200'} />
+      <div className={'flex flex-row gap-4'}>
       {items.products.map((item) => (
         <div
           key={`${item.vendor}-${item.name}`}
@@ -38,6 +39,7 @@ const RecommendedFrame = ({ items, ranking, onClickProduct }: IProps) => {
           </div>
         </div>
       ))}
+      </div>
     </div>
   );
 };
