@@ -66,9 +66,6 @@ interface ResultBodyProps {
   onSelectCeleb: (celeb: CelebType) => void;
   onOpenQr: () => void;
   onScanAnother: () => void;
-  onShare: () => void;
-  // Web Share API is only available on supported (mostly mobile/tablet) browsers.
-  canShare: boolean;
   // capture mode (used by the QR result-image screenshot): hide the action buttons
   capture?: boolean;
 }
@@ -79,8 +76,6 @@ function ResultBody({
   onSelectCeleb,
   onOpenQr,
   onScanAnother,
-  onShare,
-  canShare,
   capture = false,
 }: ResultBodyProps) {
   return <div className={'pt-6 px-9 h-full'}>
@@ -131,16 +126,7 @@ function ResultBody({
       </div> */}
       {!capture && (
         <div className={'pb-8 flex flex-col gap-4'}>
-          <div className={'flex gap-4'}>
-            {canShare && (
-              <div className={'flex-1'}>
-                <IooIBtn text={'Share'} icon={'/upload.png'} onClick={onShare} />
-              </div>
-            )}
-            <div className={'flex-1'}>
-              <IooIBtn text={'QR Code'} icon={'/qr.png'} onClick={onOpenQr} />
-            </div>
-          </div>
+          <IooIBtn text={'QR Code'} icon={'/qr.png'} onClick={onOpenQr} />
           <IooIBtn text={'Scan Another Face'} icon={'/face.png'} onClick={onScanAnother} />
         </div>
       )}
@@ -158,8 +144,6 @@ function ResultContent({params}: IProps) {
   const [isOpenQR, setIsOpenQR] = useState<boolean>(false)
   // capture mode skips the 3s loading overlay entirely
   const [isLoading, setIsLoading] = useState<boolean>(!isCapture)
-  // Web Share API support (mostly mobile/tablet) — gate the Share button on it
-  const [canShare, setCanShare] = useState<boolean>(false)
 
   const faceShape = (shape === "Square" ? "Angular" : shape) as TFaceShape;
 
@@ -173,10 +157,6 @@ function ResultContent({params}: IProps) {
     return () => clearTimeout(t)
   }, [isCapture]);
 
-  useEffect(() => {
-    setCanShare(typeof navigator !== 'undefined' && typeof navigator.share === 'function')
-  }, []);
-
   // Warm the browser cache for the frame-modal photos (Product / Woman / Man)
   // while the 3s loading overlay runs, so IooISelectModal opens instantly.
   useEffect(() => {
@@ -189,18 +169,6 @@ function ResultContent({params}: IProps) {
     });
   }, [faceShape]);
 
-  const onShare = async () => {
-    try {
-      await navigator.share({
-        title: '1001 Optometry',
-        text: `My face shape is ${faceShape} — see my frame picks`,
-        url: `${window.location.origin}/share/${faceShape}`,
-      })
-    } catch {
-      // user cancelled the share sheet, or it is unsupported — nothing to do
-    }
-  };
-
   return <>
     {isLoading ? <ResultLoadingOverlay /> : null}
     <ResponsiveContainer page={'result'}>
@@ -212,8 +180,6 @@ function ResultContent({params}: IProps) {
           onSelectCeleb={setSelectCeleb}
           onOpenQr={() => setIsOpenQR(true)}
           onScanAnother={() => router.push('/')}
-          onShare={onShare}
-          canShare={canShare}
           capture={isCapture}
         />
       </div>

@@ -39,8 +39,13 @@ const Home = () =>  {
                 />
               </div>
             </div>
-            <div className={"w-full"}>
-              <IooIBtn text={"Start Face Scan"} icon={"/arrow_right.png"} onClick={() => router.push('/scan')} />
+            <div className={"w-full flex flex-col gap-3"}>
+              <p className={"label-md text-white-800 text-center"}>
+                By starting this scan, I consent to my photos being processed for immediate analysis,
+                <br />
+                knowing they will not be stored or shared.
+              </p>
+              <IooIBtn text={"Agree and Scan"} icon={"/arrow_right.png"} onClick={() => router.push('/scan')} />
             </div>
           </div>
         </div>
