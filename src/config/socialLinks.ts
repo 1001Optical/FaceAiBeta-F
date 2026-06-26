@@ -1,4 +1,4 @@
-// CTA links shown on the QR share landing (/share/[shape]).
+// Brand CTA links shown in the result page button stack (/result/[shape]).
 // Brand is "1001 Optometry" (1001optical.com.au redirects to 1001optometry.com.au).
 // Edit here only (single source of truth).
 export interface SocialLink {

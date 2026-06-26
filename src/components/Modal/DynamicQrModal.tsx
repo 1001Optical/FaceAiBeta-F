@@ -19,7 +19,7 @@ const MODULE_COLOR = '#141414';
  * Dynamic QR modal. Generates a styled QR at runtime (no static QR PNGs):
  * dot modules + circular finder eyes, on a white panel inside a teal rounded
  * frame, with the per-shape result icon in the center. The QR encodes the
- * absolute URL of the per-shape share landing (`/share/${shape}`).
+ * absolute URL of the per-shape result page (`/result/${shape}`).
  *
  * Error correction is H so the center logo never breaks scannability. The origin
  * is read at runtime via window.location.origin so the QR points at whatever
@@ -31,7 +31,7 @@ const DynamicQrModal = ({ shape, onClose }: IProps) => {
 
   useEffect(() => {
     let cancelled = false;
-    const target = `${window.location.origin}/share/${shape}`;
+    const target = `${window.location.origin}/result/${shape}`;
 
     (async () => {
       try {

@@ -13,6 +13,7 @@ import React, { Suspense, use, useEffect, useState } from 'react';
 import IooISelectModal, { modalImageSrc, selectOptions } from '@/components/Modal/IooISelectModal';
 import { FaceShapeData } from '@/data/faceShapeData';
 import { FrameProducts, ProductType } from '@/data/frameData';
+// import { SOCIAL_LINKS } from '@/config/socialLinks'; // re-enable with the social CTA buttons below
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
@@ -126,7 +127,26 @@ function ResultBody({
       </div> */}
       {!capture && (
         <div className={'pb-8 flex flex-col gap-4'}>
+          {/* Downloads the pre-generated result image (same PNG the old /share page showed). */}
+          <IooIBtn
+            text={'Download Result'}
+            icon={'/download.png'}
+            onClick={() => {
+              const a = document.createElement('a');
+              a.href = `/result-images/${faceShape}.png`;
+              a.download = `1001-face-shape-${faceShape}.png`;
+              a.click();
+            }}
+          />
           <IooIBtn text={'QR Code'} icon={'/qr.png'} onClick={onOpenQr} />
+          {/* Brand CTAs folded in from the retired /share page. Hidden for now. */}
+          {/* {SOCIAL_LINKS.map((link) => (
+            <IooIBtn
+              key={link.href}
+              text={link.label}
+              onClick={() => window.open(link.href, '_blank', 'noopener,noreferrer')}
+            />
+          ))} */}
           <IooIBtn text={'Scan Another Face'} icon={'/face.png'} onClick={onScanAnother} />
         </div>
       )}
