@@ -9,7 +9,7 @@ import CelebList from '@/components/Result/celebList';
 import { CelebType, TFaceShape } from '@/types/face';
 import IooIModal from '@/components/Modal/IooIModal';
 import DynamicQrModal from '@/components/Modal/DynamicQrModal';
-import React, { Suspense, use, useEffect, useState } from 'react';
+import React, { Suspense, use, useEffect, useRef, useState } from 'react';
 import IooISelectModal, { modalImageSrc, selectOptions } from '@/components/Modal/IooISelectModal';
 import { FaceShapeData } from '@/data/faceShapeData';
 import { FrameProducts, ProductType } from '@/data/frameData';
@@ -79,6 +79,37 @@ function ResultBody({
   onScanAnother,
   capture = false,
 }: ResultBodyProps) {
+  // Pre-fetch the result PNG so the Save button can call navigator.share() synchronously
+  // inside the click gesture — iOS Safari drops the user-activation if you await fetch()
+  // first, which silently breaks "Save Image" (the whole point: land it in Photos, not Files).
+  const imgBlobRef = useRef<Blob | null>(null);
+  useEffect(() => {
+    imgBlobRef.current = null;
+    fetch(`/result-images/${faceShape}.png`)
+      .then((r) => r.blob())
+      .then((b) => { imgBlobRef.current = b; })
+      .catch(() => {});
+  }, [faceShape]);
+
+  const onSaveImage = async () => {
+    const filename = `1001-${faceShape}.png`;
+    const blob = imgBlobRef.current;
+    if (blob && navigator.canShare) {
+      const file = new File([blob], filename, { type: 'image/png' });
+      // No await before share(): keeps the user gesture so iOS shows the share sheet → Photos.
+      if (navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file] }); } catch { /* user cancelled */ }
+        return;
+      }
+    }
+    // Desktop (or blob not ready yet): plain download. ponytail: on iOS this lands in Files,
+    // not Photos — acceptable only as the rare not-yet-prefetched fallback.
+    const a = document.createElement('a');
+    a.href = `/result-images/${faceShape}.png`;
+    a.download = filename;
+    a.click();
+  };
+
   return <div className={'pt-6 px-9 h-full'}>
     <div className={'w-full h-full flex flex-col gap-8'}>
       <FaceShapeCard type={faceShape} />
@@ -127,17 +158,10 @@ function ResultBody({
       </div> */}
       {!capture && (
         <div className={'pb-8 flex flex-col gap-4'}>
-          {/* Downloads the pre-generated result image (same PNG the old /share page showed). */}
-          <IooIBtn
-            text={'Download Result'}
-            icon={'/download.png'}
-            onClick={() => {
-              const a = document.createElement('a');
-              a.href = `/result-images/${faceShape}.png`;
-              a.download = `1001-face-shape-${faceShape}.png`;
-              a.click();
-            }}
-          />
+          {/* Saves the pre-generated result image (same PNG the old /share page showed).
+              On iOS/Android the Web Share sheet's "Save Image" lands in Photos —
+              a plain <a download> would only save to Files there. Desktop falls back to download. */}
+          <IooIBtn text={'Save Image'} icon={'/download.png'} onClick={onSaveImage} />
           <IooIBtn text={'QR Code'} icon={'/qr.png'} onClick={onOpenQr} />
           {/* Brand CTAs folded in from the retired /share page. Hidden for now. */}
           {/* {SOCIAL_LINKS.map((link) => (
