@@ -50,3 +50,6 @@ next-env.d.ts
 
 .idea*
 .image-originals/
+
+# planning artifacts
+.omc/

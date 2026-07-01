@@ -9,6 +9,7 @@ import FaceScanBar from './FaceScanBar';
 import ResponsiveContainer from '../../components/ResponsiveContainer';
 import SiteHeader from '@/components/header';
 import { faceApiUrl } from '@/lib/apiBase';
+import { getStore } from '@/lib/store';
 
 const intro_guideline = [
   {src: "cameracheck.png", title: "Camera", description: "Please look straight at the camera."},
@@ -165,7 +166,7 @@ export default function ScanPage() {
           Authorization: process.env.NEXT_PUBLIC_API_TOKEN ?? "",
           Accept: 'application/json',
         },
-        body: JSON.stringify({ image_path: data.image_path }),
+        body: JSON.stringify({ image_path: data.image_path, store: getStore() }),
         signal: AbortSignal.timeout(API_FETCH_TIMEOUT_MS),
       });
 
