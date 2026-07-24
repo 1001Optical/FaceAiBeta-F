@@ -34,7 +34,7 @@ export default function Home() {
             </div>
 
             <div className="relative z-20 max-w-[834px] mx-auto px-6 py-8">
-            <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
+            <header className="app-header fixed left-1/2 -translate-x-1/2 z-30">
                 <Link href="/" passHref>
                     <div 
                         className="relative cursor-pointer"
@@ -65,7 +65,7 @@ export default function Home() {
                             </div>
                             <OrbitEyewear />
                             <div className="absolute bottom-0 left-0 w-full flex justify-center pb-24">
-                                <Link href="/scan" className="flex justify-center">
+                                <Link href="/filter" className="flex justify-center">
                                     <button
                                         className="
                                         flex

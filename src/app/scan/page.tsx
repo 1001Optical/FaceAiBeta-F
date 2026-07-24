@@ -3,10 +3,47 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image'
-import "./FaceScanner.css";
 import FaceScanBar from "./FaceScanBar";
 import Link from 'next/link';
 import ResponsiveContainer from '../../components/ResponsiveContainer';
+
+function waitForVideoReady(video: HTMLVideoElement, timeoutMs = 8000): Promise<void> {
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && video.videoWidth > 0 && video.videoHeight > 0) {
+        return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+        const timeoutId = window.setTimeout(() => {
+            cleanup();
+            reject(new Error('Camera is taking too long to start. Please try again.'));
+        }, timeoutMs);
+
+        const handleReady = () => {
+            if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && video.videoWidth > 0 && video.videoHeight > 0) {
+                cleanup();
+                resolve();
+            }
+        };
+
+        const handleError = () => {
+            cleanup();
+            reject(new Error('Camera preview could not be loaded. Please try again.'));
+        };
+
+        const cleanup = () => {
+            window.clearTimeout(timeoutId);
+            video.removeEventListener('loadedmetadata', handleReady);
+            video.removeEventListener('canplay', handleReady);
+            video.removeEventListener('playing', handleReady);
+            video.removeEventListener('error', handleError);
+        };
+
+        video.addEventListener('loadedmetadata', handleReady);
+        video.addEventListener('canplay', handleReady);
+        video.addEventListener('playing', handleReady);
+        video.addEventListener('error', handleError);
+    });
+}
 
 export default function ScanPage() {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -31,42 +68,52 @@ export default function ScanPage() {
 
     // 카메라 프리뷰 시작
     useEffect(() => {
-        if (step === 'intro' || step === 'guide') {
-            startCamera();
+        const videoEl = videoRef.current;
+        let cancelled = false;
+
+        async function startCamera() {
+            if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) {
+                setError('Camera access requires HTTPS. Please open this page from a secure URL.');
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 },
+                        facingMode: 'user',
+                    },
+                });
+
+                if (cancelled || !videoEl) {
+                    stream.getTracks().forEach(track => track.stop());
+                    return;
+                }
+
+                videoEl.srcObject = stream;
+                await videoEl.play();
+            } catch (err) {
+                if (!cancelled) {
+                    console.error(err);
+                    setError('Cannot access camera. Please check Safari camera permissions.');
+                }
+            }
         }
 
-        // ref의 값을 클로저 변수로 저장
-        const videoEl = videoRef.current;
+        if (step === 'intro' || step === 'guide') {
+            void startCamera();
+        }
 
-        // 정리: 컴포넌트 언마운트 시 카메라 종료
         return () => {
-            if (videoEl) {
-                const stream = videoEl.srcObject as MediaStream;
-                if (stream) {
-                    stream.getTracks().forEach(track => track.stop());
-                }
+            cancelled = true;
+            const stream = videoEl?.srcObject as MediaStream | null;
+            if (stream && videoEl) {
+                stream.getTracks().forEach(track => track.stop());
+                videoEl.srcObject = null;
             }
         };
     }, [step]);
-
-    const startCamera = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: {
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 },
-                    facingMode: 'user',
-                },
-            });
-
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream;
-            }
-        } catch (err) {
-            console.error(err);
-            setError('Cannot access camera. Please check camera permissions.');
-        }
-    };
 
     // 캡처 함수 useCallback 적용
     const handleCapture = useCallback(async () => {
@@ -76,10 +123,19 @@ export default function ScanPage() {
 
         const video = videoRef.current;
         const canvas = canvasRef.current;
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            await waitForVideoReady(video);
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+                throw new Error('Camera image could not be prepared. Please try again.');
+            }
+
             ctx.save();
             ctx.scale(-1, 1); // 좌우반전
             ctx.drawImage(
@@ -90,12 +146,8 @@ export default function ScanPage() {
                 video.videoHeight
             );
             ctx.restore();
-        }
-        setCaptured(true);
-        setIsLoading(true);
-        setError(null); // 에러 상태 초기화
+            setCaptured(true);
 
-        try {
             // 캡처된 이미지를 Blob으로 변환
             const blob = await new Promise<Blob | null>(resolve => {
                 canvas.toBlob(blob => resolve(blob), 'image/jpeg', 0.95);
@@ -194,7 +246,7 @@ export default function ScanPage() {
 
     return (
         <div
-            className="relative flex flex-col items-center justify-center min-h-screen w-full h-screen bg-black overflow-hidden"
+            className="relative flex flex-col items-center justify-center min-h-[100dvh] w-full h-[100dvh] bg-black overflow-hidden"
         >
             {/* 카메라 프리뷰 */}
             <video
@@ -213,14 +265,12 @@ export default function ScanPage() {
                     className="fixed inset-0 z-10"
                     style={{
                         background: 'rgba(0,0,0,0.35)',
-                        minWidth: 658,
-                        minHeight: 652,
                     }}
                 >
                     {/* 내비게이션바 (뒤로가기 버튼) */}
                     <div
                         onClick={() => router.back()}
-                        className="fixed top-9 left-6 cursor-pointer z-30"
+                        className="app-back-button fixed cursor-pointer z-30"
                         style={{
                             width: 'clamp(28px, 7vw, 44px)',
                             height: 'clamp(28px, 7vw, 44px)',
@@ -238,7 +288,7 @@ export default function ScanPage() {
 
                     {/* 로고 (가로 중앙 상단 고정) */}
                     <header
-                        className="fixed top-8 left-1/2 -translate-x-1/2 z-30"
+                        className="app-header fixed left-1/2 -translate-x-1/2 z-30"
                         style={{ pointerEvents: 'none' }} // header 자체에 클릭 무시, 내부만 클릭 가능
                     >
                         <Link href="/" passHref>
@@ -481,7 +531,7 @@ export default function ScanPage() {
                         {/* 내비게이션바 (뒤로가기 버튼) */}
                         <div
                             onClick={() => router.back()}
-                            className="fixed top-9 left-6 cursor-pointer z-30"
+                            className="app-back-button fixed cursor-pointer z-30"
                             style={{
                                 width: 'clamp(28px, 7vw, 44px)',
                                 height: 'clamp(28px, 7vw, 44px)',
@@ -499,7 +549,7 @@ export default function ScanPage() {
 
                         {/* 로고 (가로 중앙 상단 고정) */}
                         <header
-                            className="fixed top-8 left-1/2 -translate-x-1/2 z-30"
+                            className="app-header fixed left-1/2 -translate-x-1/2 z-30"
                             style={{ pointerEvents: 'none' }} // header 자체에 클릭 무시, 내부만 클릭 가능
                         >
                             <Link href="/" passHref>
@@ -528,7 +578,9 @@ export default function ScanPage() {
                                     width: 1200,
                                     height: 1200,
                                     left: "50%",
-                                    top: "40%",
+                                    // 1200px 컨테이너의 중심과 타원의 중심이 60px 어긋나 있으므로
+                                    // 이를 보정해 타원 중심을 디자인 화면 높이의 48%에 맞춘다.
+                                    top: "calc(48% + 60px)",
                                     transform: "translate(-50%, -50%)",
                                     pointerEvents: "none",
                                     zIndex: 20,
@@ -556,7 +608,7 @@ export default function ScanPage() {
 
                             {/* 안내문구 박스: 타원보다 훨씬 아래에 배치 */}
                             <div
-                                className={`absolute left-1/2 bottom-[200px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white/40 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem] 
+                                className={`absolute left-1/2 bottom-[48px] -translate-x-1/2 flex justify-center items-center rounded-[48px] border border-white/40 shadow-lg backdrop-blur-[12.5px] text-white text-center z-30 w-[738px] h-[132px] text-[1.15rem]
                                     ${error ? 'bg-red-500/40' : 'bg-black/40'}`}
                             >
                                 <div className="w-[658px] text-white text-center font-aribau text-[24px] font-normal leading-[142%] tracking-[-0.048px]">
