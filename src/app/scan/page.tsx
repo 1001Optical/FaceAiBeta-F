@@ -2,43 +2,11 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { faceShapeDetails } from '@/data/faceData';
-import { frameRecommendations } from '@/data/reconMap';
-import { frameShapeDetails } from '@/data/frameData';
-import { FaceShapeDetail, FrameShapeDetail } from '@/types/face';
 import Image from 'next/image'
 import "./FaceScanner.css";
 import FaceScanBar from "./FaceScanBar";
 import Link from 'next/link';
 import ResponsiveContainer from '../../components/ResponsiveContainer';
-
-// 최대 동시 3개씩 이미지를 프리로드, 각 이미지의 로딩이 비동기적으로 병렬 진행
-async function limitedParallelLoad(urls: string[], limit: number = 3): Promise<boolean[]> {
-    const results: boolean[] = [];
-    let idx = 0;
-
-    const preloadImage = (url: string): Promise<void> =>
-        new Promise((resolve, reject) => {
-            const img = new window.Image();
-            img.onload = () => resolve();
-            img.onerror = () => reject();
-            img.src = url;
-        });
-
-    async function loadNext(): Promise<void> {
-        if (idx >= urls.length) return;
-        const i = idx++;
-        try {
-            await preloadImage(urls[i]);
-            results[i] = true;
-        } catch {
-            results[i] = false;
-        }
-        await loadNext();
-    }
-    await Promise.all(Array(limit).fill(0).map(() => loadNext()));
-    return results;
-}
 
 export default function ScanPage() {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -47,13 +15,19 @@ export default function ScanPage() {
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-
     // 캡처 및 얼굴 감지 상태 (useCallback, useEffect보다 위에 선언)
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [captured, setCaptured] = useState(false);
     const [, setCountdown] = useState<number | null>(null);
+
+    const stopCamera = useCallback(() => {
+        const video = videoRef.current;
+        const stream = video?.srcObject as MediaStream | null;
+        stream?.getTracks().forEach(track => track.stop());
+        if (video) {
+            video.srcObject = null;
+        }
+    }, []);
 
     // 카메라 프리뷰 시작
     useEffect(() => {
@@ -188,56 +162,12 @@ export default function ScanPage() {
                 return;
             }
 
-            // 결과 페이지로 이동하면서 데이터 전달
-            const queryParams = new URLSearchParams({
-                faceShape: detectData.shape,
-                confidence: detectData.confidence || '0',
-                ratios: JSON.stringify({
-                    cheek: detectData.cheek_ratio,
-                    chin: detectData.chin_ratio,
-                    forehead: detectData.forehead_ratio,
-                    head: detectData.head_ratio,
-                    jaw: detectData.jaw_ratio,
-                    jawAngle: detectData.jaw_angle,
-                }),
-            }).toString();
-
-            // 얼굴형 이미지와 프레임 이미지들을 미리 로드
-            const faceDetail = faceShapeDetails.find(
-                (f: FaceShapeDetail) => f.shape === detectData.shape
-            );
-            const recommendations =
-                frameRecommendations[
-                detectData.shape as keyof typeof frameRecommendations
-                ];
-            const frameDetails =
-                recommendations?.recommendedFrames
-                    .map((frameName: string) =>
-                        frameShapeDetails.find(
-                            (f: FrameShapeDetail) =>
-                                f.shape.toLowerCase() === frameName.toLowerCase()
-                        )
-                    )
-                    .filter(Boolean) || [];
-
-            // 모든 이미지 로드 완료 대기
-            const imageUrls = [
-                faceDetail?.image,
-                ...frameDetails.map(
-                    (frame: FrameShapeDetail | undefined) => frame?.image
-                ),
-            ].filter(Boolean) as string[];
-
-            try {
-                // 모든 이미지가 로드될 때까지 대기
-                await limitedParallelLoad(imageUrls, 3);
-                // 이미지 로드가 완료된 후 결과 페이지로 이동
-                router.push(`/loading?${queryParams}`);
-            } catch (error) {
-                // 이미지 로드 실패 시에도 로딩 페이지로 이동
-                console.error(error);
-                router.push(`/loading?${queryParams}`);
-            }
+            const rawShape = detectData.shape.match(/^[A-Za-z]+/)?.[0] || 'Unknown';
+            // The API still labels this shape "Square", but the product name is "Angular".
+            const faceShape = rawShape === 'Square' ? 'Angular' : rawShape;
+            console.log('navigating to:', `/result/${faceShape}`);
+            stopCamera();
+            router.push(`/result/${faceShape}`);
         } catch (err) {
             setError(
                 'API request failed: ' + (err instanceof Error ? err.message : String(err))
@@ -247,7 +177,7 @@ export default function ScanPage() {
         } finally {
             setIsLoading(false);
         }
-    }, [apiUrl, isLoading, router]);
+    }, [isLoading, router, stopCamera]);
 
     // 얼굴이 타원 안에 들어오면 2초 후 자동 캡처 (임시: 버튼 없이 타이머)
     useEffect(() => {
