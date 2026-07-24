@@ -25,8 +25,13 @@ function LoadingInner() {
     // 3초 후 자동 이동
     useEffect(() => {
         const timeout = setTimeout(() => {
-            // /result?뒤에 현재 쿼리스트링 그대로 붙이기
-            router.push(`/result?${params.toString()}`);
+            const detectedShape = params.get('faceShape');
+            const resultShape = detectedShape === 'Square' ? 'Angular' : detectedShape;
+            if (resultShape) {
+                router.push(`/result/${resultShape}`);
+            } else {
+                router.push('/');
+            }
         }, 3000);
 
         return () => clearTimeout(timeout);
