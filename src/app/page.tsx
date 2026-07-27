@@ -4,16 +4,10 @@ import Image from 'next/image';
 import { useState } from 'react';
 import PolicyModal from '@/components/PolicyModal';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import OrbitEyewear from '@/components/OrbitEyewear';
 import ResponsiveContainer from '../components/ResponsiveContainer';
 
 export default function Home() {
     const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
-
-    const LottiePlayer = dynamic(() => import('@/components/MainPage'), {
-        ssr: false,
-    });
 
     return (
         <main className="min-h-screen w-full relative overflow-hidden">
@@ -29,12 +23,8 @@ export default function Home() {
                 priority
             />
             
-            <div className="absolute inset-0 z-10 pointer-events-none">
-                <LottiePlayer />
-            </div>
-
             <div className="relative z-20 max-w-[834px] mx-auto px-6 py-8">
-            <header className="fixed top-8 left-1/2 -translate-x-1/2 z-30">
+            <header className="app-header fixed left-1/2 -translate-x-1/2 z-30">
                 <Link href="/" passHref>
                     <div 
                         className="relative cursor-pointer"
@@ -63,9 +53,17 @@ export default function Home() {
                                     priority
                                 />
                             </div>
-                            <OrbitEyewear />
+                            <Image
+                                src="/lottie_preload/main.svg"
+                                alt=""
+                                width={810}
+                                height={705}
+                                className="h-[705px] w-[810px] object-contain"
+                                unoptimized
+                                priority
+                            />
                             <div className="absolute bottom-0 left-0 w-full flex justify-center pb-24">
-                                <Link href="/scan" className="flex justify-center">
+                                <Link href="/filter" className="flex justify-center">
                                     <button
                                         className="
                                         flex

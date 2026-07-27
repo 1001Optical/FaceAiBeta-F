@@ -5,6 +5,8 @@
 :root {
   --background: #f7f6f3;
   --foreground: #171717;
+  --app-header-offset: max(1rem, env(safe-area-inset-top));
+  --app-side-offset: max(1.5rem, env(safe-area-inset-left));
 }
 
 @theme inline {
@@ -42,17 +44,29 @@ body {
     color: var(--foreground);
     font-family: 'Aribau Grotesk';
     min-height: 100vh;
+    min-height: 100dvh;
     width: 100%;
+    margin: 0;
+    overflow-x: hidden;
 }
 
 .fixed-container {
     position: fixed;
     inset: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     background: #000;
     overflow: hidden;
     z-index: 0;
+}
+
+.app-header {
+  top: var(--app-header-offset);
+}
+
+.app-back-button {
+  top: var(--app-header-offset);
+  left: var(--app-side-offset);
 }
 
 .content-container {
@@ -66,6 +80,28 @@ body {
 
 .lf-error {
   display: none !important;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  :root {
+    --app-header-offset: max(0.5rem, env(safe-area-inset-top));
+  }
 }
 
 @layer components {
