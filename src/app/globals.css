@@ -5,8 +5,6 @@
 :root {
   --background: #f7f6f3;
   --foreground: #171717;
-  --app-header-offset: max(1rem, env(safe-area-inset-top));
-  --app-side-offset: max(1.5rem, env(safe-area-inset-left));
 }
 
 @theme inline {
@@ -22,92 +20,66 @@
     --foreground: #ededed;
   }
 }
+/* globals.css */
 
 @font-face {
-    font-family: "Aribau Grotesk";
-    src: url("/fonts/Aribau-Grotesk-Regular.otf") format("opentype");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Aribau Grotesk';
+  src: url('/fonts/AribauGrotesk-Rg.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap; /* FOUT 최소화 */
 }
 
 @font-face {
-    font-family: "Aribau Grotesk";
-    src: url("/fonts/AribauGrotesk-Bd.otf") format("opentype");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Aribau Grotesk';
+  src: url('/fonts/AribauGrotesk-Bd.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap; /* FOUT 최소화 */
+}
+
+
+/* 권장: 합성 억제로 CLS/깜빡임 완화 */
+html {
+  font-synthesis-weight: none;
+  font-synthesis-style: none;
 }
 
 body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family: 'Aribau Grotesk';
-    min-height: 100vh;
-    min-height: 100dvh;
-    width: 100%;
-    margin: 0;
-    overflow-x: hidden;
-}
-
-.fixed-container {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100dvh;
-    background: #000;
-    overflow: hidden;
-    z-index: 0;
-}
-
-.app-header {
-  top: var(--app-header-offset);
-}
-
-.app-back-button {
-  top: var(--app-header-offset);
-  left: var(--app-side-offset);
-}
-
-.content-container {
-    width: 810px;
-    height: 1080px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform-origin: top left;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Aribau Grotesk', serif;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .lf-error {
   display: none !important;
 }
 
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-@media (orientation: landscape) and (max-height: 600px) {
-  :root {
-    --app-header-offset: max(0.5rem, env(safe-area-inset-top));
-  }
-}
-
+/* Typography */
 @layer components {
-  .heading-xl { @apply text-[40px] leading-[120%] tracking-[-0.3%] font-aribau }
-  .heading-md { @apply text-[28px] leading-[136%] tracking-[-0.2%] font-aribau }
-  .heading-sm { @apply text-[24px] leading-[133%] tracking-[-0.15%] font-aribau }
-  .heading-xs { @apply text-[20px] leading-[140%] tracking-[-0.12%] font-aribau }
-  .label-xl { @apply text-[24px] leading-[142%] font-aribau }
+  .display-xl { @apply text-[56px] leading-[128%] tracking-[-0.5%] font-aribau }
+  .display-lg { @apply text-5xl leading-[132%] tracking-[-0.4%] font-aribau };
+  .heading-xl { @apply text-[40px] leading-[120%] tracking-[-0.3%] font-aribau };
+  .heading-lg { @apply text-[36px] leading-[128%] tracking-[-0.28%] font-aribau };
+  .heading-md { @apply text-[28px] leading-[136%] tracking-[-0.2%] font-aribau };
+  .heading-sm { @apply text-[24px] leading-[133%] tracking-[-0.15%] font-aribau };
+  .heading-xs { @apply text-[20px] leading-[140%] tracking-[-0.12%] font-aribau };
+  .body-lg { @apply text-[18px] leading-[155%] font-aribau};
+  .body-md { @apply text-[16px] leading-[150%] font-aribau };
+  .label-xl { @apply text-[24px] leading-[142%] font-aribau };
+  .label-lg { @apply text-[20px] leading-[138%] font-aribau };
+  .label-md { @apply text-[16px] leading-[140%] font-aribau };
+  .caption-md { @apply text-[12px] leading-[150%] font-aribau };
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

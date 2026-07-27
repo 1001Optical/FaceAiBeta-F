@@ -1,19 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
-import styles from "@/css/optimizedResult.module.css"
-import SiteHeader from '@/components/OptimizedResult/header';
-import FaceShapeCard from '@/components/OptimizedResult/faceShapeCard';
-import ResponsiveContainer from '@/components/OptimizedResult/ResponsiveContainer';
-import RecommendedFrame from '@/components/OptimizedResult/Result/recommendedFrame';
-import IooIBtn from '@/components/OptimizedResult/IooIBtn';
-import CelebList from '@/components/OptimizedResult/Result/celebList';
-import { CelebType, TFaceShape } from '@/types/optimizedResultTypes';
-import IooIModal from '@/components/OptimizedResult/Modal/IooIModal';
-import DynamicQrModal from '@/components/OptimizedResult/Modal/DynamicQrModal';
+import styles from "@/css/main.module.css"
+import SiteHeader from '@/components/header';
+import FaceShapeCard from '@/components/faceShapeCard';
+import ResponsiveContainer from '@/components/ResponsiveContainer';
+import RecommendedFrame from '@/components/Result/recommendedFrame';
+import IooIBtn from '@/components/IooIBtn';
+import CelebList from '@/components/Result/celebList';
+import { CelebType, TFaceShape } from '@/types/face';
+import IooIModal from '@/components/Modal/IooIModal';
+import DynamicQrModal from '@/components/Modal/DynamicQrModal';
 import React, { Suspense, use, useEffect, useRef, useState } from 'react';
-import IooISelectModal, { modalImageSrc, selectOptions } from '@/components/OptimizedResult/Modal/IooISelectModal';
-import { FaceShapeData } from '@/data/optimizedFaceShapeData';
-import { FrameProducts, ProductType } from '@/data/optimizedFrameData';
+import IooISelectModal, { modalImageSrc, selectOptions } from '@/components/Modal/IooISelectModal';
+import { FaceShapeData } from '@/data/faceShapeData';
+import { FrameProducts, ProductType } from '@/data/frameData';
 // import { SOCIAL_LINKS } from '@/config/socialLinks'; // re-enable with the social CTA buttons below
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';

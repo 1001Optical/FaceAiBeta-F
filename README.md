@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI FACE DETECTION
 
-## Getting Started
+This is a document for [AI FACE DETECTION](https://1001face-ai.vercel.app)
 
-First, run the development server:
-
-```bash
+### Getting Started
+```shell
+# npm
 npm run dev
-# or
+# yarn
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## QR share flow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+After a scan, the result page (`/result/[shape]`) lets users take their
+recommendation with them via two entry points, both pointing at the same
+landing page:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **QR Code** button — opens `DynamicQrModal`, which renders a styled QR at
+  runtime (dot modules, circular finder eyes, brand teal frame, center shape
+  icon) using [`qr-code-styling`](https://www.npmjs.com/package/qr-code-styling).
+  Error correction is set to `H` so the center logo never breaks scannability.
+- **Share** button — uses the Web Share API (shown only on supported
+  browsers, mostly mobile/tablet) to share the landing URL directly.
 
-## Learn More
+Both target `/share/[shape]` — the landing page that shows the pre-generated
+result image plus brand CTA links (Shop, Find Nearest Store, Instagram).
 
-To learn more about Next.js, take a look at the following resources:
+### Editing the landing links
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+CTA links live in a single source of truth: `src/config/socialLinks.ts`.
+Edit there only.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Generating the result images
 
-## Deploy on Vercel
+The QR/landing shows a faithful screenshot of the result page, pre-generated
+per shape into `public/result-images/<Shape>.png`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```shell
+# dev server must be running on :3000 first
+yarn capture:results          # all 5 shapes
+yarn capture:results Oval     # a single shape
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The script (`scripts/capture-results.mjs`) screenshots the real
+`/result/[shape]` page in capture mode (action buttons + loading overlay
+hidden) via Playwright. Re-run it whenever the result page design changes.

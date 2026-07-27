@@ -1,66 +1,61 @@
-﻿import React, { useEffect, useState } from 'react';
+"use client"
 
-const DESIGN_WIDTH = 810;
-const DESIGN_HEIGHT = 1080;
-const DESKTOP_TOP_OFFSET = 70;
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
-export default function ResponsiveContainer({ children }: { children: React.ReactNode }) {
-    const [layout, setLayout] = useState({ scale: 0, top: 0 });
+const backgroundType = {
+  "result": "bg-[url(/background/bg_result.svg)]",
+  "main": "bg-[url(/background/bg_main.svg)]",
+  "loading": "bg-[url(/background/bg_loading.svg)]",
+}
 
-    useEffect(() => {
-        function updateLayout() {
-            const viewport = window.visualViewport;
-            const viewportWidth = viewport?.width ?? window.innerWidth;
-            const viewportHeight = viewport?.height ?? window.innerHeight;
-            const top = Math.min(DESKTOP_TOP_OFFSET, Math.max(16, viewportHeight * 0.065));
-            const availableHeight = Math.max(0, viewportHeight - top);
-            const widthScale = viewportWidth / DESIGN_WIDTH;
-            const heightScale = availableHeight / DESIGN_HEIGHT;
+// useLayoutEffect on the server warns; fall back to useEffect there.
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
-            setLayout({
-                scale: Math.min(widthScale, heightScale, 1),
-                top,
-            });
-        }
+interface IProps {
+  children: React.ReactNode;
+  page?: "result" | "main" | "loading";
+  className?: string
+}
 
-        updateLayout();
-        window.addEventListener('resize', updateLayout);
-        window.addEventListener('orientationchange', updateLayout);
-        window.visualViewport?.addEventListener('resize', updateLayout);
+export default function ResponsiveContainer({
+  children, page, className
+}: IProps) {
+  // null until measured. Keeping the content hidden + applying the scale in a
+  // layout effect (before paint) avoids the flash where the 810px design first
+  // renders at scale 1 (huge on small screens) and then snaps down.
+  const [scale, setScale] = useState<number | null>(null);
 
-        return () => {
-            window.removeEventListener('resize', updateLayout);
-            window.removeEventListener('orientationchange', updateLayout);
-            window.visualViewport?.removeEventListener('resize', updateLayout);
-        };
-    }, []);
+  useIsomorphicLayoutEffect(() => {
+    function handleResize() {
+      const wScale = window.innerWidth / 810;
+      const hScale = window.innerHeight / 1080;
+      setScale(Math.min(wScale, hScale));
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-    return (
-        <div className="fixed-container"
-            style={{
-                position: 'fixed',
-                inset: 0,
-                width: '100vw',
-                height: '100dvh',
-                background: 'none',
-                overflow: 'hidden',
-            }}
-        >
-            <div
-                className="content-container"
-                style={{
-                    width: DESIGN_WIDTH,
-                    height: DESIGN_HEIGHT,
-                    position: 'absolute',
-                    left: '50%',
-                    top: layout.top,
-                    transformOrigin: 'top left',
-                    transform: `scale(${layout.scale}) translateX(-50%)`,
-                    visibility: layout.scale > 0 ? 'visible' : 'hidden',
-                }}
-            >
-                {children}
-            </div>
-        </div>
-    );
+  return (
+    <div
+      className={
+      "inset-0 w-screen h-screen overflow-x-hidden bg-cover bg-local flex flex-col justify-start items-center "
+        + (page ? backgroundType[page] : "")
+        + (page === "result" ? " overflow-y-auto" : " overflow-hidden")
+        + (` ${className}`)
+    }
+    >
+      <div
+        className={"w-[810px] h-full origin-top"}
+        style={{
+          transform: scale != null ? `scale(${scale})` : undefined,
+          height: scale != null ? `calc(100% / ${scale})` : '100%',
+          visibility: scale != null ? 'visible' : 'hidden',
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
 }

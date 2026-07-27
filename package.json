@@ -4,23 +4,28 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "capture:results": "node scripts/capture-results.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "dependencies": {
     "@dotlottie/player-component": "^2.7.12",
     "@dotlottie/react-player": "^1.6.19",
-    "@lottiefiles/dotlottie-react": "^0.14.3",
+    "@headlessui/react": "^2.2.7",
+    "@heroicons/react": "^2.2.0",
+    "@lottiefiles/dotlottie-react": "^0.14.4",
     "@lottiefiles/dotlottie-web": "^0.48.0",
     "@lottiefiles/react-lottie-player": "^3.6.0",
+    "headlessui": "^0.0.0",
+    "heroicons": "^2.2.0",
     "lottie-react": "^2.4.1",
-    "next": "16.1.5",
+    "next": "16.2.4",
     "qr-code-styling": "^1.9.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -30,7 +35,8 @@
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
-    "eslint-config-next": "15.3.3",
+    "eslint-config-next": "16.2.4",
+    "playwright": "^1.60.0",
     "postcss": "^8.5.5",
     "prettier": "^3.6.0",
     "tailwindcss": "^3.4.17",
