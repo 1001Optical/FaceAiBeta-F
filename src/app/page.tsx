@@ -63,7 +63,7 @@ export default function Home() {
                                 priority
                             />
                             <div className="absolute bottom-0 left-0 w-full flex justify-center pb-24">
-                                <Link href="/filter" className="flex justify-center">
+                                <Link href="/scan" className="flex justify-center">
                                     <button
                                         className="
                                         flex
