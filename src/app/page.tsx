@@ -45,7 +45,7 @@ const Home = () =>  {
                 <br />
                 knowing they will not be stored or shared.
               </p>
-              <IooIBtn text={"Agree and Scan"} icon={"/arrow_right.png"} onClick={() => router.push('/scan')} />
+              <IooIBtn text={"Agree and Scan"} icon={"/arrow_right.png"} onClick={() => router.push('/filter')} />
             </div>
           </div>
         </div>

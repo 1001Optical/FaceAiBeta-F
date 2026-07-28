@@ -28,19 +28,27 @@ export default function ResponsiveContainer({
 
   useIsomorphicLayoutEffect(() => {
     function handleResize() {
-      const wScale = window.innerWidth / 810;
-      const hScale = window.innerHeight / 1080;
-      setScale(Math.min(wScale, hScale));
+      const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+      const wScale = viewportWidth / 810;
+      const hScale = viewportHeight / 1080;
+      setScale(Math.min(wScale, hScale, 1));
     }
     handleResize();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    window.visualViewport?.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+      window.visualViewport?.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (
     <div
       className={
-      "inset-0 w-screen h-screen overflow-x-hidden bg-cover bg-local flex flex-col justify-start items-center "
+      "inset-0 w-screen h-[100dvh] overflow-x-hidden bg-cover bg-local flex flex-col justify-start items-center "
         + (page ? backgroundType[page] : "")
         + (page === "result" ? " overflow-y-auto" : " overflow-hidden")
         + (` ${className}`)

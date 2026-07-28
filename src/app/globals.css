@@ -5,6 +5,8 @@
 :root {
   --background: #f7f6f3;
   --foreground: #171717;
+  --app-header-offset: max(1rem, env(safe-area-inset-top));
+  --app-side-offset: max(1rem, env(safe-area-inset-left));
 }
 
 @theme inline {
@@ -50,11 +52,23 @@ body {
   color: var(--foreground);
   font-family: 'Aribau Grotesk', serif;
   min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
+  margin: 0;
+  overflow-x: hidden;
 }
 
 .lf-error {
   display: none !important;
+}
+
+.app-header {
+  top: var(--app-header-offset);
+}
+
+.app-back-button {
+  top: var(--app-header-offset);
+  left: var(--app-side-offset);
 }
 
 /* Typography */
@@ -81,5 +95,27 @@ body {
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  :root {
+    --app-header-offset: max(0.5rem, env(safe-area-inset-top));
   }
 }
