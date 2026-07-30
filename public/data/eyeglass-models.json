@@ -1,0 +1,37 @@
+{
+  "Square": [
+    {
+      "name": "A0012",
+      "vendor": "ALLEGRO",
+      "src": "/frame/A0012"
+    }
+  ],
+  "Round": [
+    {
+      "name": "T2003",
+      "vendor": "ALLEGRO",
+      "src": "/frame/T2003"
+    }
+  ],
+  "Rectangle": [
+    {
+      "name": "T2002",
+      "vendor": "ALLEGRO",
+      "src": "/frame/T2002"
+    }
+  ],
+  "Oval": [
+    {
+      "name": "SF41",
+      "vendor": "Signature",
+      "src": "/frame/SF41"
+    }
+  ],
+  "Pilot": [
+    {
+      "name": "LT53",
+      "vendor": "1001 Premium",
+      "src": "/frame/LT53"
+    }
+  ]
+}
